@@ -1,7 +1,7 @@
 [comment encoding = UTF-8 /]
 [module mainGenerator('http://www.example.org/ccsl')]
 
-[import org::ccsl::gen::ocl::rule::faultTypeDescription::faultTypeDescriptionToXMLModule /]
+
 [import org::ccsl::gen::ocl::rule::faultTypeDescription::injectionActionToJavaClassModule /]
 [import org::ccsl::gen::ocl::rule::recommendationRule::oclBuilderModule /]
 [import org::ccsl::gen::ocl::commom::walkHelperModule /]
@@ -16,13 +16,4 @@
 [file ('ocl-gen.txt', false, 'UTF-8')]
 [rule.writeOCL() /]
 [/file]
-[/template]
-
-[template private write(faultType: FaultTypeDescription)]
-[faultType.rule.write() /]
-[faultType.clearAllContexts() /]
-[faultType.writeXMLFile() /]
-[for(action: InjectionAction | faultType.actions)]
-[action.writeActionJavaClass(faultType.rule.subject, faultType.name, i) /]
-[/for]
 [/template]
