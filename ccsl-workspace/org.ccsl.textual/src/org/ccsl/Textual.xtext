@@ -76,21 +76,21 @@ Statement returns statements::Statement:
 	Statement_Impl | ControlFlowStatement | Block | InstanceCreation | SynchronizedBlock | ThrowStatement | EmptyStatement | ReturnStatement | BreakStatement | ContinueStatement | AssertStatement | ExpressionStatement | LabelStatement;
 
 NamedElement returns namedElements::NamedElement:
-	NamedElement_Impl | Package;
+	NamedElement_Impl | Package | TypeDeclaration_Impl;
 
 ComplexType returns complexType::ComplexType:
 	ComplexType_Impl | JInterface | AnonymousClass | JClass | JEnum | ComplexTypeDeclaration_Impl | ConstructComplexTypeDeclaration_Impl;
 
 CompositeRule returns ccsl::CompositeRule:
-	'CompositeRule'
+	'Composite'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('operator' operator=LogicOperator)?
-		'rules' '{' rules+=Rule ( "," rules+=Rule)* '}' 
+		'rules' '[' rules+=Rule ( "," rules+=Rule)* ']' 
 	'}';
 
 AtomicRule returns ccsl::AtomicRule:
-	'AtomicRule'
+	'Atomic'
 	'{'
 		negated?= 'not'?
 		'context' context=Context
@@ -98,27 +98,25 @@ AtomicRule returns ccsl::AtomicRule:
 	'}';
 
 Boolean returns type::Boolean:
-	'Boolean' /* TODO: implement this rule and an appropriate IValueConverter */;
+	EBoolean;
 
 enum LogicOperator returns ccsl::LogicOperator:
 				AND = 'AND' | OR = 'OR';
 
 Element returns elements::Element:
 	{elements::Element}
-	'Element'
-	uniqueName=EString;
+	uniqueName= EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType | ImportableElement | Expression | Annotation /* | SimpleMethod*/ | AnnotationFieldValue ;
 	
 
 Context returns context::Context:
 	{context::Context}
-	'Context'
 	'{'
-		('contextElements' '{' contextElements+=Element ( "," contextElements+=Element)* '}' )?
-		('filters' '{' filters+=Filter ( "," filters+=Filter)* '}' )?
+		('contextElements' '[' contextElements+=Element ( "," contextElements+=Element)* ']' )?
+		('filters' '[' filters+=Filter ( "," filters+=Filter)* ']' )?
 	'}';
 
 String0 returns type::String:
-	'String' /* TODO: implement this rule and an appropriate IValueConverter */;
+	STRING;
 
 enum Visibility returns elements::Visibility:
 				PRIVATE = 'PRIVATE' | PACKAGE = 'PACKAGE' | PROTECTED = 'PROTECTED' | PUBLIC = 'PUBLIC' | ANY = 'ANY';
@@ -126,11 +124,11 @@ enum Visibility returns elements::Visibility:
 Annotation returns annotation::Annotation:
 	{annotation::Annotation}
 	'Annotation'
-	uniqueName=String0
+	uniqueName=EString
 	'{'
 		('valuesKind' valuesKind=CollectionKind)?
 		('type' type=[complexType::AnnotationType|EString])?
-		('values' '{' values+=AnnotationFieldValue ( "," values+=AnnotationFieldValue)* '}' )?
+		('values' '[' values+=AnnotationFieldValue ( "," values+=AnnotationFieldValue)* ']' )?
 	'}';
 
 AnnotationType returns complexType::AnnotationType:
@@ -143,10 +141,10 @@ AnnotationType returns complexType::AnnotationType:
 		('visibility' visibility=Visibility)?
 		('static' static=BooleanObject)?
 		('inheritance' inheritance=Inheritance)?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=AnnotationField ( "," fields+=AnnotationField)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=AnnotationField ( "," fields+=AnnotationField)* ']' )?
 	'}';
 
 AnnotationFieldValue returns annotation::AnnotationFieldValue:
@@ -162,7 +160,7 @@ enum CollectionKind returns ccsl::CollectionKind:
 				EXACT = 'EXACT' | SEQUENCE = 'SEQUENCE' | ANY = 'ANY' | IMMEDIATE = 'IMMEDIATE';
 
 BooleanObject returns type::BooleanObject:
-	'BooleanObject' /* TODO: implement this rule and an appropriate IValueConverter */;
+	EBoolean;
 
 ImportStatement returns import0::ImportStatement:
 	{import0::ImportStatement}
@@ -183,9 +181,9 @@ TypeDeclaration_Impl returns complexType::TypeDeclaration:
 		('visibility' visibility=Visibility)?
 		('static' static=BooleanObject)?
 		('inheritance' inheritance=Inheritance)?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
 	'}';
 
 enum Inheritance returns elements::Inheritance:
@@ -199,7 +197,7 @@ AnnotationField returns complexType::AnnotationField:
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 		('default' default=Expression)?
 	'}';
 
@@ -224,11 +222,11 @@ JInterface returns complexType::JInterface:
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
 		('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] ( "," superInterfaces+=[complexType::JInterface|EString])* ')' )?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
 	'}';
 
 JClass returns complexType::JClass:
@@ -245,12 +243,12 @@ JClass returns complexType::JClass:
 		('methodsKind' methodsKind=CollectionKind)?
 		('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] ( "," superInterfaces+=[complexType::JInterface|EString])* ')' )?
 		('superClass' superClass=[complexType::JClass|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
-		('constructors' '{' constructors+=Constructor ( "," constructors+=Constructor)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
+		('constructors' '[' constructors+=Constructor ( "," constructors+=Constructor)* ']' )?
 	'}';
 
 JEnum returns complexType::JEnum:
@@ -266,13 +264,13 @@ JEnum returns complexType::JEnum:
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
 		('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] ( "," superInterfaces+=[complexType::JInterface|EString])* ')' )?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
-		('constructors' '{' constructors+=Constructor ( "," constructors+=Constructor)* '}' )?
-		('enumConstants' '{' enumConstants+=EnumConstant ( "," enumConstants+=EnumConstant)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
+		('constructors' '[' constructors+=Constructor ( "," constructors+=Constructor)* ']' )?
+		('enumConstants' '[' enumConstants+=EnumConstant ( "," enumConstants+=EnumConstant)* ']' )?
 	'}';
 
 ComplexTypeDeclaration_Impl returns complexType::ComplexTypeDeclaration:
@@ -288,11 +286,11 @@ ComplexTypeDeclaration_Impl returns complexType::ComplexTypeDeclaration:
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
 		('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] ( "," superInterfaces+=[complexType::JInterface|EString])* ')' )?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
 	'}';
 
 ConstructComplexTypeDeclaration_Impl returns complexType::ConstructComplexTypeDeclaration:
@@ -308,12 +306,12 @@ ConstructComplexTypeDeclaration_Impl returns complexType::ConstructComplexTypeDe
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
 		('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] ( "," superInterfaces+=[complexType::JInterface|EString])* ')' )?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('imports' '{' imports+=ImportStatement ( "," imports+=ImportStatement)* '}' )?
-		('nestedTypes' '{' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* '}' )?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
-		('constructors' '{' constructors+=Constructor ( "," constructors+=Constructor)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('imports' '[' imports+=ImportStatement ( "," imports+=ImportStatement)* ']' )?
+		('nestedTypes' '[' nestedTypes+=TypeDeclaration ( "," nestedTypes+=TypeDeclaration)* ']' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* '}' )?
+		('constructors' '[' constructors+=Constructor ( "," constructors+=Constructor)* ']' )?
 	'}';
 
 FieldVariable returns variable::FieldVariable:
@@ -328,7 +326,7 @@ FieldVariable returns variable::FieldVariable:
 		('static' static=BooleanObject)?
 		('volatile' volatile=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 		('initialValue' initialValue=Expression)?
 	'}';
 
@@ -337,23 +335,25 @@ Method returns method::Method:
 	'Method'
 	uniqueName=String0
 	'{'
-		('name' name=String0)?
-		('availableInSourceCode' availableInSourceCode=BooleanObject)?
-		('visibility' visibility=Visibility)?
-		('paramsKind' paramsKind=CollectionKind)?
-		('static' static=BooleanObject)?
-		('inheritance' inheritance=Inheritance)?
-		('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] ( "," thrownExceptions+=[complexType::JClass|EString])* ')' )?
-		('returnType' returnType=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('params' '{' params+=ParameterVariable ( "," params+=ParameterVariable)* '}' )?
-		('body' body=Block)?
+		(
+			('name' name=String0)?
+			&('availableInSourceCode' availableInSourceCode=BooleanObject)?
+			&('visibility' visibility=Visibility)?
+			&('paramsKind' paramsKind=CollectionKind)?
+			&('static' static=BooleanObject)?
+			&('inheritance' inheritance=Inheritance)?
+			&('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] ( "," thrownExceptions+=[complexType::JClass|EString])* ')' )?
+			&('returnType' returnType=[datatype::DataType|EString])?
+			&('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+			&('params' '[' params+=ParameterVariable ( "," params+=ParameterVariable)* ']' )?
+			&('body' body=Block)?
+		)
 	'}';
 
 DataType_Impl returns datatype::DataType:
 	{datatype::DataType}
 	'DataType'
-	uniqueName=String0;
+	uniqueName=EString;
 
 Expression_Impl returns expressions::Expression:
 	{expressions::Expression}
@@ -451,7 +451,7 @@ LongPrimitiveType returns datatype::LongPrimitiveType:
 	uniqueName=String0;
 
 Int0 returns type::Int:
-	'Int' /* TODO: implement this rule and an appropriate IValueConverter */;
+	INT;
 
 VarDeclaration returns expressions::VarDeclaration:
 	{expressions::VarDeclaration}
@@ -497,7 +497,7 @@ ArithmeticExpression returns expressions::ArithmeticExpression:
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
 		('operator' operator=ArithmeticOperator)?
-		('operands' '{' operands+=Expression ( "," operands+=Expression)* '}' )?
+		('operands' '[' operands+=Expression ( "," operands+=Expression)* ']' )?
 	'}';
 
 StringConcatenation returns expressions::StringConcatenation:
@@ -507,7 +507,7 @@ StringConcatenation returns expressions::StringConcatenation:
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
-		('operands' '{' operands+=Expression ( "," operands+=Expression)* '}' )?
+		('operands' '[' operands+=Expression ( "," operands+=Expression)* ']' )?
 	'}';
 
 BooleanExpression returns expressions::BooleanExpression:
@@ -518,7 +518,7 @@ BooleanExpression returns expressions::BooleanExpression:
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
 		('operator' operator=BooleanOperator)?
-		('operands' '{' operands+=Expression ( "," operands+=Expression)* '}' )?
+		('operands' '[' operands+=Expression ( "," operands+=Expression)* ']' )?
 	'}';
 
 BinaryExpression returns expressions::BinaryExpression:
@@ -529,7 +529,7 @@ BinaryExpression returns expressions::BinaryExpression:
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
 		('operator' operator=BinaryOperator)?
-		('operands' '{' operands+=Expression ( "," operands+=Expression)* '}' )?
+		('operands' '[' operands+=Expression ( "," operands+=Expression)* ']' )?
 	'}';
 
 OperandExpression_Impl returns expressions::OperandExpression:
@@ -539,7 +539,7 @@ OperandExpression_Impl returns expressions::OperandExpression:
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
-		('operands' '{' operands+=Expression ( "," operands+=Expression)* '}' )?
+		('operands' '[' operands+=Expression ( "," operands+=Expression)* ']' )?
 	'}';
 
 Variable_Impl returns variable::Variable:
@@ -551,7 +551,7 @@ Variable_Impl returns variable::Variable:
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('final' final=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 	'}';
 
 ParameterVariable returns variable::ParameterVariable:
@@ -563,7 +563,7 @@ ParameterVariable returns variable::ParameterVariable:
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('final' final=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 	'}';
 
 LocalVariable returns variable::LocalVariable:
@@ -575,7 +575,7 @@ LocalVariable returns variable::LocalVariable:
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('final' final=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 		('initialValue' initialValue=Expression)?
 	'}';
 
@@ -588,7 +588,7 @@ InitializableVariable_Impl returns variable::InitializableVariable:
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('final' final=BooleanObject)?
 		('type' type=[datatype::DataType|EString])?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 		('initialValue' initialValue=Expression)?
 	'}';
 
@@ -610,7 +610,7 @@ Block returns statements::Block:
 	uniqueName=String0
 	'{'
 		('statementsKind' statementsKind=CollectionKind)?
-		('statements' '{' statements+=Statement ( "," statements+=Statement)* '}' )?
+		('statements' '[' statements+=Statement ( "," statements+=Statement)* ']' )?
 	'}';
 
 Statement_Impl returns statements::Statement:
@@ -631,7 +631,7 @@ InstanceCreation returns statements::InstanceCreation:
 		('argsKind' argsKind=CollectionKind)?
 		('type' type=[datatype::ObjectType|EString])?
 		('constructor' constructor=Constructor)?
-		('args' '{' args+=Statement ( "," args+=Statement)* '}' )?
+		('args' '[' args+=Statement ( "," args+=Statement)* ']' )?
 	'}';
 
 SynchronizedBlock returns statements::SynchronizedBlock:
@@ -639,9 +639,17 @@ SynchronizedBlock returns statements::SynchronizedBlock:
 	'SynchronizedBlock'
 	uniqueName=String0
 	'{'
-		('bodyStatements' '{' bodyStatements+=Statement ( "," bodyStatements+=Statement)* '}' )?
+		('bodyStatements' '[' bodyStatements+=Statement ( "," bodyStatements+=Statement)* ']' )?
 		('key' key=Statement)?
 	'}';
+
+ControlledAccessElement returns elements::ControlledAccessElement:
+	{elements::ControlledAccessElement}
+	uniqueName=String0
+	'{'
+		('visibility' visibility=Visibility)?
+	'}';
+	
 
 ThrowStatement returns statements::ThrowStatement:
 	{statements::ThrowStatement}
@@ -709,8 +717,8 @@ Constructor returns method::Constructor:
 		('paramsKind' paramsKind=CollectionKind)?
 		('avaliableInSourceCode' avaliableInSourceCode=BooleanObject)?
 		('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] ( "," thrownExceptions+=[complexType::JClass|EString])* ')' )?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('params' '{' params+=ParameterVariable ( "," params+=ParameterVariable)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('params' '[' params+=ParameterVariable ( "," params+=ParameterVariable)* ']' )?
 		('body' body=Block)?
 	'}';
 
@@ -725,8 +733,8 @@ EnumConstant returns complexType::EnumConstant:
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		('argumentsKind' argumentsKind=CollectionKind)?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('arguments' '{' arguments+=Expression ( "," arguments+=Expression)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('arguments' '[' arguments+=Expression ( "," arguments+=Expression)* ']' )?
 	'}';
 
 AtomicFilter_Impl returns filters::AtomicFilter:
@@ -739,22 +747,22 @@ AtomicFilter_Impl returns filters::AtomicFilter:
 CompositeFilter returns filters::CompositeFilter:
 	'CompositeFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('operator' operator=LogicOperator)?
-		'filters' '{' filters+=Filter ( "," filters+=Filter)* '}' 
+		'filters' '[' filters+=Filter ( "," filters+=Filter)* ']' 
 	'}';
 
 PropertyFilter returns filters::PropertyFilter:
 	'PropertyFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 	'}';
 
 TemplateFilter_Impl returns filters::TemplateFilter:
 	'TemplateFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'targetTemplate' targetTemplate=[elements::Element|EString]
 		'context' context=Context
@@ -763,7 +771,7 @@ TemplateFilter_Impl returns filters::TemplateFilter:
 SameNameFilter returns filters::SameNameFilter:
 	'SameNameFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('ignoreCase' ignoreCase=Boolean)?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		('elements' '(' elements+=[namedElements::NamedElement|EString] ( "," elements+=[namedElements::NamedElement|EString])* ')' )?
@@ -772,19 +780,19 @@ SameNameFilter returns filters::SameNameFilter:
 CountFilter returns filters::CountFilter:
 	'CountFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('min' min=Int0)?
 		('max' max=Int0)?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		('container' container=[elements::Element|EString])?
 		'field' field=[elements::Element|EString]
-		'context' '{' context+=Context ( "," context+=Context)* '}' 
+		'context' '[' context+=Context ( "," context+=Context)* ']' 
 	'}';
 
 RegexMatch returns filters::RegexMatch:
 	'RegexMatch'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('regex' regex=String0)?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 	'}';
@@ -792,7 +800,7 @@ RegexMatch returns filters::RegexMatch:
 ImplicityOperandFilter returns filters::ImplicityOperandFilter:
 	'ImplicityOperandFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'targetTemplate' targetTemplate=[elements::Element|EString]
 		'implicityOperand' implicityOperand=[elements::Element|EString]
@@ -803,7 +811,7 @@ ImplicityOperandFilter returns filters::ImplicityOperandFilter:
 ImplicityContainerFilter returns filters::ImplicityContainerFilter:
 	'ImplicityContainerFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'implicityContainer' implicityContainer=[elements::Element|EString]
 		'implicityField' implicityField=[elements::Element|EString]
@@ -813,7 +821,7 @@ ImplicityContainerFilter returns filters::ImplicityContainerFilter:
 IsKindOfFilter returns filters::IsKindOfFilter:
 	'IsKindOfFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'type' type=[datatype::DataType|EString]
 		'context' context=Context
@@ -822,7 +830,7 @@ IsKindOfFilter returns filters::IsKindOfFilter:
 SuperMethodClosureFilter returns filters::SuperMethodClosureFilter:
 	'SuperMethodClosureFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'superMethod' superMethod=[method::Method|EString]
 		'context' context=Context
@@ -831,7 +839,7 @@ SuperMethodClosureFilter returns filters::SuperMethodClosureFilter:
 IsTypeOfFilter returns filters::IsTypeOfFilter:
 	'IsTypeOfFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'type' type=[datatype::DataType|EString]
 		'context' context=Context
@@ -840,7 +848,7 @@ IsTypeOfFilter returns filters::IsTypeOfFilter:
 ChildClosureComplexTypeFilter returns filters::ChildClosureComplexTypeFilter:
 	'ChildClosureComplexTypeFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'superComplexType' superComplexType=[complexType::ComplexType|EString]
 		'childComplexType' childComplexType=[complexType::ComplexType|EString]
@@ -850,14 +858,14 @@ ChildClosureComplexTypeFilter returns filters::ChildClosureComplexTypeFilter:
 IsStringFilter returns filters::IsStringFilter:
 	'IsStringFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 	'}';
 
 FromClosureFilter returns filters::FromClosureFilter:
 	'FromClosureFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		'from' from=[statements::Statement|EString]
 		('context' context=Context)?
@@ -866,7 +874,7 @@ FromClosureFilter returns filters::FromClosureFilter:
 HasSuperClassFilter returns filters::HasSuperClassFilter:
 	'HasSuperClassFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('includesTarget' includesTarget=Boolean)?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		('superClass' superClass=[complexType::JClass|EString])?
@@ -877,7 +885,7 @@ HasSuperClassFilter returns filters::HasSuperClassFilter:
 BlockLastStatementFilter returns filters::BlockLastStatementFilter:
 	'BlockLastStatementFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		('lastStatement' lastStatement=[statements::Statement|EString])?
 		('context' context=Context)?
@@ -886,14 +894,14 @@ BlockLastStatementFilter returns filters::BlockLastStatementFilter:
 HasSameReferenceFilter returns filters::HasSameReferenceFilter:
 	'HasSameReferenceFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 	'}';
 
 IsEmptyBlockFilter returns filters::IsEmptyBlockFilter:
 	'IsEmptyBlockFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		('allowEmptyStatement' allowEmptyStatement=Boolean)?
 		('allowComments' allowComments=Boolean)?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
@@ -902,7 +910,7 @@ IsEmptyBlockFilter returns filters::IsEmptyBlockFilter:
 ImplicitContentsFilter returns filters::ImplicitContentsFilter:
 	'ImplicitContentsFilter'
 	'{'
-		('negated' negated=Boolean)?
+		negated?= 'not'?
 		'targets' '(' targets+=[elements::Element|EString] ( "," targets+=[elements::Element|EString])* ')' 
 		('implicitField' implicitField=[elements::Element|EString])?
 		('implicitContainer' implicitContainer=[elements::Element|EString])?
@@ -916,7 +924,7 @@ NamedElement_Impl returns namedElements::NamedElement:
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
 	'}';
 
 Package returns namedElements::Package:
@@ -926,8 +934,8 @@ Package returns namedElements::Package:
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
-		('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
-		('declaredTypes' '{' declaredTypes+=TypeDeclaration ( "," declaredTypes+=TypeDeclaration)* '}' )?
+		('annotations' '[' annotations+=Annotation ( "," annotations+=Annotation)* ']' )?
+		('declaredTypes' '[' declaredTypes+=TypeDeclaration ( "," declaredTypes+=TypeDeclaration)* ']' )?
 	'}';
 
 ComplexType_Impl returns complexType::ComplexType:
@@ -937,8 +945,8 @@ ComplexType_Impl returns complexType::ComplexType:
 	'{'
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
 	'}';
 
 AnonymousClass returns complexType::AnonymousClass:
@@ -949,6 +957,6 @@ AnonymousClass returns complexType::AnonymousClass:
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
 		('type' type=[datatype::ObjectType|EString])?
-		('fields' '{' fields+=FieldVariable ( "," fields+=FieldVariable)* '}' )?
-		('methods' '{' methods+=Method ( "," methods+=Method)* '}' )?
+		('fields' '[' fields+=FieldVariable ( "," fields+=FieldVariable)* ']' )?
+		('methods' '[' methods+=Method ( "," methods+=Method)* ']' )?
 	'}';

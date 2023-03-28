@@ -30,16 +30,4 @@ public class TextualValidator extends AbstractTextualValidator {
 //					INVALID_NAME);
 //		}
 //	}
-	public static final String INVALID_NAME = "invalidName";
-	
-	/*
-	@Check
-	public void checkElement(AtomicRule atomicRule) {
-		if (atomicRule.getSubject() == null) {
-			if(atomicRule.getSubject().getUniqueName() == null || atomicRule.getSubject().getUniqueName().isEmpty()) {
-				error("Element name cannot be empty", ccslPackage.Literals.ATOMIC_RULE__SUBJECT);
-			}
-		}
-	
-}*/
 }

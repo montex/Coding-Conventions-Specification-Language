@@ -8,6 +8,7 @@ import ccsl.CompositeRule;
 import ccsl.ccslPackage;
 import ccsl.context.Context;
 import ccsl.context.ContextPackage;
+import ccsl.elements.ControlledAccessElement;
 import ccsl.elements.Element;
 import ccsl.elements.ElementsPackage;
 import ccsl.elements.datatype.ArrayType;
@@ -240,6 +241,9 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 			}
 		else if (epackage == ElementsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case ElementsPackage.CONTROLLED_ACCESS_ELEMENT:
+				sequence_ControlledAccessElement(context, (ControlledAccessElement) semanticObject); 
+				return; 
 			case ElementsPackage.ELEMENT:
 				sequence_Element(context, (Element) semanticObject); 
 				return; 
@@ -433,6 +437,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns AnnotationFieldValue
 	 *     AnnotationFieldValue returns AnnotationFieldValue
 	 *
 	 * Constraint:
@@ -488,10 +493,11 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns Annotation
 	 *     Annotation returns Annotation
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0 valuesKind=CollectionKind? type=[AnnotationType|EString]? (values+=AnnotationFieldValue values+=AnnotationFieldValue*)?)
+	 *     (uniqueName=EString valuesKind=CollectionKind? type=[AnnotationType|EString]? (values+=AnnotationFieldValue values+=AnnotationFieldValue*)?)
 	 */
 	protected void sequence_Annotation(ISerializationContext context, Annotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -501,6 +507,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     ComplexType returns AnonymousClass
+	 *     Element returns AnonymousClass
 	 *     AnonymousClass returns AnonymousClass
 	 *
 	 * Constraint:
@@ -521,6 +528,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns ArithmeticExpression
+	 *     Element returns ArithmeticExpression
 	 *     ArithmeticExpression returns ArithmeticExpression
 	 *
 	 * Constraint:
@@ -535,6 +543,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     DataType returns ArrayType
 	 *     ObjectType returns ArrayType
+	 *     Element returns ArrayType
 	 *     ArrayType returns ArrayType
 	 *
 	 * Constraint:
@@ -548,6 +557,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns AssertStatement
+	 *     Element returns AssertStatement
 	 *     AssertStatement returns AssertStatement
 	 *
 	 * Constraint:
@@ -587,6 +597,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns BinaryExpression
+	 *     Element returns BinaryExpression
 	 *     BinaryExpression returns BinaryExpression
 	 *
 	 * Constraint:
@@ -603,7 +614,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BlockLastStatementFilter returns BlockLastStatementFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* lastStatement=[Statement|EString]? context=Context?)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* lastStatement=[Statement|EString]? context=Context?)
 	 */
 	protected void sequence_BlockLastStatementFilter(ISerializationContext context, BlockLastStatementFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -613,6 +624,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns Block
+	 *     Element returns Block
 	 *     Block returns Block
 	 *
 	 * Constraint:
@@ -626,6 +638,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns BooleanExpression
+	 *     Element returns BooleanExpression
 	 *     BooleanExpression returns BooleanExpression
 	 *
 	 * Constraint:
@@ -639,6 +652,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns BooleanPrimitiveType
+	 *     Element returns BooleanPrimitiveType
 	 *     BooleanPrimitiveType returns BooleanPrimitiveType
 	 *
 	 * Constraint:
@@ -658,6 +672,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns BreakStatement
+	 *     Element returns BreakStatement
 	 *     BreakStatement returns BreakStatement
 	 *
 	 * Constraint:
@@ -677,6 +692,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns BytePrimitiveType
+	 *     Element returns BytePrimitiveType
 	 *     BytePrimitiveType returns BytePrimitiveType
 	 *
 	 * Constraint:
@@ -696,6 +712,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns CastExpression
+	 *     Element returns CastExpression
 	 *     CastExpression returns CastExpression
 	 *
 	 * Constraint:
@@ -709,6 +726,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns CharPrimitiveType
+	 *     Element returns CharPrimitiveType
 	 *     CharPrimitiveType returns CharPrimitiveType
 	 *
 	 * Constraint:
@@ -732,7 +750,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
 	 *         superComplexType=[ComplexType|EString] 
@@ -749,6 +767,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     TypeDeclaration returns ComplexTypeDeclaration
 	 *     ComplexType returns ComplexTypeDeclaration
+	 *     Element returns ComplexTypeDeclaration
 	 *     ComplexTypeDeclaration_Impl returns ComplexTypeDeclaration
 	 *
 	 * Constraint:
@@ -777,6 +796,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     ComplexType returns ComplexType
+	 *     Element returns ComplexType
 	 *     ComplexType_Impl returns ComplexType
 	 *
 	 * Constraint:
@@ -799,7 +819,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     CompositeFilter returns CompositeFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? operator=LogicOperator? filters+=Filter filters+=Filter*)
+	 *     (negated?='not'? operator=LogicOperator? filters+=Filter filters+=Filter*)
 	 */
 	protected void sequence_CompositeFilter(ISerializationContext context, CompositeFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -812,7 +832,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     CompositeRule returns CompositeRule
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? operator=LogicOperator? rules+=Rule rules+=Rule*)
+	 *     (negated?='not'? operator=LogicOperator? rules+=Rule rules+=Rule*)
 	 */
 	protected void sequence_CompositeRule(ISerializationContext context, CompositeRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -823,6 +843,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     TypeDeclaration returns ConstructComplexTypeDeclaration
 	 *     ComplexType returns ConstructComplexTypeDeclaration
+	 *     Element returns ConstructComplexTypeDeclaration
 	 *     ConstructComplexTypeDeclaration_Impl returns ConstructComplexTypeDeclaration
 	 *
 	 * Constraint:
@@ -885,6 +906,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns ContinueStatement
+	 *     Element returns ContinueStatement
 	 *     ContinueStatement returns ContinueStatement
 	 *
 	 * Constraint:
@@ -904,6 +926,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns ControlFlowStatement
+	 *     Element returns ControlFlowStatement
 	 *     ControlFlowStatement returns ControlFlowStatement
 	 *
 	 * Constraint:
@@ -922,12 +945,25 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns ControlledAccessElement
+	 *     ControlledAccessElement returns ControlledAccessElement
+	 *
+	 * Constraint:
+	 *     (uniqueName=String0 visibility=Visibility?)
+	 */
+	protected void sequence_ControlledAccessElement(ISerializationContext context, ControlledAccessElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Filter returns CountFilter
 	 *     CountFilter returns CountFilter
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         min=Int0? 
 	 *         max=Int0? 
 	 *         targets+=[Element|EString] 
@@ -946,10 +982,11 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns DataType
+	 *     Element returns DataType
 	 *     DataType_Impl returns DataType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0
+	 *     uniqueName=EString
 	 */
 	protected void sequence_DataType_Impl(ISerializationContext context, DataType semanticObject) {
 		if (errorAcceptor != null) {
@@ -957,7 +994,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ElementsPackage.Literals.ELEMENT__UNIQUE_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getDataType_ImplAccess().getUniqueNameString0ParserRuleCall_2_0(), semanticObject.getUniqueName());
+		feeder.accept(grammarAccess.getDataType_ImplAccess().getUniqueNameEStringParserRuleCall_2_0(), semanticObject.getUniqueName());
 		feeder.finish();
 	}
 	
@@ -965,6 +1002,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns DoublePrimitiveType
+	 *     Element returns DoublePrimitiveType
 	 *     DoublePrimitiveType returns DoublePrimitiveType
 	 *
 	 * Constraint:
@@ -994,7 +1032,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ElementsPackage.Literals.ELEMENT__UNIQUE_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getElementAccess().getUniqueNameEStringParserRuleCall_2_0(), semanticObject.getUniqueName());
+		feeder.accept(grammarAccess.getElementAccess().getUniqueNameEStringParserRuleCall_0_1_0(), semanticObject.getUniqueName());
 		feeder.finish();
 	}
 	
@@ -1002,6 +1040,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns EmptyStatement
+	 *     Element returns EmptyStatement
 	 *     EmptyStatement returns EmptyStatement
 	 *
 	 * Constraint:
@@ -1040,6 +1079,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns ExpressionStatement
+	 *     Element returns ExpressionStatement
 	 *     ExpressionStatement returns ExpressionStatement
 	 *
 	 * Constraint:
@@ -1053,6 +1093,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns Expression
+	 *     Element returns Expression
 	 *     Expression_Impl returns Expression
 	 *
 	 * Constraint:
@@ -1096,6 +1137,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns FloatPrimitiveType
+	 *     Element returns FloatPrimitiveType
 	 *     FloatPrimitiveType returns FloatPrimitiveType
 	 *
 	 * Constraint:
@@ -1118,7 +1160,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     FromClosureFilter returns FromClosureFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* from=[Statement|EString] context=Context?)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* from=[Statement|EString] context=Context?)
 	 */
 	protected void sequence_FromClosureFilter(ISerializationContext context, FromClosureFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1131,7 +1173,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     HasSameReferenceFilter returns HasSameReferenceFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]*)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]*)
 	 */
 	protected void sequence_HasSameReferenceFilter(ISerializationContext context, HasSameReferenceFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1145,7 +1187,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         includesTarget=Boolean? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
@@ -1166,7 +1208,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
 	 *         implicitField=[Element|EString]? 
@@ -1186,7 +1228,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
 	 *         implicityContainer=[Element|EString] 
@@ -1206,7 +1248,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
 	 *         targetTemplate=[Element|EString] 
@@ -1234,6 +1276,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns ImportableElement
 	 *     ImportableElement returns ImportableElement
 	 *
 	 * Constraint:
@@ -1274,6 +1317,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns InstanceCreation
+	 *     Element returns InstanceCreation
 	 *     InstanceCreation returns InstanceCreation
 	 *
 	 * Constraint:
@@ -1287,6 +1331,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns InstanceofExpression
+	 *     Element returns InstanceofExpression
 	 *     InstanceofExpression returns InstanceofExpression
 	 *
 	 * Constraint:
@@ -1300,6 +1345,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns IntPrimitiveType
+	 *     Element returns IntPrimitiveType
 	 *     IntPrimitiveType returns IntPrimitiveType
 	 *
 	 * Constraint:
@@ -1322,7 +1368,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     IsEmptyBlockFilter returns IsEmptyBlockFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? allowEmptyStatement=Boolean? allowComments=Boolean? targets+=[Element|EString] targets+=[Element|EString]*)
+	 *     (negated?='not'? allowEmptyStatement=Boolean? allowComments=Boolean? targets+=[Element|EString] targets+=[Element|EString]*)
 	 */
 	protected void sequence_IsEmptyBlockFilter(ISerializationContext context, IsEmptyBlockFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1335,7 +1381,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     IsKindOfFilter returns IsKindOfFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* type=[DataType|EString] context=Context)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* type=[DataType|EString] context=Context)
 	 */
 	protected void sequence_IsKindOfFilter(ISerializationContext context, IsKindOfFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1348,7 +1394,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     IsStringFilter returns IsStringFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]*)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]*)
 	 */
 	protected void sequence_IsStringFilter(ISerializationContext context, IsStringFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1361,7 +1407,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     IsTypeOfFilter returns IsTypeOfFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* type=[DataType|EString] context=Context)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* type=[DataType|EString] context=Context)
 	 */
 	protected void sequence_IsTypeOfFilter(ISerializationContext context, IsTypeOfFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1372,6 +1418,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     TypeDeclaration returns JClass
 	 *     ComplexType returns JClass
+	 *     Element returns JClass
 	 *     JClass returns JClass
 	 *
 	 * Constraint:
@@ -1403,6 +1450,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     TypeDeclaration returns JEnum
 	 *     ComplexType returns JEnum
+	 *     Element returns JEnum
 	 *     JEnum returns JEnum
 	 *
 	 * Constraint:
@@ -1434,6 +1482,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     TypeDeclaration returns JInterface
 	 *     ComplexType returns JInterface
+	 *     Element returns JInterface
 	 *     JInterface returns JInterface
 	 *
 	 * Constraint:
@@ -1462,6 +1511,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns LabelStatement
+	 *     Element returns LabelStatement
 	 *     LabelStatement returns LabelStatement
 	 *
 	 * Constraint:
@@ -1496,6 +1546,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns LongPrimitiveType
+	 *     Element returns LongPrimitiveType
 	 *     LongPrimitiveType returns LongPrimitiveType
 	 *
 	 * Constraint:
@@ -1519,17 +1570,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         uniqueName=String0 
-	 *         name=String0? 
-	 *         availableInSourceCode=BooleanObject? 
-	 *         visibility=Visibility? 
-	 *         paramsKind=CollectionKind? 
-	 *         static=BooleanObject? 
-	 *         inheritance=Inheritance? 
-	 *         (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)? 
-	 *         returnType=[DataType|EString]? 
-	 *         (annotations+=Annotation annotations+=Annotation*)? 
-	 *         (params+=ParameterVariable params+=ParameterVariable*)? 
-	 *         body=Block?
+	 *         (
+	 *             (
+	 *                 name=String0 | 
+	 *                 availableInSourceCode=BooleanObject | 
+	 *                 visibility=Visibility | 
+	 *                 paramsKind=CollectionKind | 
+	 *                 static=BooleanObject | 
+	 *                 inheritance=Inheritance | 
+	 *                 returnType=[DataType|EString] | 
+	 *                 body=Block
+	 *             )? 
+	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)? 
+	 *             (annotations+=Annotation annotations+=Annotation*)? 
+	 *             (params+=ParameterVariable params+=ParameterVariable*)?
+	 *         )+
 	 *     )
 	 */
 	protected void sequence_Method(ISerializationContext context, Method semanticObject) {
@@ -1540,6 +1595,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     NamedElement returns NamedElement
+	 *     Element returns NamedElement
 	 *     NamedElement_Impl returns NamedElement
 	 *
 	 * Constraint:
@@ -1554,6 +1610,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     DataType returns ObjectType
 	 *     ObjectType returns ObjectType
+	 *     Element returns ObjectType
 	 *     ObjectType_Impl returns ObjectType
 	 *
 	 * Constraint:
@@ -1573,6 +1630,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns OperandExpression
+	 *     Element returns OperandExpression
 	 *     OperandExpression_Impl returns OperandExpression
 	 *
 	 * Constraint:
@@ -1586,6 +1644,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     NamedElement returns Package
+	 *     Element returns Package
 	 *     Package returns Package
 	 *
 	 * Constraint:
@@ -1626,6 +1685,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     DataType returns ParameterizedType
 	 *     ObjectType returns ParameterizedType
+	 *     Element returns ParameterizedType
 	 *     ParameterizedType returns ParameterizedType
 	 *
 	 * Constraint:
@@ -1639,6 +1699,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns PrimitiveType
+	 *     Element returns PrimitiveType
 	 *     PrimitiveType_Impl returns PrimitiveType
 	 *
 	 * Constraint:
@@ -1661,7 +1722,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     PropertyFilter returns PropertyFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]*)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]*)
 	 */
 	protected void sequence_PropertyFilter(ISerializationContext context, PropertyFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1674,7 +1735,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     RegexMatch returns RegexMatch
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? regex=String0? targets+=[Element|EString] targets+=[Element|EString]*)
+	 *     (negated?='not'? regex=String0? targets+=[Element|EString] targets+=[Element|EString]*)
 	 */
 	protected void sequence_RegexMatch(ISerializationContext context, RegexMatch semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1684,6 +1745,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns ReturnStatement
+	 *     Element returns ReturnStatement
 	 *     ReturnStatement returns ReturnStatement
 	 *
 	 * Constraint:
@@ -1701,7 +1763,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         negated=Boolean? 
+	 *         negated?='not'? 
 	 *         ignoreCase=Boolean? 
 	 *         targets+=[Element|EString] 
 	 *         targets+=[Element|EString]* 
@@ -1716,6 +1778,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns ShortPrimitiveType
+	 *     Element returns ShortPrimitiveType
 	 *     ShortPrimitiveType returns ShortPrimitiveType
 	 *
 	 * Constraint:
@@ -1735,6 +1798,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns Statement
+	 *     Element returns Statement
 	 *     Statement_Impl returns Statement
 	 *
 	 * Constraint:
@@ -1754,6 +1818,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns StringConcatenation
+	 *     Element returns StringConcatenation
 	 *     StringConcatenation returns StringConcatenation
 	 *
 	 * Constraint:
@@ -1770,7 +1835,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     SuperMethodClosureFilter returns SuperMethodClosureFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* superMethod=[Method|EString] context=Context)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* superMethod=[Method|EString] context=Context)
 	 */
 	protected void sequence_SuperMethodClosureFilter(ISerializationContext context, SuperMethodClosureFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1780,6 +1845,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns SynchronizedBlock
+	 *     Element returns SynchronizedBlock
 	 *     SynchronizedBlock returns SynchronizedBlock
 	 *
 	 * Constraint:
@@ -1796,7 +1862,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     TemplateFilter_Impl returns TemplateFilter
 	 *
 	 * Constraint:
-	 *     (negated=Boolean? targets+=[Element|EString] targets+=[Element|EString]* targetTemplate=[Element|EString] context=Context)
+	 *     (negated?='not'? targets+=[Element|EString] targets+=[Element|EString]* targetTemplate=[Element|EString] context=Context)
 	 */
 	protected void sequence_TemplateFilter_Impl(ISerializationContext context, TemplateFilter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1806,6 +1872,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns TernaryExpression
+	 *     Element returns TernaryExpression
 	 *     TernaryExpression returns TernaryExpression
 	 *
 	 * Constraint:
@@ -1819,6 +1886,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Statement returns ThrowStatement
+	 *     Element returns ThrowStatement
 	 *     ThrowStatement returns ThrowStatement
 	 *
 	 * Constraint:
@@ -1832,6 +1900,8 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     TypeDeclaration returns TypeDeclaration
+	 *     NamedElement returns TypeDeclaration
+	 *     Element returns TypeDeclaration
 	 *     TypeDeclaration_Impl returns TypeDeclaration
 	 *
 	 * Constraint:
@@ -1856,6 +1926,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     DataType returns TypeParameter
 	 *     ObjectType returns TypeParameter
+	 *     Element returns TypeParameter
 	 *     TypeParameter returns TypeParameter
 	 *
 	 * Constraint:
@@ -1869,6 +1940,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Expression returns VarDeclaration
+	 *     Element returns VarDeclaration
 	 *     VarDeclaration returns VarDeclaration
 	 *
 	 * Constraint:
@@ -1902,6 +1974,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     DataType returns VoidType
+	 *     Element returns VoidType
 	 *     VoidType returns VoidType
 	 *
 	 * Constraint:
@@ -1922,6 +1995,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Contexts:
 	 *     DataType returns WildCardType
 	 *     ObjectType returns WildCardType
+	 *     Element returns WildCardType
 	 *     WildCardType returns WildCardType
 	 *
 	 * Constraint:
