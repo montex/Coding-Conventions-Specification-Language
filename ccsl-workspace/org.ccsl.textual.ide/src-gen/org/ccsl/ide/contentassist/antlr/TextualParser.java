@@ -241,6 +241,12 @@ public class TextualParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMethodAccess().getGroup_4_9(), "rule__Method__Group_4_9__0");
 			builder.put(grammarAccess.getMethodAccess().getGroup_4_9_3(), "rule__Method__Group_4_9_3__0");
 			builder.put(grammarAccess.getMethodAccess().getGroup_4_10(), "rule__Method__Group_4_10__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup(), "rule__SimpleMethod__Group__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup_4_0(), "rule__SimpleMethod__Group_4_0__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup_4_1(), "rule__SimpleMethod__Group_4_1__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup_4_2(), "rule__SimpleMethod__Group_4_2__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup_4_2_3(), "rule__SimpleMethod__Group_4_2_3__0");
+			builder.put(grammarAccess.getSimpleMethodAccess().getGroup_4_3(), "rule__SimpleMethod__Group_4_3__0");
 			builder.put(grammarAccess.getDataType_ImplAccess().getGroup(), "rule__DataType_Impl__Group__0");
 			builder.put(grammarAccess.getExpression_ImplAccess().getGroup(), "rule__Expression_Impl__Group__0");
 			builder.put(grammarAccess.getPrimitiveType_ImplAccess().getGroup(), "rule__PrimitiveType_Impl__Group__0");
@@ -669,6 +675,12 @@ public class TextualParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMethodAccess().getParamsAssignment_4_9_2(), "rule__Method__ParamsAssignment_4_9_2");
 			builder.put(grammarAccess.getMethodAccess().getParamsAssignment_4_9_3_1(), "rule__Method__ParamsAssignment_4_9_3_1");
 			builder.put(grammarAccess.getMethodAccess().getBodyAssignment_4_10_1(), "rule__Method__BodyAssignment_4_10_1");
+			builder.put(grammarAccess.getSimpleMethodAccess().getUniqueNameAssignment_2(), "rule__SimpleMethod__UniqueNameAssignment_2");
+			builder.put(grammarAccess.getSimpleMethodAccess().getVisibilityAssignment_4_0_1(), "rule__SimpleMethod__VisibilityAssignment_4_0_1");
+			builder.put(grammarAccess.getSimpleMethodAccess().getParamsKindAssignment_4_1_1(), "rule__SimpleMethod__ParamsKindAssignment_4_1_1");
+			builder.put(grammarAccess.getSimpleMethodAccess().getParamsAssignment_4_2_2(), "rule__SimpleMethod__ParamsAssignment_4_2_2");
+			builder.put(grammarAccess.getSimpleMethodAccess().getParamsAssignment_4_2_3_1(), "rule__SimpleMethod__ParamsAssignment_4_2_3_1");
+			builder.put(grammarAccess.getSimpleMethodAccess().getBodyAssignment_4_3_1(), "rule__SimpleMethod__BodyAssignment_4_3_1");
 			builder.put(grammarAccess.getDataType_ImplAccess().getUniqueNameAssignment_2(), "rule__DataType_Impl__UniqueNameAssignment_2");
 			builder.put(grammarAccess.getExpression_ImplAccess().getUniqueNameAssignment_2(), "rule__Expression_Impl__UniqueNameAssignment_2");
 			builder.put(grammarAccess.getPrimitiveType_ImplAccess().getUniqueNameAssignment_2(), "rule__PrimitiveType_Impl__UniqueNameAssignment_2");
@@ -947,6 +959,7 @@ public class TextualParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAnonymousClassAccess().getMethodsAssignment_8_2(), "rule__AnonymousClass__MethodsAssignment_8_2");
 			builder.put(grammarAccess.getAnonymousClassAccess().getMethodsAssignment_8_3_1(), "rule__AnonymousClass__MethodsAssignment_8_3_1");
 			builder.put(grammarAccess.getMethodAccess().getUnorderedGroup_4(), "rule__Method__UnorderedGroup_4");
+			builder.put(grammarAccess.getSimpleMethodAccess().getUnorderedGroup_4(), "rule__SimpleMethod__UnorderedGroup_4");
 		}
 	}
 	

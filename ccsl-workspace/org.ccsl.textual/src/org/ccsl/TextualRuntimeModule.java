@@ -4,7 +4,9 @@
 package org.ccsl;
 
 import org.ccsl.QualifiedNameProvider.QualifiedNameProvider;
+import org.ccsl.formatting2.TextualFormatter;
 import org.ccsl.scoping.TextualScopeProvider;
+import org.eclipse.xtext.formatting2.IFormatter2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.scoping.IScopeProvider;
 
@@ -21,6 +23,10 @@ public class TextualRuntimeModule extends AbstractTextualRuntimeModule  {
 	 
 	 public Class<? extends IScopeProvider> bindIScopeProvider() {
 	        return TextualScopeProvider.class;
+	    }
+	 
+	 public Class<? extends IFormatter2> bindIFormatter2() {
+	        return TextualFormatter.class;
 	    }
 	
 }

@@ -684,16 +684,16 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cDataTypeParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cImportableElementParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cExpressionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cAnnotationParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cSimpleMethodParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final RuleCall cAnnotationFieldValueParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		
 		//Element elements::Element:
 		//	{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType
-		//	| ImportableElement | Expression | Annotation /* | SimpleMethod*/ | AnnotationFieldValue;
+		//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType |
-		//ImportableElement | Expression | Annotation /* | SimpleMethod*/ | AnnotationFieldValue
+		//ImportableElement | Expression | SimpleMethod | AnnotationFieldValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{elements::Element} uniqueName=EString
@@ -729,8 +729,8 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Expression
 		public RuleCall getExpressionParserRuleCall_7() { return cExpressionParserRuleCall_7; }
 		
-		//Annotation
-		public RuleCall getAnnotationParserRuleCall_8() { return cAnnotationParserRuleCall_8; }
+		//SimpleMethod
+		public RuleCall getSimpleMethodParserRuleCall_8() { return cSimpleMethodParserRuleCall_8; }
 		
 		//AnnotationFieldValue
 		public RuleCall getAnnotationFieldValueParserRuleCall_9() { return cAnnotationFieldValueParserRuleCall_9; }
@@ -844,14 +844,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	public class String0Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.String0");
-		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//String0 type::String:
-		//	STRING;
+		//	ID;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall() { return cSTRINGTerminalRuleCall; }
+		//ID
+		public RuleCall getIDTerminalRuleCall() { return cIDTerminalRuleCall; }
 	}
 	public class AnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.Annotation");
@@ -885,13 +885,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Annotation annotation::Annotation:
 		//	{annotation::Annotation}
 		//	'Annotation'
-		//	uniqueName=EString
+		//	uniqueName=EString?
 		//	'{' ('valuesKind' valuesKind=CollectionKind)? ('type' type=[complexType::AnnotationType|EString])? ('values' '['
 		//	values+=AnnotationFieldValue ("," values+=AnnotationFieldValue)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{annotation::Annotation} 'Annotation' uniqueName=EString '{' ('valuesKind' valuesKind=CollectionKind)? ('type'
+		//{annotation::Annotation} 'Annotation' uniqueName=EString? '{' ('valuesKind' valuesKind=CollectionKind)? ('type'
 		//type=[complexType::AnnotationType|EString])? ('values' '[' values+=AnnotationFieldValue (","
 		//values+=AnnotationFieldValue)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -902,7 +902,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Annotation'
 		public Keyword getAnnotationKeyword_1() { return cAnnotationKeyword_1; }
 		
-		//uniqueName=EString
+		//uniqueName=EString?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//EString
@@ -1044,7 +1044,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AnnotationType complexType::AnnotationType:
 		//	{complexType::AnnotationType}
 		//	'AnnotationType'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('annotations' '['
 		//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('imports' '[' imports+=ImportStatement (","
@@ -1053,7 +1053,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::AnnotationType} 'AnnotationType' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::AnnotationType} 'AnnotationType' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)?
 		//('inheritance' inheritance=Inheritance)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)*
 		//']')? ('imports' '[' imports+=ImportStatement ("," imports+=ImportStatement)* ']')? ('nestedTypes' '['
@@ -1067,7 +1067,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'AnnotationType'
 		public Keyword getAnnotationTypeKeyword_1() { return cAnnotationTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -1281,12 +1281,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AnnotationFieldValue annotation::AnnotationFieldValue:
 		//	{annotation::AnnotationFieldValue}
 		//	'AnnotationFieldValue'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('field' field=[complexType::AnnotationField|EString])? ('value' value=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{annotation::AnnotationFieldValue} 'AnnotationFieldValue' uniqueName=String0 '{' ('field'
+		//{annotation::AnnotationFieldValue} 'AnnotationFieldValue' uniqueName=String0? '{' ('field'
 		//field=[complexType::AnnotationField|EString])? ('value' value=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -1296,7 +1296,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'AnnotationFieldValue'
 		public Keyword getAnnotationFieldValueKeyword_1() { return cAnnotationFieldValueKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -1366,12 +1366,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ImportStatement import0::ImportStatement:
 		//	{import0::ImportStatement} static?='static'?
 		//	'ImportStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('importedElement' importedElement=[import0::ImportableElement|EString])?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{import0::ImportStatement} static?='static'? 'ImportStatement' uniqueName=String0 '{' ('importedElement'
+		//{import0::ImportStatement} static?='static'? 'ImportStatement' uniqueName=String0? '{' ('importedElement'
 		//importedElement=[import0::ImportableElement|EString])? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -1387,7 +1387,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ImportStatement'
 		public Keyword getImportStatementKeyword_2() { return cImportStatementKeyword_2; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_3() { return cUniqueNameAssignment_3; }
 		
 		//String0
@@ -1477,7 +1477,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//TypeDeclaration_Impl complexType::TypeDeclaration:
 		//	{complexType::TypeDeclaration}
 		//	'TypeDeclaration'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('annotations' '['
 		//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('imports' '[' imports+=ImportStatement (","
@@ -1486,7 +1486,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::TypeDeclaration} 'TypeDeclaration' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::TypeDeclaration} 'TypeDeclaration' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)?
 		//('inheritance' inheritance=Inheritance)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)*
 		//']')? ('imports' '[' imports+=ImportStatement ("," imports+=ImportStatement)* ']')? ('nestedTypes' '['
@@ -1499,7 +1499,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'TypeDeclaration'
 		public Keyword getTypeDeclarationKeyword_1() { return cTypeDeclarationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -1701,14 +1701,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AnnotationField complexType::AnnotationField:
 		//	{complexType::AnnotationField}
 		//	'AnnotationField'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('type'
 		//	type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//	('default' default=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::AnnotationField} 'AnnotationField' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::AnnotationField} 'AnnotationField' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '['
 		//annotations+=Annotation ("," annotations+=Annotation)* ']')? ('default' default=Expression)? '}'
 		public Group getGroup() { return cGroup; }
@@ -1719,7 +1719,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'AnnotationField'
 		public Keyword getAnnotationFieldKeyword_1() { return cAnnotationFieldKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -1823,10 +1823,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ImportableElement import0::ImportableElement:
 		//	{import0::ImportableElement}
 		//	'ImportableElement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{import0::ImportableElement} 'ImportableElement' uniqueName=String0
+		//{import0::ImportableElement} 'ImportableElement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{import0::ImportableElement}
@@ -1835,7 +1835,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ImportableElement'
 		public Keyword getImportableElementKeyword_1() { return cImportableElementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -1963,7 +1963,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//JInterface complexType::JInterface:
 		//	{complexType::JInterface}
 		//	'JInterface'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 		//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -1975,7 +1975,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::JInterface} 'JInterface' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::JInterface} 'JInterface' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)?
 		//('inheritance' inheritance=Inheritance)? ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind'
 		//methodsKind=CollectionKind)? ('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] (","
@@ -1992,7 +1992,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'JInterface'
 		public Keyword getJInterfaceKeyword_1() { return cJInterfaceKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -2393,7 +2393,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//JClass complexType::JClass:
 		//	{complexType::JClass}
 		//	'JClass'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 		//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -2406,7 +2406,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::JClass} 'JClass' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::JClass} 'JClass' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)?
 		//('inheritance' inheritance=Inheritance)? ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind'
 		//methodsKind=CollectionKind)? ('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] (","
@@ -2424,7 +2424,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'JClass'
 		public Keyword getJClassKeyword_1() { return cJClassKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -2875,7 +2875,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//JEnum complexType::JEnum:
 		//	{complexType::JEnum}
 		//	'JEnum'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 		//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -2889,7 +2889,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::JEnum} 'JEnum' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::JEnum} 'JEnum' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)?
 		//('inheritance' inheritance=Inheritance)? ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind'
 		//methodsKind=CollectionKind)? ('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString] (","
@@ -2907,7 +2907,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'JEnum'
 		public Keyword getJEnumKeyword_1() { return cJEnumKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -3353,7 +3353,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ComplexTypeDeclaration_Impl complexType::ComplexTypeDeclaration:
 		//	{complexType::ComplexTypeDeclaration}
 		//	'ComplexTypeDeclaration'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 		//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -3365,7 +3365,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::ComplexTypeDeclaration} 'ComplexTypeDeclaration' uniqueName=String0 '{' ('name' name=String0)?
+		//{complexType::ComplexTypeDeclaration} 'ComplexTypeDeclaration' uniqueName=String0? '{' ('name' name=String0)?
 		//('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)? ('static'
 		//static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind' fieldsKind=CollectionKind)?
 		//('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString]
@@ -3382,7 +3382,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ComplexTypeDeclaration'
 		public Keyword getComplexTypeDeclarationKeyword_1() { return cComplexTypeDeclarationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -3778,7 +3778,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ConstructComplexTypeDeclaration_Impl complexType::ConstructComplexTypeDeclaration:
 		//	{complexType::ConstructComplexTypeDeclaration}
 		//	'ConstructComplexTypeDeclaration'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 		//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 		//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -3791,7 +3791,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::ConstructComplexTypeDeclaration} 'ConstructComplexTypeDeclaration' uniqueName=String0 '{' ('name'
+		//{complexType::ConstructComplexTypeDeclaration} 'ConstructComplexTypeDeclaration' uniqueName=String0? '{' ('name'
 		//name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility' visibility=Visibility)?
 		//('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind' fieldsKind=CollectionKind)?
 		//('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '(' superInterfaces+=[complexType::JInterface|EString]
@@ -3808,7 +3808,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ConstructComplexTypeDeclaration'
 		public Keyword getConstructComplexTypeDeclarationKeyword_1() { return cConstructComplexTypeDeclarationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4177,7 +4177,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//FieldVariable variable::FieldVariable:
 		//	{variable::FieldVariable}
 		//	'FieldVariable'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 		//	final=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)? ('volatile'
 		//	volatile=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
@@ -4185,7 +4185,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{variable::FieldVariable} 'FieldVariable' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{variable::FieldVariable} 'FieldVariable' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('visibility' visibility=Visibility)? ('static'
 		//static=BooleanObject)? ('volatile' volatile=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations'
 		//'[' annotations+=Annotation ("," annotations+=Annotation)* ']')? ('initialValue' initialValue=Expression)? '}'
@@ -4197,7 +4197,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'FieldVariable'
 		public Keyword getFieldVariableKeyword_1() { return cFieldVariableKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4417,7 +4417,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Method method::Method:
 		//	{method::Method}
 		//	'Method'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' (('name' name=String0)?
 		//	& ('availableInSourceCode' availableInSourceCode=BooleanObject)?
 		//	& ('visibility' visibility=Visibility)?
@@ -4433,7 +4433,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{method::Method} 'Method' uniqueName=String0 '{' (('name' name=String0)? & ('availableInSourceCode'
+		//{method::Method} 'Method' uniqueName=String0? '{' (('name' name=String0)? & ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? & ('visibility' visibility=Visibility)? & ('paramsKind'
 		//paramsKind=CollectionKind)? & ('static' static=BooleanObject)? & ('inheritance' inheritance=Inheritance)? &
 		//('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] (","
@@ -4448,7 +4448,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Method'
 		public Keyword getMethodKeyword_1() { return cMethodKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4664,6 +4664,143 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
+	public class SimpleMethodElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.SimpleMethod");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cSimpleMethodAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSimpleMethodKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cUniqueNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUniqueNameString0ParserRuleCall_2_0 = (RuleCall)cUniqueNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final UnorderedGroup cUnorderedGroup_4 = (UnorderedGroup)cGroup.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cUnorderedGroup_4.eContents().get(0);
+		private final Keyword cVisibilityKeyword_4_0_0 = (Keyword)cGroup_4_0.eContents().get(0);
+		private final Assignment cVisibilityAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
+		private final RuleCall cVisibilityVisibilityEnumRuleCall_4_0_1_0 = (RuleCall)cVisibilityAssignment_4_0_1.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cUnorderedGroup_4.eContents().get(1);
+		private final Keyword cParamsKindKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Assignment cParamsKindAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
+		private final RuleCall cParamsKindCollectionKindEnumRuleCall_4_1_1_0 = (RuleCall)cParamsKindAssignment_4_1_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cUnorderedGroup_4.eContents().get(2);
+		private final Keyword cParamsKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_4_2_1 = (Keyword)cGroup_4_2.eContents().get(1);
+		private final Assignment cParamsAssignment_4_2_2 = (Assignment)cGroup_4_2.eContents().get(2);
+		private final RuleCall cParamsParameterVariableParserRuleCall_4_2_2_0 = (RuleCall)cParamsAssignment_4_2_2.eContents().get(0);
+		private final Group cGroup_4_2_3 = (Group)cGroup_4_2.eContents().get(3);
+		private final Keyword cCommaKeyword_4_2_3_0 = (Keyword)cGroup_4_2_3.eContents().get(0);
+		private final Assignment cParamsAssignment_4_2_3_1 = (Assignment)cGroup_4_2_3.eContents().get(1);
+		private final RuleCall cParamsParameterVariableParserRuleCall_4_2_3_1_0 = (RuleCall)cParamsAssignment_4_2_3_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4_2_4 = (Keyword)cGroup_4_2.eContents().get(4);
+		private final Group cGroup_4_3 = (Group)cUnorderedGroup_4.eContents().get(3);
+		private final Keyword cBodyKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
+		private final Assignment cBodyAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
+		private final RuleCall cBodyBlockParserRuleCall_4_3_1_0 = (RuleCall)cBodyAssignment_4_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		///*SimpleMethod added manually */ SimpleMethod method::SimpleMethod:
+		//	{method::SimpleMethod}
+		//	'SimpleMethod'
+		//	uniqueName=String0?
+		//	'{' (('visibility' visibility=Visibility)?
+		//	& ('paramsKind' paramsKind=CollectionKind)?
+		//	& ('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')?
+		//	& ('body' body=Block)?)
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{method::SimpleMethod} 'SimpleMethod' uniqueName=String0? '{' (('visibility' visibility=Visibility)? & ('paramsKind'
+		//paramsKind=CollectionKind)? & ('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')? & ('body'
+		//body=Block)?) '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{method::SimpleMethod}
+		public Action getSimpleMethodAction_0() { return cSimpleMethodAction_0; }
+		
+		//'SimpleMethod'
+		public Keyword getSimpleMethodKeyword_1() { return cSimpleMethodKeyword_1; }
+		
+		//uniqueName=String0?
+		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
+		
+		//String0
+		public RuleCall getUniqueNameString0ParserRuleCall_2_0() { return cUniqueNameString0ParserRuleCall_2_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//(('visibility' visibility=Visibility)? & ('paramsKind' paramsKind=CollectionKind)? & ('params' '['
+		//params+=ParameterVariable ("," params+=ParameterVariable)* ']')? & ('body' body=Block)?)
+		public UnorderedGroup getUnorderedGroup_4() { return cUnorderedGroup_4; }
+		
+		//('visibility' visibility=Visibility)?
+		public Group getGroup_4_0() { return cGroup_4_0; }
+		
+		//'visibility'
+		public Keyword getVisibilityKeyword_4_0_0() { return cVisibilityKeyword_4_0_0; }
+		
+		//visibility=Visibility
+		public Assignment getVisibilityAssignment_4_0_1() { return cVisibilityAssignment_4_0_1; }
+		
+		//Visibility
+		public RuleCall getVisibilityVisibilityEnumRuleCall_4_0_1_0() { return cVisibilityVisibilityEnumRuleCall_4_0_1_0; }
+		
+		//('paramsKind' paramsKind=CollectionKind)?
+		public Group getGroup_4_1() { return cGroup_4_1; }
+		
+		//'paramsKind'
+		public Keyword getParamsKindKeyword_4_1_0() { return cParamsKindKeyword_4_1_0; }
+		
+		//paramsKind=CollectionKind
+		public Assignment getParamsKindAssignment_4_1_1() { return cParamsKindAssignment_4_1_1; }
+		
+		//CollectionKind
+		public RuleCall getParamsKindCollectionKindEnumRuleCall_4_1_1_0() { return cParamsKindCollectionKindEnumRuleCall_4_1_1_0; }
+		
+		//('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')?
+		public Group getGroup_4_2() { return cGroup_4_2; }
+		
+		//'params'
+		public Keyword getParamsKeyword_4_2_0() { return cParamsKeyword_4_2_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_4_2_1() { return cLeftSquareBracketKeyword_4_2_1; }
+		
+		//params+=ParameterVariable
+		public Assignment getParamsAssignment_4_2_2() { return cParamsAssignment_4_2_2; }
+		
+		//ParameterVariable
+		public RuleCall getParamsParameterVariableParserRuleCall_4_2_2_0() { return cParamsParameterVariableParserRuleCall_4_2_2_0; }
+		
+		//("," params+=ParameterVariable)*
+		public Group getGroup_4_2_3() { return cGroup_4_2_3; }
+		
+		//","
+		public Keyword getCommaKeyword_4_2_3_0() { return cCommaKeyword_4_2_3_0; }
+		
+		//params+=ParameterVariable
+		public Assignment getParamsAssignment_4_2_3_1() { return cParamsAssignment_4_2_3_1; }
+		
+		//ParameterVariable
+		public RuleCall getParamsParameterVariableParserRuleCall_4_2_3_1_0() { return cParamsParameterVariableParserRuleCall_4_2_3_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_4_2_4() { return cRightSquareBracketKeyword_4_2_4; }
+		
+		//('body' body=Block)?
+		public Group getGroup_4_3() { return cGroup_4_3; }
+		
+		//'body'
+		public Keyword getBodyKeyword_4_3_0() { return cBodyKeyword_4_3_0; }
+		
+		//body=Block
+		public Assignment getBodyAssignment_4_3_1() { return cBodyAssignment_4_3_1; }
+		
+		//Block
+		public RuleCall getBodyBlockParserRuleCall_4_3_1_0() { return cBodyBlockParserRuleCall_4_3_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
 	public class DataType_ImplElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.DataType_Impl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -4675,10 +4812,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//DataType_Impl datatype::DataType:
 		//	{datatype::DataType}
 		//	'DataType'
-		//	uniqueName=EString;
+		//	uniqueName=EString?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::DataType} 'DataType' uniqueName=EString
+		//{datatype::DataType} 'DataType' uniqueName=EString?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::DataType}
@@ -4687,7 +4824,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'DataType'
 		public Keyword getDataTypeKeyword_1() { return cDataTypeKeyword_1; }
 		
-		//uniqueName=EString
+		//uniqueName=EString?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//EString
@@ -4704,10 +4841,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Expression_Impl expressions::Expression:
 		//	{expressions::Expression}
 		//	'Expression'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::Expression} 'Expression' uniqueName=String0
+		//{expressions::Expression} 'Expression' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{expressions::Expression}
@@ -4716,7 +4853,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Expression'
 		public Keyword getExpressionKeyword_1() { return cExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4733,10 +4870,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//PrimitiveType_Impl datatype::PrimitiveType:
 		//	{datatype::PrimitiveType}
 		//	'PrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::PrimitiveType} 'PrimitiveType' uniqueName=String0
+		//{datatype::PrimitiveType} 'PrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::PrimitiveType}
@@ -4745,7 +4882,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'PrimitiveType'
 		public Keyword getPrimitiveTypeKeyword_1() { return cPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4762,10 +4899,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//BooleanPrimitiveType datatype::BooleanPrimitiveType:
 		//	{datatype::BooleanPrimitiveType}
 		//	'BooleanPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::BooleanPrimitiveType} 'BooleanPrimitiveType' uniqueName=String0
+		//{datatype::BooleanPrimitiveType} 'BooleanPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::BooleanPrimitiveType}
@@ -4774,7 +4911,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'BooleanPrimitiveType'
 		public Keyword getBooleanPrimitiveTypeKeyword_1() { return cBooleanPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4791,10 +4928,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ShortPrimitiveType datatype::ShortPrimitiveType:
 		//	{datatype::ShortPrimitiveType}
 		//	'ShortPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::ShortPrimitiveType} 'ShortPrimitiveType' uniqueName=String0
+		//{datatype::ShortPrimitiveType} 'ShortPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::ShortPrimitiveType}
@@ -4803,7 +4940,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ShortPrimitiveType'
 		public Keyword getShortPrimitiveTypeKeyword_1() { return cShortPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4820,10 +4957,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ObjectType_Impl datatype::ObjectType:
 		//	{datatype::ObjectType}
 		//	'ObjectType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::ObjectType} 'ObjectType' uniqueName=String0
+		//{datatype::ObjectType} 'ObjectType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::ObjectType}
@@ -4832,7 +4969,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ObjectType'
 		public Keyword getObjectTypeKeyword_1() { return cObjectTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4868,13 +5005,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ParameterizedType datatype::ParameterizedType:
 		//	{datatype::ParameterizedType}
 		//	'ParameterizedType'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('typeArguments' '(' typeArguments+=[datatype::ObjectType|EString] (","
 		//	typeArguments+=[datatype::ObjectType|EString])* ')')? ('type' type=[complexType::TypeDeclaration|EString])?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::ParameterizedType} 'ParameterizedType' uniqueName=String0 '{' ('typeArguments' '('
+		//{datatype::ParameterizedType} 'ParameterizedType' uniqueName=String0? '{' ('typeArguments' '('
 		//typeArguments+=[datatype::ObjectType|EString] ("," typeArguments+=[datatype::ObjectType|EString])* ')')? ('type'
 		//type=[complexType::TypeDeclaration|EString])? '}'
 		public Group getGroup() { return cGroup; }
@@ -4885,7 +5022,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ParameterizedType'
 		public Keyword getParameterizedTypeKeyword_1() { return cParameterizedTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -4960,10 +5097,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//IntPrimitiveType datatype::IntPrimitiveType:
 		//	{datatype::IntPrimitiveType}
 		//	'IntPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::IntPrimitiveType} 'IntPrimitiveType' uniqueName=String0
+		//{datatype::IntPrimitiveType} 'IntPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::IntPrimitiveType}
@@ -4972,7 +5109,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'IntPrimitiveType'
 		public Keyword getIntPrimitiveTypeKeyword_1() { return cIntPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5000,12 +5137,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ArrayType datatype::ArrayType:
 		//	{datatype::ArrayType}
 		//	'ArrayType'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('dimensions' dimensions=Int0)? ('type' type=[datatype::DataType|EString])?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::ArrayType} 'ArrayType' uniqueName=String0 '{' ('dimensions' dimensions=Int0)? ('type'
+		//{datatype::ArrayType} 'ArrayType' uniqueName=String0? '{' ('dimensions' dimensions=Int0)? ('type'
 		//type=[datatype::DataType|EString])? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -5015,7 +5152,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ArrayType'
 		public Keyword getArrayTypeKeyword_1() { return cArrayTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5065,10 +5202,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//VoidType datatype::VoidType:
 		//	{datatype::VoidType}
 		//	'VoidType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::VoidType} 'VoidType' uniqueName=String0
+		//{datatype::VoidType} 'VoidType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::VoidType}
@@ -5077,7 +5214,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'VoidType'
 		public Keyword getVoidTypeKeyword_1() { return cVoidTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5112,14 +5249,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//TypeParameter datatype::TypeParameter:
 		//	{datatype::TypeParameter}
 		//	'TypeParameter'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('boundsKind' boundsKind=CollectionKind)? ('bounds' '(' bounds+=[datatype::ObjectType|EString] (","
 		//	bounds+=[datatype::ObjectType|EString])* ')')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::TypeParameter} 'TypeParameter' uniqueName=String0 '{' ('boundsKind' boundsKind=CollectionKind)? ('bounds' '('
-		//bounds+=[datatype::ObjectType|EString] ("," bounds+=[datatype::ObjectType|EString])* ')')? '}'
+		//{datatype::TypeParameter} 'TypeParameter' uniqueName=String0? '{' ('boundsKind' boundsKind=CollectionKind)? ('bounds'
+		//'(' bounds+=[datatype::ObjectType|EString] ("," bounds+=[datatype::ObjectType|EString])* ')')? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::TypeParameter}
@@ -5128,7 +5265,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'TypeParameter'
 		public Keyword getTypeParameterKeyword_1() { return cTypeParameterKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5206,12 +5343,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//WildCardType datatype::WildCardType:
 		//	{datatype::WildCardType}
 		//	'WildCardType'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('bound' bound=[datatype::ObjectType|EString])?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::WildCardType} 'WildCardType' uniqueName=String0 '{' ('bound' bound=[datatype::ObjectType|EString])? '}'
+		//{datatype::WildCardType} 'WildCardType' uniqueName=String0? '{' ('bound' bound=[datatype::ObjectType|EString])? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::WildCardType}
@@ -5220,7 +5357,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'WildCardType'
 		public Keyword getWildCardTypeKeyword_1() { return cWildCardTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5258,10 +5395,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//BytePrimitiveType datatype::BytePrimitiveType:
 		//	{datatype::BytePrimitiveType}
 		//	'BytePrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::BytePrimitiveType} 'BytePrimitiveType' uniqueName=String0
+		//{datatype::BytePrimitiveType} 'BytePrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::BytePrimitiveType}
@@ -5270,7 +5407,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'BytePrimitiveType'
 		public Keyword getBytePrimitiveTypeKeyword_1() { return cBytePrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5287,10 +5424,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//CharPrimitiveType datatype::CharPrimitiveType:
 		//	{datatype::CharPrimitiveType}
 		//	'CharPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::CharPrimitiveType} 'CharPrimitiveType' uniqueName=String0
+		//{datatype::CharPrimitiveType} 'CharPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::CharPrimitiveType}
@@ -5299,7 +5436,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'CharPrimitiveType'
 		public Keyword getCharPrimitiveTypeKeyword_1() { return cCharPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5316,10 +5453,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//DoublePrimitiveType datatype::DoublePrimitiveType:
 		//	{datatype::DoublePrimitiveType}
 		//	'DoublePrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::DoublePrimitiveType} 'DoublePrimitiveType' uniqueName=String0
+		//{datatype::DoublePrimitiveType} 'DoublePrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::DoublePrimitiveType}
@@ -5328,7 +5465,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'DoublePrimitiveType'
 		public Keyword getDoublePrimitiveTypeKeyword_1() { return cDoublePrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5345,10 +5482,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//FloatPrimitiveType datatype::FloatPrimitiveType:
 		//	{datatype::FloatPrimitiveType}
 		//	'FloatPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::FloatPrimitiveType} 'FloatPrimitiveType' uniqueName=String0
+		//{datatype::FloatPrimitiveType} 'FloatPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::FloatPrimitiveType}
@@ -5357,7 +5494,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'FloatPrimitiveType'
 		public Keyword getFloatPrimitiveTypeKeyword_1() { return cFloatPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5374,10 +5511,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//LongPrimitiveType datatype::LongPrimitiveType:
 		//	{datatype::LongPrimitiveType}
 		//	'LongPrimitiveType'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{datatype::LongPrimitiveType} 'LongPrimitiveType' uniqueName=String0
+		//{datatype::LongPrimitiveType} 'LongPrimitiveType' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{datatype::LongPrimitiveType}
@@ -5386,7 +5523,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'LongPrimitiveType'
 		public Keyword getLongPrimitiveTypeKeyword_1() { return cLongPrimitiveTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5420,12 +5557,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//VarDeclaration expressions::VarDeclaration:
 		//	{expressions::VarDeclaration}
 		//	'VarDeclaration'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('variable' variable=Variable)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::VarDeclaration} 'VarDeclaration' uniqueName=String0 '{' ('variable' variable=Variable)? '}'
+		//{expressions::VarDeclaration} 'VarDeclaration' uniqueName=String0? '{' ('variable' variable=Variable)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{expressions::VarDeclaration}
@@ -5434,7 +5571,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'VarDeclaration'
 		public Keyword getVarDeclarationKeyword_1() { return cVarDeclarationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5480,12 +5617,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//CastExpression expressions::CastExpression:
 		//	{expressions::CastExpression}
 		//	'CastExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('type' type=[datatype::DataType|EString])? ('expression' expression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::CastExpression} 'CastExpression' uniqueName=String0 '{' ('type' type=[datatype::DataType|EString])?
+		//{expressions::CastExpression} 'CastExpression' uniqueName=String0? '{' ('type' type=[datatype::DataType|EString])?
 		//('expression' expression=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -5495,7 +5632,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'CastExpression'
 		public Keyword getCastExpressionKeyword_1() { return cCastExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5559,13 +5696,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//TernaryExpression expressions::TernaryExpression:
 		//	{expressions::TernaryExpression}
 		//	'TernaryExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('condition' condition=Expression)? ('elseExpression' elseExpression=Expression)? ('thenExpression'
 		//	thenExpression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::TernaryExpression} 'TernaryExpression' uniqueName=String0 '{' ('condition' condition=Expression)?
+		//{expressions::TernaryExpression} 'TernaryExpression' uniqueName=String0? '{' ('condition' condition=Expression)?
 		//('elseExpression' elseExpression=Expression)? ('thenExpression' thenExpression=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -5575,7 +5712,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'TernaryExpression'
 		public Keyword getTernaryExpressionKeyword_1() { return cTernaryExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5645,12 +5782,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//InstanceofExpression expressions::InstanceofExpression:
 		//	{expressions::InstanceofExpression}
 		//	'InstanceofExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('type' type=[datatype::ObjectType|EString])? ('objectExpression' objectExpression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::InstanceofExpression} 'InstanceofExpression' uniqueName=String0 '{' ('type'
+		//{expressions::InstanceofExpression} 'InstanceofExpression' uniqueName=String0? '{' ('type'
 		//type=[datatype::ObjectType|EString])? ('objectExpression' objectExpression=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -5660,7 +5797,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'InstanceofExpression'
 		public Keyword getInstanceofExpressionKeyword_1() { return cInstanceofExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5734,13 +5871,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ArithmeticExpression expressions::ArithmeticExpression:
 		//	{expressions::ArithmeticExpression}
 		//	'ArithmeticExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator'
 		//	operator=ArithmeticOperator)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::ArithmeticExpression} 'ArithmeticExpression' uniqueName=String0 '{' ('kind' kind=ExpressionKind)?
+		//{expressions::ArithmeticExpression} 'ArithmeticExpression' uniqueName=String0? '{' ('kind' kind=ExpressionKind)?
 		//('operandsKind' operandsKind=CollectionKind)? ('operator' operator=ArithmeticOperator)? ('operands' '['
 		//operands+=Expression ("," operands+=Expression)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -5751,7 +5888,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ArithmeticExpression'
 		public Keyword getArithmeticExpressionKeyword_1() { return cArithmeticExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5860,13 +5997,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//StringConcatenation expressions::StringConcatenation:
 		//	{expressions::StringConcatenation}
 		//	'StringConcatenation'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression
 		//	("," operands+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::StringConcatenation} 'StringConcatenation' uniqueName=String0 '{' ('kind' kind=ExpressionKind)?
+		//{expressions::StringConcatenation} 'StringConcatenation' uniqueName=String0? '{' ('kind' kind=ExpressionKind)?
 		//('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 		//'}'
 		public Group getGroup() { return cGroup; }
@@ -5877,7 +6014,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'StringConcatenation'
 		public Keyword getStringConcatenationKeyword_1() { return cStringConcatenationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -5978,13 +6115,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//BooleanExpression expressions::BooleanExpression:
 		//	{expressions::BooleanExpression}
 		//	'BooleanExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator'
 		//	operator=BooleanOperator)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::BooleanExpression} 'BooleanExpression' uniqueName=String0 '{' ('kind' kind=ExpressionKind)?
+		//{expressions::BooleanExpression} 'BooleanExpression' uniqueName=String0? '{' ('kind' kind=ExpressionKind)?
 		//('operandsKind' operandsKind=CollectionKind)? ('operator' operator=BooleanOperator)? ('operands' '['
 		//operands+=Expression ("," operands+=Expression)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -5995,7 +6132,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'BooleanExpression'
 		public Keyword getBooleanExpressionKeyword_1() { return cBooleanExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6108,13 +6245,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//BinaryExpression expressions::BinaryExpression:
 		//	{expressions::BinaryExpression}
 		//	'BinaryExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator' operator=BinaryOperator)?
 		//	('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::BinaryExpression} 'BinaryExpression' uniqueName=String0 '{' ('kind' kind=ExpressionKind)? ('operandsKind'
+		//{expressions::BinaryExpression} 'BinaryExpression' uniqueName=String0? '{' ('kind' kind=ExpressionKind)? ('operandsKind'
 		//operandsKind=CollectionKind)? ('operator' operator=BinaryOperator)? ('operands' '[' operands+=Expression (","
 		//operands+=Expression)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -6125,7 +6262,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'BinaryExpression'
 		public Keyword getBinaryExpressionKeyword_1() { return cBinaryExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6234,13 +6371,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//OperandExpression_Impl expressions::OperandExpression:
 		//	{expressions::OperandExpression}
 		//	'OperandExpression'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression
 		//	("," operands+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{expressions::OperandExpression} 'OperandExpression' uniqueName=String0 '{' ('kind' kind=ExpressionKind)?
+		//{expressions::OperandExpression} 'OperandExpression' uniqueName=String0? '{' ('kind' kind=ExpressionKind)?
 		//('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 		//'}'
 		public Group getGroup() { return cGroup; }
@@ -6251,7 +6388,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'OperandExpression'
 		public Keyword getOperandExpressionKeyword_1() { return cOperandExpressionKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6357,14 +6494,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Variable_Impl variable::Variable:
 		//	{variable::Variable}
 		//	'Variable'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 		//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 		//	annotations+=Annotation)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{variable::Variable} 'Variable' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{variable::Variable} 'Variable' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('type' type=[datatype::DataType|EString])?
 		//('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -6375,7 +6512,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Variable'
 		public Keyword getVariableKeyword_1() { return cVariableKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6508,16 +6645,17 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ParameterVariable variable::ParameterVariable:
 		//	{variable::ParameterVariable}
 		//	'ParameterVariable'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 		//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 		//	annotations+=Annotation)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{variable::ParameterVariable} 'ParameterVariable' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
-		//availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('type' type=[datatype::DataType|EString])?
-		//('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')? '}'
+		//{variable::ParameterVariable} 'ParameterVariable' uniqueName=String0? '{' ('name' name=String0)?
+		//('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('type'
+		//type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
+		//'}'
 		public Group getGroup() { return cGroup; }
 		
 		//{variable::ParameterVariable}
@@ -6526,7 +6664,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ParameterVariable'
 		public Keyword getParameterVariableKeyword_1() { return cParameterVariableKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6663,14 +6801,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//LocalVariable variable::LocalVariable:
 		//	{variable::LocalVariable}
 		//	'LocalVariable'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 		//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 		//	annotations+=Annotation)* ']')? ('initialValue' initialValue=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{variable::LocalVariable} 'LocalVariable' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{variable::LocalVariable} 'LocalVariable' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('type' type=[datatype::DataType|EString])?
 		//('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')? ('initialValue'
 		//initialValue=Expression)? '}'
@@ -6682,7 +6820,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'LocalVariable'
 		public Keyword getLocalVariableKeyword_1() { return cLocalVariableKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6831,14 +6969,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//InitializableVariable_Impl variable::InitializableVariable:
 		//	{variable::InitializableVariable}
 		//	'InitializableVariable'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 		//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 		//	annotations+=Annotation)* ']')? ('initialValue' initialValue=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{variable::InitializableVariable} 'InitializableVariable' uniqueName=String0 '{' ('name' name=String0)?
+		//{variable::InitializableVariable} 'InitializableVariable' uniqueName=String0? '{' ('name' name=String0)?
 		//('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final' final=BooleanObject)? ('type'
 		//type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//('initialValue' initialValue=Expression)? '}'
@@ -6850,7 +6988,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'InitializableVariable'
 		public Keyword getInitializableVariableKeyword_1() { return cInitializableVariableKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -6982,13 +7120,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Block statements::Block:
 		//	{statements::Block}
 		//	'Block'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('statementsKind' statementsKind=CollectionKind)? ('statements' '[' statements+=Statement (","
 		//	statements+=Statement)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::Block} 'Block' uniqueName=String0 '{' ('statementsKind' statementsKind=CollectionKind)? ('statements' '['
+		//{statements::Block} 'Block' uniqueName=String0? '{' ('statementsKind' statementsKind=CollectionKind)? ('statements' '['
 		//statements+=Statement ("," statements+=Statement)* ']')? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -6998,7 +7136,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Block'
 		public Keyword getBlockKeyword_1() { return cBlockKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7063,10 +7201,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Statement_Impl statements::Statement:
 		//	{statements::Statement}
 		//	'Statement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::Statement} 'Statement' uniqueName=String0
+		//{statements::Statement} 'Statement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::Statement}
@@ -7075,7 +7213,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Statement'
 		public Keyword getStatementKeyword_1() { return cStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7092,10 +7230,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ControlFlowStatement statements::ControlFlowStatement:
 		//	{statements::ControlFlowStatement}
 		//	'ControlFlowStatement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::ControlFlowStatement} 'ControlFlowStatement' uniqueName=String0
+		//{statements::ControlFlowStatement} 'ControlFlowStatement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::ControlFlowStatement}
@@ -7104,7 +7242,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ControlFlowStatement'
 		public Keyword getControlFlowStatementKeyword_1() { return cControlFlowStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7146,13 +7284,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//InstanceCreation statements::InstanceCreation:
 		//	{statements::InstanceCreation}
 		//	'InstanceCreation'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('argsKind' argsKind=CollectionKind)? ('type' type=[datatype::ObjectType|EString])? ('constructor'
 		//	constructor=Constructor)? ('args' '[' args+=Statement ("," args+=Statement)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::InstanceCreation} 'InstanceCreation' uniqueName=String0 '{' ('argsKind' argsKind=CollectionKind)? ('type'
+		//{statements::InstanceCreation} 'InstanceCreation' uniqueName=String0? '{' ('argsKind' argsKind=CollectionKind)? ('type'
 		//type=[datatype::ObjectType|EString])? ('constructor' constructor=Constructor)? ('args' '[' args+=Statement (","
 		//args+=Statement)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -7163,7 +7301,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'InstanceCreation'
 		public Keyword getInstanceCreationKeyword_1() { return cInstanceCreationKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7271,12 +7409,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//SynchronizedBlock statements::SynchronizedBlock:
 		//	{statements::SynchronizedBlock}
 		//	'SynchronizedBlock'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('bodyStatements' '[' bodyStatements+=Statement ("," bodyStatements+=Statement)* ']')? ('key' key=Statement)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::SynchronizedBlock} 'SynchronizedBlock' uniqueName=String0 '{' ('bodyStatements' '['
+		//{statements::SynchronizedBlock} 'SynchronizedBlock' uniqueName=String0? '{' ('bodyStatements' '['
 		//bodyStatements+=Statement ("," bodyStatements+=Statement)* ']')? ('key' key=Statement)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -7286,7 +7424,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'SynchronizedBlock'
 		public Keyword getSynchronizedBlockKeyword_1() { return cSynchronizedBlockKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7354,18 +7492,18 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ControlledAccessElement elements::ControlledAccessElement:
-		//	{elements::ControlledAccessElement} uniqueName=String0
+		//	{elements::ControlledAccessElement} uniqueName=String0?
 		//	'{' ('visibility' visibility=Visibility)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{elements::ControlledAccessElement} uniqueName=String0 '{' ('visibility' visibility=Visibility)? '}'
+		//{elements::ControlledAccessElement} uniqueName=String0? '{' ('visibility' visibility=Visibility)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{elements::ControlledAccessElement}
 		public Action getControlledAccessElementAction_0() { return cControlledAccessElementAction_0; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_1() { return cUniqueNameAssignment_1; }
 		
 		//String0
@@ -7406,12 +7544,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ThrowStatement statements::ThrowStatement:
 		//	{statements::ThrowStatement}
 		//	'ThrowStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('expression' expression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::ThrowStatement} 'ThrowStatement' uniqueName=String0 '{' ('expression' expression=Expression)? '}'
+		//{statements::ThrowStatement} 'ThrowStatement' uniqueName=String0? '{' ('expression' expression=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::ThrowStatement}
@@ -7420,7 +7558,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ThrowStatement'
 		public Keyword getThrowStatementKeyword_1() { return cThrowStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7455,10 +7593,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//EmptyStatement statements::EmptyStatement:
 		//	{statements::EmptyStatement}
 		//	'EmptyStatement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::EmptyStatement} 'EmptyStatement' uniqueName=String0
+		//{statements::EmptyStatement} 'EmptyStatement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::EmptyStatement}
@@ -7467,7 +7605,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'EmptyStatement'
 		public Keyword getEmptyStatementKeyword_1() { return cEmptyStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7490,12 +7628,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ReturnStatement statements::ReturnStatement:
 		//	{statements::ReturnStatement}
 		//	'ReturnStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('expression' expression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::ReturnStatement} 'ReturnStatement' uniqueName=String0 '{' ('expression' expression=Expression)? '}'
+		//{statements::ReturnStatement} 'ReturnStatement' uniqueName=String0? '{' ('expression' expression=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::ReturnStatement}
@@ -7504,7 +7642,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ReturnStatement'
 		public Keyword getReturnStatementKeyword_1() { return cReturnStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7539,10 +7677,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//BreakStatement statements::BreakStatement:
 		//	{statements::BreakStatement}
 		//	'BreakStatement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::BreakStatement} 'BreakStatement' uniqueName=String0
+		//{statements::BreakStatement} 'BreakStatement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::BreakStatement}
@@ -7551,7 +7689,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'BreakStatement'
 		public Keyword getBreakStatementKeyword_1() { return cBreakStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7568,10 +7706,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ContinueStatement statements::ContinueStatement:
 		//	{statements::ContinueStatement}
 		//	'ContinueStatement'
-		//	uniqueName=String0;
+		//	uniqueName=String0?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::ContinueStatement} 'ContinueStatement' uniqueName=String0
+		//{statements::ContinueStatement} 'ContinueStatement' uniqueName=String0?
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::ContinueStatement}
@@ -7580,7 +7718,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ContinueStatement'
 		public Keyword getContinueStatementKeyword_1() { return cContinueStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7607,12 +7745,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AssertStatement statements::AssertStatement:
 		//	{statements::AssertStatement}
 		//	'AssertStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('expression' expression=Expression)? ('message' message=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::AssertStatement} 'AssertStatement' uniqueName=String0 '{' ('expression' expression=Expression)? ('message'
+		//{statements::AssertStatement} 'AssertStatement' uniqueName=String0? '{' ('expression' expression=Expression)? ('message'
 		//message=Expression)? '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -7622,7 +7760,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'AssertStatement'
 		public Keyword getAssertStatementKeyword_1() { return cAssertStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7675,12 +7813,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ExpressionStatement statements::ExpressionStatement:
 		//	{statements::ExpressionStatement}
 		//	'ExpressionStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('expression' expression=Expression)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::ExpressionStatement} 'ExpressionStatement' uniqueName=String0 '{' ('expression' expression=Expression)? '}'
+		//{statements::ExpressionStatement} 'ExpressionStatement' uniqueName=String0? '{' ('expression' expression=Expression)?
+		//'}'
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::ExpressionStatement}
@@ -7689,7 +7828,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ExpressionStatement'
 		public Keyword getExpressionStatementKeyword_1() { return cExpressionStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7734,12 +7873,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//LabelStatement statements::LabelStatement:
 		//	{statements::LabelStatement}
 		//	'LabelStatement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=EString)? ('body' body=Statement)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{statements::LabelStatement} 'LabelStatement' uniqueName=String0 '{' ('name' name=EString)? ('body' body=Statement)? '}'
+		//{statements::LabelStatement} 'LabelStatement' uniqueName=String0? '{' ('name' name=EString)? ('body' body=Statement)?
+		//'}'
 		public Group getGroup() { return cGroup; }
 		
 		//{statements::LabelStatement}
@@ -7748,7 +7888,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'LabelStatement'
 		public Keyword getLabelStatementKeyword_1() { return cLabelStatementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -7845,7 +7985,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Constructor method::Constructor:
 		//	{method::Constructor}
 		//	'Constructor'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('visibility' visibility=Visibility)? ('paramsKind' paramsKind=CollectionKind)? ('avaliableInSourceCode'
 		//	avaliableInSourceCode=BooleanObject)? ('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] (","
 		//	thrownExceptions+=[complexType::JClass|EString])* ')')? ('annotations' '[' annotations+=Annotation (","
@@ -7854,7 +7994,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{method::Constructor} 'Constructor' uniqueName=String0 '{' ('visibility' visibility=Visibility)? ('paramsKind'
+		//{method::Constructor} 'Constructor' uniqueName=String0? '{' ('visibility' visibility=Visibility)? ('paramsKind'
 		//paramsKind=CollectionKind)? ('avaliableInSourceCode' avaliableInSourceCode=BooleanObject)? ('thrownExceptions' '('
 		//thrownExceptions+=[complexType::JClass|EString] ("," thrownExceptions+=[complexType::JClass|EString])* ')')?
 		//('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')? ('params' '['
@@ -7867,7 +8007,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Constructor'
 		public Keyword getConstructorKeyword_1() { return cConstructorKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -8088,14 +8228,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//EnumConstant complexType::EnumConstant:
 		//	{complexType::EnumConstant}
 		//	'EnumConstant'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('argumentsKind'
 		//	argumentsKind=CollectionKind)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//	('arguments' '[' arguments+=Expression ("," arguments+=Expression)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::EnumConstant} 'EnumConstant' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{complexType::EnumConstant} 'EnumConstant' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('argumentsKind' argumentsKind=CollectionKind)? ('annotations' '['
 		//annotations+=Annotation ("," annotations+=Annotation)* ']')? ('arguments' '[' arguments+=Expression (","
 		//arguments+=Expression)* ']')? '}'
@@ -8107,7 +8247,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'EnumConstant'
 		public Keyword getEnumConstantKeyword_1() { return cEnumConstantKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -10569,13 +10709,13 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//NamedElement_Impl namedElements::NamedElement:
 		//	{namedElements::NamedElement}
 		//	'NamedElement'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('annotations' '['
 		//	annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{namedElements::NamedElement} 'NamedElement' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{namedElements::NamedElement} 'NamedElement' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//'}'
 		public Group getGroup() { return cGroup; }
@@ -10586,7 +10726,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'NamedElement'
 		public Keyword getNamedElementKeyword_1() { return cNamedElementKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -10693,14 +10833,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//Package namedElements::Package:
 		//	{namedElements::Package}
 		//	'Package'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('annotations' '['
 		//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('declaredTypes' '[' declaredTypes+=TypeDeclaration (","
 		//	declaredTypes+=TypeDeclaration)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{namedElements::Package} 'Package' uniqueName=String0 '{' ('name' name=String0)? ('availableInSourceCode'
+		//{namedElements::Package} 'Package' uniqueName=String0? '{' ('name' name=String0)? ('availableInSourceCode'
 		//availableInSourceCode=BooleanObject)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 		//('declaredTypes' '[' declaredTypes+=TypeDeclaration ("," declaredTypes+=TypeDeclaration)* ']')? '}'
 		public Group getGroup() { return cGroup; }
@@ -10711,7 +10851,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'Package'
 		public Keyword getPackageKeyword_1() { return cPackageKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -10848,15 +10988,15 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ComplexType_Impl complexType::ComplexType:
 		//	{complexType::ComplexType}
 		//	'ComplexType'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('fields' '['
 		//	fields+=FieldVariable ("," fields+=FieldVariable)* ']')? ('methods' '[' methods+=Method ("," methods+=Method)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::ComplexType} 'ComplexType' uniqueName=String0 '{' ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind'
-		//methodsKind=CollectionKind)? ('fields' '[' fields+=FieldVariable ("," fields+=FieldVariable)* ']')? ('methods' '['
-		//methods+=Method ("," methods+=Method)* ']')? '}'
+		//{complexType::ComplexType} 'ComplexType' uniqueName=String0? '{' ('fieldsKind' fieldsKind=CollectionKind)?
+		//('methodsKind' methodsKind=CollectionKind)? ('fields' '[' fields+=FieldVariable ("," fields+=FieldVariable)* ']')?
+		//('methods' '[' methods+=Method ("," methods+=Method)* ']')? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{complexType::ComplexType}
@@ -10865,7 +11005,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'ComplexType'
 		public Keyword getComplexTypeKeyword_1() { return cComplexTypeKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -11007,14 +11147,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AnonymousClass complexType::AnonymousClass:
 		//	{complexType::AnonymousClass}
 		//	'AnonymousClass'
-		//	uniqueName=String0
+		//	uniqueName=String0?
 		//	'{' ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('type'
 		//	type=[datatype::ObjectType|EString])? ('fields' '[' fields+=FieldVariable ("," fields+=FieldVariable)* ']')?
 		//	('methods' '[' methods+=Method ("," methods+=Method)* ']')?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{complexType::AnonymousClass} 'AnonymousClass' uniqueName=String0 '{' ('fieldsKind' fieldsKind=CollectionKind)?
+		//{complexType::AnonymousClass} 'AnonymousClass' uniqueName=String0? '{' ('fieldsKind' fieldsKind=CollectionKind)?
 		//('methodsKind' methodsKind=CollectionKind)? ('type' type=[datatype::ObjectType|EString])? ('fields' '['
 		//fields+=FieldVariable ("," fields+=FieldVariable)* ']')? ('methods' '[' methods+=Method ("," methods+=Method)* ']')?
 		//'}'
@@ -11026,7 +11166,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'AnonymousClass'
 		public Keyword getAnonymousClassKeyword_1() { return cAnonymousClassKeyword_1; }
 		
-		//uniqueName=String0
+		//uniqueName=String0?
 		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
 		
 		//String0
@@ -11535,6 +11675,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final ConstructComplexTypeDeclaration_ImplElements pConstructComplexTypeDeclaration_Impl;
 	private final FieldVariableElements pFieldVariable;
 	private final MethodElements pMethod;
+	private final SimpleMethodElements pSimpleMethod;
 	private final DataType_ImplElements pDataType_Impl;
 	private final Expression_ImplElements pExpression_Impl;
 	private final PrimitiveType_ImplElements pPrimitiveType_Impl;
@@ -11657,6 +11798,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pConstructComplexTypeDeclaration_Impl = new ConstructComplexTypeDeclaration_ImplElements();
 		this.pFieldVariable = new FieldVariableElements();
 		this.pMethod = new MethodElements();
+		this.pSimpleMethod = new SimpleMethodElements();
 		this.pDataType_Impl = new DataType_ImplElements();
 		this.pExpression_Impl = new Expression_ImplElements();
 		this.pPrimitiveType_Impl = new PrimitiveType_ImplElements();
@@ -11923,7 +12065,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	//Element elements::Element:
 	//	{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType
-	//	| ImportableElement | Expression | Annotation /* | SimpleMethod*/ | AnnotationFieldValue;
+	//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue;
 	public ElementElements getElementAccess() {
 		return pElement;
 	}
@@ -11946,7 +12088,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//String0 type::String:
-	//	STRING;
+	//	ID;
 	public String0Elements getString0Access() {
 		return pString0;
 	}
@@ -11968,7 +12110,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Annotation annotation::Annotation:
 	//	{annotation::Annotation}
 	//	'Annotation'
-	//	uniqueName=EString
+	//	uniqueName=EString?
 	//	'{' ('valuesKind' valuesKind=CollectionKind)? ('type' type=[complexType::AnnotationType|EString])? ('values' '['
 	//	values+=AnnotationFieldValue ("," values+=AnnotationFieldValue)* ']')?
 	//	'}';
@@ -11983,7 +12125,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//AnnotationType complexType::AnnotationType:
 	//	{complexType::AnnotationType}
 	//	'AnnotationType'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('annotations' '['
 	//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('imports' '[' imports+=ImportStatement (","
@@ -12001,7 +12143,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//AnnotationFieldValue annotation::AnnotationFieldValue:
 	//	{annotation::AnnotationFieldValue}
 	//	'AnnotationFieldValue'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('field' field=[complexType::AnnotationField|EString])? ('value' value=Expression)?
 	//	'}';
 	public AnnotationFieldValueElements getAnnotationFieldValueAccess() {
@@ -12035,7 +12177,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ImportStatement import0::ImportStatement:
 	//	{import0::ImportStatement} static?='static'?
 	//	'ImportStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('importedElement' importedElement=[import0::ImportableElement|EString])?
 	//	'}';
 	public ImportStatementElements getImportStatementAccess() {
@@ -12049,7 +12191,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//TypeDeclaration_Impl complexType::TypeDeclaration:
 	//	{complexType::TypeDeclaration}
 	//	'TypeDeclaration'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('annotations' '['
 	//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('imports' '[' imports+=ImportStatement (","
@@ -12077,7 +12219,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//AnnotationField complexType::AnnotationField:
 	//	{complexType::AnnotationField}
 	//	'AnnotationField'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('type'
 	//	type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 	//	('default' default=Expression)?
@@ -12093,7 +12235,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ImportableElement import0::ImportableElement:
 	//	{import0::ImportableElement}
 	//	'ImportableElement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public ImportableElementElements getImportableElementAccess() {
 		return pImportableElement;
 	}
@@ -12115,7 +12257,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//JInterface complexType::JInterface:
 	//	{complexType::JInterface}
 	//	'JInterface'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 	//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -12136,7 +12278,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//JClass complexType::JClass:
 	//	{complexType::JClass}
 	//	'JClass'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 	//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -12158,7 +12300,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//JEnum complexType::JEnum:
 	//	{complexType::JEnum}
 	//	'JEnum'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 	//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -12181,7 +12323,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ComplexTypeDeclaration_Impl complexType::ComplexTypeDeclaration:
 	//	{complexType::ComplexTypeDeclaration}
 	//	'ComplexTypeDeclaration'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 	//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -12202,7 +12344,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ConstructComplexTypeDeclaration_Impl complexType::ConstructComplexTypeDeclaration:
 	//	{complexType::ConstructComplexTypeDeclaration}
 	//	'ConstructComplexTypeDeclaration'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('visibility'
 	//	visibility=Visibility)? ('static' static=BooleanObject)? ('inheritance' inheritance=Inheritance)? ('fieldsKind'
 	//	fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('superInterfaces' '('
@@ -12224,7 +12366,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//FieldVariable variable::FieldVariable:
 	//	{variable::FieldVariable}
 	//	'FieldVariable'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 	//	final=BooleanObject)? ('visibility' visibility=Visibility)? ('static' static=BooleanObject)? ('volatile'
 	//	volatile=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
@@ -12241,7 +12383,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Method method::Method:
 	//	{method::Method}
 	//	'Method'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' (('name' name=String0)?
 	//	& ('availableInSourceCode' availableInSourceCode=BooleanObject)?
 	//	& ('visibility' visibility=Visibility)?
@@ -12263,10 +12405,27 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		return getMethodAccess().getRule();
 	}
 	
+	///*SimpleMethod added manually */ SimpleMethod method::SimpleMethod:
+	//	{method::SimpleMethod}
+	//	'SimpleMethod'
+	//	uniqueName=String0?
+	//	'{' (('visibility' visibility=Visibility)?
+	//	& ('paramsKind' paramsKind=CollectionKind)?
+	//	& ('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')?
+	//	& ('body' body=Block)?)
+	//	'}';
+	public SimpleMethodElements getSimpleMethodAccess() {
+		return pSimpleMethod;
+	}
+	
+	public ParserRule getSimpleMethodRule() {
+		return getSimpleMethodAccess().getRule();
+	}
+	
 	//DataType_Impl datatype::DataType:
 	//	{datatype::DataType}
 	//	'DataType'
-	//	uniqueName=EString;
+	//	uniqueName=EString?;
 	public DataType_ImplElements getDataType_ImplAccess() {
 		return pDataType_Impl;
 	}
@@ -12278,7 +12437,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Expression_Impl expressions::Expression:
 	//	{expressions::Expression}
 	//	'Expression'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public Expression_ImplElements getExpression_ImplAccess() {
 		return pExpression_Impl;
 	}
@@ -12290,7 +12449,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//PrimitiveType_Impl datatype::PrimitiveType:
 	//	{datatype::PrimitiveType}
 	//	'PrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public PrimitiveType_ImplElements getPrimitiveType_ImplAccess() {
 		return pPrimitiveType_Impl;
 	}
@@ -12302,7 +12461,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//BooleanPrimitiveType datatype::BooleanPrimitiveType:
 	//	{datatype::BooleanPrimitiveType}
 	//	'BooleanPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public BooleanPrimitiveTypeElements getBooleanPrimitiveTypeAccess() {
 		return pBooleanPrimitiveType;
 	}
@@ -12314,7 +12473,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ShortPrimitiveType datatype::ShortPrimitiveType:
 	//	{datatype::ShortPrimitiveType}
 	//	'ShortPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public ShortPrimitiveTypeElements getShortPrimitiveTypeAccess() {
 		return pShortPrimitiveType;
 	}
@@ -12326,7 +12485,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ObjectType_Impl datatype::ObjectType:
 	//	{datatype::ObjectType}
 	//	'ObjectType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public ObjectType_ImplElements getObjectType_ImplAccess() {
 		return pObjectType_Impl;
 	}
@@ -12338,7 +12497,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ParameterizedType datatype::ParameterizedType:
 	//	{datatype::ParameterizedType}
 	//	'ParameterizedType'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('typeArguments' '(' typeArguments+=[datatype::ObjectType|EString] (","
 	//	typeArguments+=[datatype::ObjectType|EString])* ')')? ('type' type=[complexType::TypeDeclaration|EString])?
 	//	'}';
@@ -12353,7 +12512,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//IntPrimitiveType datatype::IntPrimitiveType:
 	//	{datatype::IntPrimitiveType}
 	//	'IntPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public IntPrimitiveTypeElements getIntPrimitiveTypeAccess() {
 		return pIntPrimitiveType;
 	}
@@ -12365,7 +12524,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ArrayType datatype::ArrayType:
 	//	{datatype::ArrayType}
 	//	'ArrayType'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('dimensions' dimensions=Int0)? ('type' type=[datatype::DataType|EString])?
 	//	'}';
 	public ArrayTypeElements getArrayTypeAccess() {
@@ -12379,7 +12538,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//VoidType datatype::VoidType:
 	//	{datatype::VoidType}
 	//	'VoidType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public VoidTypeElements getVoidTypeAccess() {
 		return pVoidType;
 	}
@@ -12391,7 +12550,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//TypeParameter datatype::TypeParameter:
 	//	{datatype::TypeParameter}
 	//	'TypeParameter'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('boundsKind' boundsKind=CollectionKind)? ('bounds' '(' bounds+=[datatype::ObjectType|EString] (","
 	//	bounds+=[datatype::ObjectType|EString])* ')')?
 	//	'}';
@@ -12406,7 +12565,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//WildCardType datatype::WildCardType:
 	//	{datatype::WildCardType}
 	//	'WildCardType'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('bound' bound=[datatype::ObjectType|EString])?
 	//	'}';
 	public WildCardTypeElements getWildCardTypeAccess() {
@@ -12420,7 +12579,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//BytePrimitiveType datatype::BytePrimitiveType:
 	//	{datatype::BytePrimitiveType}
 	//	'BytePrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public BytePrimitiveTypeElements getBytePrimitiveTypeAccess() {
 		return pBytePrimitiveType;
 	}
@@ -12432,7 +12591,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//CharPrimitiveType datatype::CharPrimitiveType:
 	//	{datatype::CharPrimitiveType}
 	//	'CharPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public CharPrimitiveTypeElements getCharPrimitiveTypeAccess() {
 		return pCharPrimitiveType;
 	}
@@ -12444,7 +12603,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//DoublePrimitiveType datatype::DoublePrimitiveType:
 	//	{datatype::DoublePrimitiveType}
 	//	'DoublePrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public DoublePrimitiveTypeElements getDoublePrimitiveTypeAccess() {
 		return pDoublePrimitiveType;
 	}
@@ -12456,7 +12615,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//FloatPrimitiveType datatype::FloatPrimitiveType:
 	//	{datatype::FloatPrimitiveType}
 	//	'FloatPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public FloatPrimitiveTypeElements getFloatPrimitiveTypeAccess() {
 		return pFloatPrimitiveType;
 	}
@@ -12468,7 +12627,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//LongPrimitiveType datatype::LongPrimitiveType:
 	//	{datatype::LongPrimitiveType}
 	//	'LongPrimitiveType'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public LongPrimitiveTypeElements getLongPrimitiveTypeAccess() {
 		return pLongPrimitiveType;
 	}
@@ -12490,7 +12649,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//VarDeclaration expressions::VarDeclaration:
 	//	{expressions::VarDeclaration}
 	//	'VarDeclaration'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('variable' variable=Variable)?
 	//	'}';
 	public VarDeclarationElements getVarDeclarationAccess() {
@@ -12504,7 +12663,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//CastExpression expressions::CastExpression:
 	//	{expressions::CastExpression}
 	//	'CastExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('type' type=[datatype::DataType|EString])? ('expression' expression=Expression)?
 	//	'}';
 	public CastExpressionElements getCastExpressionAccess() {
@@ -12518,7 +12677,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//TernaryExpression expressions::TernaryExpression:
 	//	{expressions::TernaryExpression}
 	//	'TernaryExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('condition' condition=Expression)? ('elseExpression' elseExpression=Expression)? ('thenExpression'
 	//	thenExpression=Expression)?
 	//	'}';
@@ -12533,7 +12692,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//InstanceofExpression expressions::InstanceofExpression:
 	//	{expressions::InstanceofExpression}
 	//	'InstanceofExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('type' type=[datatype::ObjectType|EString])? ('objectExpression' objectExpression=Expression)?
 	//	'}';
 	public InstanceofExpressionElements getInstanceofExpressionAccess() {
@@ -12547,7 +12706,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ArithmeticExpression expressions::ArithmeticExpression:
 	//	{expressions::ArithmeticExpression}
 	//	'ArithmeticExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator'
 	//	operator=ArithmeticOperator)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 	//	'}';
@@ -12562,7 +12721,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//StringConcatenation expressions::StringConcatenation:
 	//	{expressions::StringConcatenation}
 	//	'StringConcatenation'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression
 	//	("," operands+=Expression)* ']')?
 	//	'}';
@@ -12577,7 +12736,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//BooleanExpression expressions::BooleanExpression:
 	//	{expressions::BooleanExpression}
 	//	'BooleanExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator'
 	//	operator=BooleanOperator)? ('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 	//	'}';
@@ -12592,7 +12751,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//BinaryExpression expressions::BinaryExpression:
 	//	{expressions::BinaryExpression}
 	//	'BinaryExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operator' operator=BinaryOperator)?
 	//	('operands' '[' operands+=Expression ("," operands+=Expression)* ']')?
 	//	'}';
@@ -12607,7 +12766,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//OperandExpression_Impl expressions::OperandExpression:
 	//	{expressions::OperandExpression}
 	//	'OperandExpression'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('kind' kind=ExpressionKind)? ('operandsKind' operandsKind=CollectionKind)? ('operands' '[' operands+=Expression
 	//	("," operands+=Expression)* ']')?
 	//	'}';
@@ -12622,7 +12781,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Variable_Impl variable::Variable:
 	//	{variable::Variable}
 	//	'Variable'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 	//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 	//	annotations+=Annotation)* ']')?
@@ -12638,7 +12797,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ParameterVariable variable::ParameterVariable:
 	//	{variable::ParameterVariable}
 	//	'ParameterVariable'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 	//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 	//	annotations+=Annotation)* ']')?
@@ -12654,7 +12813,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//LocalVariable variable::LocalVariable:
 	//	{variable::LocalVariable}
 	//	'LocalVariable'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 	//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 	//	annotations+=Annotation)* ']')? ('initialValue' initialValue=Expression)?
@@ -12670,7 +12829,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//InitializableVariable_Impl variable::InitializableVariable:
 	//	{variable::InitializableVariable}
 	//	'InitializableVariable'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('final'
 	//	final=BooleanObject)? ('type' type=[datatype::DataType|EString])? ('annotations' '[' annotations+=Annotation (","
 	//	annotations+=Annotation)* ']')? ('initialValue' initialValue=Expression)?
@@ -12726,7 +12885,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Block statements::Block:
 	//	{statements::Block}
 	//	'Block'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('statementsKind' statementsKind=CollectionKind)? ('statements' '[' statements+=Statement (","
 	//	statements+=Statement)* ']')?
 	//	'}';
@@ -12741,7 +12900,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Statement_Impl statements::Statement:
 	//	{statements::Statement}
 	//	'Statement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public Statement_ImplElements getStatement_ImplAccess() {
 		return pStatement_Impl;
 	}
@@ -12753,7 +12912,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ControlFlowStatement statements::ControlFlowStatement:
 	//	{statements::ControlFlowStatement}
 	//	'ControlFlowStatement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public ControlFlowStatementElements getControlFlowStatementAccess() {
 		return pControlFlowStatement;
 	}
@@ -12765,7 +12924,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//InstanceCreation statements::InstanceCreation:
 	//	{statements::InstanceCreation}
 	//	'InstanceCreation'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('argsKind' argsKind=CollectionKind)? ('type' type=[datatype::ObjectType|EString])? ('constructor'
 	//	constructor=Constructor)? ('args' '[' args+=Statement ("," args+=Statement)* ']')?
 	//	'}';
@@ -12780,7 +12939,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//SynchronizedBlock statements::SynchronizedBlock:
 	//	{statements::SynchronizedBlock}
 	//	'SynchronizedBlock'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('bodyStatements' '[' bodyStatements+=Statement ("," bodyStatements+=Statement)* ']')? ('key' key=Statement)?
 	//	'}';
 	public SynchronizedBlockElements getSynchronizedBlockAccess() {
@@ -12792,7 +12951,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//ControlledAccessElement elements::ControlledAccessElement:
-	//	{elements::ControlledAccessElement} uniqueName=String0
+	//	{elements::ControlledAccessElement} uniqueName=String0?
 	//	'{' ('visibility' visibility=Visibility)?
 	//	'}';
 	public ControlledAccessElementElements getControlledAccessElementAccess() {
@@ -12806,7 +12965,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ThrowStatement statements::ThrowStatement:
 	//	{statements::ThrowStatement}
 	//	'ThrowStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('expression' expression=Expression)?
 	//	'}';
 	public ThrowStatementElements getThrowStatementAccess() {
@@ -12820,7 +12979,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//EmptyStatement statements::EmptyStatement:
 	//	{statements::EmptyStatement}
 	//	'EmptyStatement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public EmptyStatementElements getEmptyStatementAccess() {
 		return pEmptyStatement;
 	}
@@ -12832,7 +12991,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ReturnStatement statements::ReturnStatement:
 	//	{statements::ReturnStatement}
 	//	'ReturnStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('expression' expression=Expression)?
 	//	'}';
 	public ReturnStatementElements getReturnStatementAccess() {
@@ -12846,7 +13005,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//BreakStatement statements::BreakStatement:
 	//	{statements::BreakStatement}
 	//	'BreakStatement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public BreakStatementElements getBreakStatementAccess() {
 		return pBreakStatement;
 	}
@@ -12858,7 +13017,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ContinueStatement statements::ContinueStatement:
 	//	{statements::ContinueStatement}
 	//	'ContinueStatement'
-	//	uniqueName=String0;
+	//	uniqueName=String0?;
 	public ContinueStatementElements getContinueStatementAccess() {
 		return pContinueStatement;
 	}
@@ -12870,7 +13029,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//AssertStatement statements::AssertStatement:
 	//	{statements::AssertStatement}
 	//	'AssertStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('expression' expression=Expression)? ('message' message=Expression)?
 	//	'}';
 	public AssertStatementElements getAssertStatementAccess() {
@@ -12884,7 +13043,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ExpressionStatement statements::ExpressionStatement:
 	//	{statements::ExpressionStatement}
 	//	'ExpressionStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('expression' expression=Expression)?
 	//	'}';
 	public ExpressionStatementElements getExpressionStatementAccess() {
@@ -12898,7 +13057,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//LabelStatement statements::LabelStatement:
 	//	{statements::LabelStatement}
 	//	'LabelStatement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=EString)? ('body' body=Statement)?
 	//	'}';
 	public LabelStatementElements getLabelStatementAccess() {
@@ -12912,7 +13071,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Constructor method::Constructor:
 	//	{method::Constructor}
 	//	'Constructor'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('visibility' visibility=Visibility)? ('paramsKind' paramsKind=CollectionKind)? ('avaliableInSourceCode'
 	//	avaliableInSourceCode=BooleanObject)? ('thrownExceptions' '(' thrownExceptions+=[complexType::JClass|EString] (","
 	//	thrownExceptions+=[complexType::JClass|EString])* ')')? ('annotations' '[' annotations+=Annotation (","
@@ -12940,7 +13099,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//EnumConstant complexType::EnumConstant:
 	//	{complexType::EnumConstant}
 	//	'EnumConstant'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('argumentsKind'
 	//	argumentsKind=CollectionKind)? ('annotations' '[' annotations+=Annotation ("," annotations+=Annotation)* ']')?
 	//	('arguments' '[' arguments+=Expression ("," arguments+=Expression)* ']')?
@@ -13264,7 +13423,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//NamedElement_Impl namedElements::NamedElement:
 	//	{namedElements::NamedElement}
 	//	'NamedElement'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('annotations' '['
 	//	annotations+=Annotation ("," annotations+=Annotation)* ']')?
 	//	'}';
@@ -13279,7 +13438,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//Package namedElements::Package:
 	//	{namedElements::Package}
 	//	'Package'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('name' name=String0)? ('availableInSourceCode' availableInSourceCode=BooleanObject)? ('annotations' '['
 	//	annotations+=Annotation ("," annotations+=Annotation)* ']')? ('declaredTypes' '[' declaredTypes+=TypeDeclaration (","
 	//	declaredTypes+=TypeDeclaration)* ']')?
@@ -13295,7 +13454,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//ComplexType_Impl complexType::ComplexType:
 	//	{complexType::ComplexType}
 	//	'ComplexType'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('fields' '['
 	//	fields+=FieldVariable ("," fields+=FieldVariable)* ']')? ('methods' '[' methods+=Method ("," methods+=Method)* ']')?
 	//	'}';
@@ -13310,7 +13469,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//AnonymousClass complexType::AnonymousClass:
 	//	{complexType::AnonymousClass}
 	//	'AnonymousClass'
-	//	uniqueName=String0
+	//	uniqueName=String0?
 	//	'{' ('fieldsKind' fieldsKind=CollectionKind)? ('methodsKind' methodsKind=CollectionKind)? ('type'
 	//	type=[datatype::ObjectType|EString])? ('fields' '[' fields+=FieldVariable ("," fields+=FieldVariable)* ']')?
 	//	('methods' '[' methods+=Method ("," methods+=Method)* ']')?

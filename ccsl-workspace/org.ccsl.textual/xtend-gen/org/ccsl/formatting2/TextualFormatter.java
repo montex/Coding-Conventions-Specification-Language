@@ -13,8 +13,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.formatting2.AbstractFormatter2;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
+import org.eclipse.xtext.formatting2.IHiddenRegionFormatter;
+import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class TextualFormatter extends AbstractFormatter2 {
@@ -30,7 +33,28 @@ public class TextualFormatter extends AbstractFormatter2 {
   }
   
   protected void _format(final AtomicRule atomicRule, @Extension final IFormattableDocument document) {
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
+      it.newLine();
+    };
+    final Procedure1<IHiddenRegionFormatter> _function_1 = (IHiddenRegionFormatter it) -> {
+      it.indent();
+    };
+    document.<ISemanticRegion, ISemanticRegion>interior(
+      document.append(this.textRegionExtensions.regionFor(atomicRule).keyword("{"), _function), 
+      this.textRegionExtensions.regionFor(atomicRule).keyword("}"), _function_1);
     document.<Context>format(atomicRule.getContext());
+  }
+  
+  protected void _format(final Context context, @Extension final IFormattableDocument document) {
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
+      it.newLine();
+    };
+    final Procedure1<IHiddenRegionFormatter> _function_1 = (IHiddenRegionFormatter it) -> {
+      it.indent();
+    };
+    document.<ISemanticRegion, ISemanticRegion>interior(
+      document.append(this.textRegionExtensions.regionFor(context).keyword("{"), _function), 
+      this.textRegionExtensions.regionFor(context).keyword("}"), _function_1);
   }
   
   public void format(final Object atomicRule, final IFormattableDocument document) {
@@ -42,6 +66,9 @@ public class TextualFormatter extends AbstractFormatter2 {
       return;
     } else if (atomicRule instanceof XtextResource) {
       _format((XtextResource)atomicRule, document);
+      return;
+    } else if (atomicRule instanceof Context) {
+      _format((Context)atomicRule, document);
       return;
     } else if (atomicRule instanceof EObject) {
       _format((EObject)atomicRule, document);

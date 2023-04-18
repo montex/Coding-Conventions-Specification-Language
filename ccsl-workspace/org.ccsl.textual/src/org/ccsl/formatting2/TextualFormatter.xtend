@@ -5,10 +5,13 @@ package org.ccsl.formatting2
 
 import ccsl.AtomicRule
 import ccsl.CompositeRule
+import ccsl.ccslPackage;
 import com.google.inject.Inject
 import org.ccsl.services.TextualGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import ccsl.context.Context
+import org.eclipse.xtext.formatting2.ITextReplacer
 
 class TextualFormatter extends AbstractFormatter2 {
 	
@@ -22,8 +25,20 @@ class TextualFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(AtomicRule atomicRule, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		atomicRule.context.format
+    interior(
+        atomicRule.regionFor.keyword('{').append[newLine],
+        atomicRule.regionFor.keyword('}'),
+        [indent]
+    )
+    atomicRule.context.format
+	}
+	
+	def dispatch void format(Context context, extension IFormattableDocument document) {
+    interior(
+        context.regionFor.keyword('{').append[newLine],
+        context.regionFor.keyword('}'),
+        [indent]
+    )
 	}
 	
 	// TODO: implement for Context, Annotation, AnnotationType, AnnotationFieldValue, TypeDeclaration, AnnotationField, JInterface, JClass, JEnum, ComplexTypeDeclaration, ConstructComplexTypeDeclaration, FieldVariable, Method, VarDeclaration, CastExpression, TernaryExpression, InstanceofExpression, ArithmeticExpression, StringConcatenation, BooleanExpression, BinaryExpression, OperandExpression, Variable, ParameterVariable, LocalVariable, InitializableVariable, Block, InstanceCreation, SynchronizedBlock, ThrowStatement, ReturnStatement, AssertStatement, ExpressionStatement, LabelStatement, Constructor, EnumConstant, CompositeFilter, TemplateFilter, CountFilter, ImplicityOperandFilter, ImplicityContainerFilter, IsKindOfFilter, SuperMethodClosureFilter, IsTypeOfFilter, ChildClosureComplexTypeFilter, FromClosureFilter, HasSuperClassFilter, BlockLastStatementFilter, ImplicitContentsFilter, NamedElement, Package, ComplexType, AnonymousClass
