@@ -23,7 +23,9 @@ public class Main2 {
 
         ResourceSet resourceSet = new ResourceSetImpl();
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/CompareObjectsWithEquals.ccsl");*/
-        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/sample-instances/anonymousClass.ccsl");
+        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/sample-instances/anonymousClass.ccsl");*/
+        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/NonCaseLabelInSwitchStatement.ccsl");
+        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/MissingSerialVersionUID.ccsl");*/
         Resource xmiResource = resourceSet.getResource(inputURI, true);
 
         EObject topObject = xmiResource.getContents().get(0);

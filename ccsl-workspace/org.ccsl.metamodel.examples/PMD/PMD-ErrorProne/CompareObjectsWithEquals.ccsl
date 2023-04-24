@@ -5,11 +5,11 @@
       <operands xsi:type="accesses:VariableAccess" uniqueName="test2" variable="test4"/>
       <operands xsi:type="accesses:VariableAccess" uniqueName="test3" variable="test5"/>
     </contextElements>
-    <contextElements xsi:type="variable:Variable" uniqueName="test4"/>
-    <contextElements xsi:type="variable:Variable" uniqueName="test5"/>
-    <filters xsi:type="filters:TemplateFilter" negated="true" targets="test4 test5" targetTemplate="test6">
+    <contextElements xsi:type="variable:Variable" uniqueName="test4" name="v1"/>
+    <contextElements xsi:type="variable:Variable" uniqueName="test5" name="v2"/>
+    <filters xsi:type="filters:TemplateFilter" negated="true" targets="test4 test5" targetTemplate="test4">
       <context>
-        <contextElements xsi:type="variable:Variable" uniqueName="test6" type="test7"/>
+        <contextElements xsi:type="variable:Variable" uniqueName="test6" name="v3" type="test7"/>
         <contextElements xsi:type="datatype:PrimitiveType" uniqueName="test7"/>
       </context>
     </filters>

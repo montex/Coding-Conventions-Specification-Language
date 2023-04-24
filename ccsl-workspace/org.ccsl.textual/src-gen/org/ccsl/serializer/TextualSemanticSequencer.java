@@ -39,6 +39,10 @@ import ccsl.elements.expressions.OperandExpression;
 import ccsl.elements.expressions.StringConcatenation;
 import ccsl.elements.expressions.TernaryExpression;
 import ccsl.elements.expressions.VarDeclaration;
+import ccsl.elements.expressions.accesses.Access;
+import ccsl.elements.expressions.accesses.AccessesPackage;
+import ccsl.elements.expressions.accesses.DataTypeAccess;
+import ccsl.elements.expressions.accesses.VariableAccess;
 import ccsl.elements.expressions.annotation.Annotation;
 import ccsl.elements.expressions.annotation.AnnotationFieldValue;
 import ccsl.elements.expressions.annotation.AnnotationPackage;
@@ -80,6 +84,8 @@ import ccsl.elements.statements.Statement;
 import ccsl.elements.statements.StatementsPackage;
 import ccsl.elements.statements.SynchronizedBlock;
 import ccsl.elements.statements.ThrowStatement;
+import ccsl.elements.statements.controlFlow.ControlFlowPackage;
+import ccsl.elements.statements.controlFlow.SwitchCaseBlock;
 import ccsl.elements.statements.import_.ImportPackage;
 import ccsl.elements.statements.import_.ImportStatement;
 import ccsl.elements.statements.import_.ImportableElement;
@@ -129,7 +135,19 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
-		if (epackage == AnnotationPackage.eINSTANCE)
+		if (epackage == AccessesPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case AccessesPackage.ACCESS:
+				sequence_Access_Impl(context, (Access) semanticObject); 
+				return; 
+			case AccessesPackage.DATA_TYPE_ACCESS:
+				sequence_DataTypeAccess(context, (DataTypeAccess) semanticObject); 
+				return; 
+			case AccessesPackage.VARIABLE_ACCESS:
+				sequence_VariableAccess(context, (VariableAccess) semanticObject); 
+				return; 
+			}
+		else if (epackage == AnnotationPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case AnnotationPackage.ANNOTATION:
 				sequence_Annotation(context, (Annotation) semanticObject); 
@@ -187,6 +205,12 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 			switch (semanticObject.eClass().getClassifierID()) {
 			case ContextPackage.CONTEXT:
 				sequence_Context(context, (Context) semanticObject); 
+				return; 
+			}
+		else if (epackage == ControlFlowPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case ControlFlowPackage.SWITCH_CASE_BLOCK:
+				sequence_SwitchCaseBlock(context, (SwitchCaseBlock) semanticObject); 
 				return; 
 			}
 		else if (epackage == DatatypePackage.eINSTANCE)
@@ -441,6 +465,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns Access
+	 *     Access returns Access
+	 *     Element returns Access
+	 *     Access_Impl returns Access
+	 *
+	 * Constraint:
+	 *     (uniqueName=String0? from=Expression?)
+	 */
+	protected void sequence_Access_Impl(ISerializationContext context, Access semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Element returns AnnotationFieldValue
 	 *     AnnotationFieldValue returns AnnotationFieldValue
 	 *
@@ -590,7 +629,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     AtomicRule returns AtomicRule
 	 *
 	 * Constraint:
-	 *     (negated?='not'? context=Context subject=[Element|EString])
+	 *     (negated?='not'? context=Context subject=[Element|EString]?)
 	 */
 	protected void sequence_AtomicRule(ISerializationContext context, AtomicRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -948,6 +987,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns DataTypeAccess
+	 *     Access returns DataTypeAccess
+	 *     Element returns DataTypeAccess
+	 *     DataTypeAccess returns DataTypeAccess
+	 *
+	 * Constraint:
+	 *     (uniqueName=String0? datatype=[DataType|ID]?)
+	 */
+	protected void sequence_DataTypeAccess(ISerializationContext context, DataTypeAccess semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     DataType returns DataType
 	 *     Element returns DataType
 	 *     DataType_Impl returns DataType
@@ -1056,6 +1110,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns FieldVariable
+	 *     Element returns FieldVariable
 	 *     FieldVariable returns FieldVariable
 	 *
 	 * Constraint:
@@ -1227,6 +1282,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns InitializableVariable
+	 *     Element returns InitializableVariable
 	 *     InitializableVariable_Impl returns InitializableVariable
 	 *
 	 * Constraint:
@@ -1450,6 +1506,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns LocalVariable
+	 *     Element returns LocalVariable
 	 *     LocalVariable returns LocalVariable
 	 *
 	 * Constraint:
@@ -1484,6 +1541,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns Method
 	 *     Method returns Method
 	 *
 	 * Constraint:
@@ -1501,8 +1559,8 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *                 body=Block
 	 *             )? 
 	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)? 
-	 *             (annotations+=Annotation annotations+=Annotation*)? 
-	 *             (params+=ParameterVariable params+=ParameterVariable*)?
+	 *             (params+=ParameterVariable params+=ParameterVariable*)? 
+	 *             (annotations+=Annotation annotations+=Annotation*)?
 	 *         )+
 	 *     )
 	 */
@@ -1577,6 +1635,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns ParameterVariable
+	 *     Element returns ParameterVariable
 	 *     ParameterVariable returns ParameterVariable
 	 *
 	 * Constraint:
@@ -1755,6 +1814,19 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Element returns SwitchCaseBlock
+	 *     SwitchCaseBlock returns SwitchCaseBlock
+	 *
+	 * Constraint:
+	 *     (uniqueName=String0? statementsKind=CollectionKind? default=EBoolean? (statements+=Statement statements+=Statement*)?)
+	 */
+	protected void sequence_SwitchCaseBlock(ISerializationContext context, SwitchCaseBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns SynchronizedBlock
 	 *     Element returns SynchronizedBlock
 	 *     SynchronizedBlock returns SynchronizedBlock
@@ -1864,7 +1936,23 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns VariableAccess
+	 *     Access returns VariableAccess
+	 *     Element returns VariableAccess
+	 *     VariableAccess returns VariableAccess
+	 *
+	 * Constraint:
+	 *     (uniqueName=String0? variable=[Variable|ID]?)
+	 */
+	protected void sequence_VariableAccess(ISerializationContext context, VariableAccess semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Variable returns Variable
+	 *     Element returns Variable
 	 *     Variable_Impl returns Variable
 	 *
 	 * Constraint:

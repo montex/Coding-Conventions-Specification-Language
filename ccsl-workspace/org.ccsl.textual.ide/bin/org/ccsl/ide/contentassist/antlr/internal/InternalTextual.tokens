@@ -5,6 +5,7 @@
 'ADDITION'=28
 'AND'=13
 'ANY'=19
+'Access'=219
 'Annotation'=52
 'AnnotationField'=72
 'AnnotationFieldValue'=66
@@ -37,6 +38,7 @@
 'CountFilter'=179
 'DIVIDE'=30
 'DataType'=100
+'DataTypeAccess'=218
 'DoublePrimitiveType'=119
 'EXACT'=20
 'EmptyStatement'=157
@@ -100,6 +102,7 @@
 'Statement'=147
 'StringConcatenation'=136
 'SuperMethodClosureFilter'=191
+'SwitchCaseBlock'=220
 'SynchronizedBlock'=153
 'TemplateFilter'=174
 'TernaryExpression'=126
@@ -111,6 +114,7 @@
 'UNSIGNED_RIGHT_SHIFT'=37
 'VarDeclaration'=122
 'Variable'=140
+'VariableAccess'=217
 'VoidType'=111
 'WildCardType'=115
 '['=42
@@ -171,7 +175,7 @@
 'min'=180
 'name'=57
 'nestedTypes'=64
-'not'=217
+'not'=221
 'objectExpression'=131
 'operands'=135
 'operandsKind'=134
@@ -206,8 +210,8 @@
 '{'=40
 '}'=44
 RULE_ANY_OTHER=10
-RULE_ID=4
-RULE_INT=5
+RULE_ID=5
+RULE_INT=4
 RULE_ML_COMMENT=7
 RULE_SL_COMMENT=8
 RULE_STRING=6
@@ -340,7 +344,11 @@ T__214=214
 T__215=215
 T__216=216
 T__217=217
+T__218=218
+T__219=219
 T__21=21
+T__220=220
+T__221=221
 T__22=22
 T__23=23
 T__24=24

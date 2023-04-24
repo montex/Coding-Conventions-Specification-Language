@@ -1,0 +1,5 @@
+Composite { operator OR rules [ Atomic {
+	context {
+		contextElements [ SwitchCaseBlock { statements [ LabelStatement l1 { name label1 } ] } ] } subject label1 } , Atomic {
+	context {
+		contextElements [ SwitchCaseBlock { statements [ Block { statements [ LabelStatement l2 { name label2 } ] } ] } ] } subject label2 } ] }

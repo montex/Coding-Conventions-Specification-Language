@@ -16,6 +16,7 @@ import ccsl.elements.datatype.ObjectType;
 import ccsl.elements.namedElements.complexType.AnnotationType;
 import ccsl.elements.namedElements.complexType.AnonymousClass;
 import ccsl.elements.namedElements.complexType.ComplexTypePackage;
+import ccsl.elements.namedElements.complexType.JClass;
 import ccsl.elements.namedElements.complexType.TypeDeclaration;
 import ccsl.elements.expressions.annotation.*;
 import ccsl.functions.booleanFunctions.BooleanFunctionsPackage;
@@ -49,6 +50,11 @@ public class TextualScopeProvider extends AbstractTextualScopeProvider {
         else if (context instanceof Annotation && reference == ComplexTypePackage.Literals.ANNOTATION_TYPE) {
         	EObject rootElement = EcoreUtil2.getRootContainer(context);
             List<AnnotationType> candidates = EcoreUtil2.getAllContentsOfType(rootElement, AnnotationType.class);
+            return Scopes.scopeFor(candidates);
+        }
+        else if (context instanceof JClass && reference == ComplexTypePackage.Literals.JCLASS) {
+        	EObject rootElement = EcoreUtil2.getRootContainer(context);
+            List<JClass> candidates = EcoreUtil2.getAllContentsOfType(rootElement, JClass.class);
             return Scopes.scopeFor(candidates);
         }
         else if (context instanceof TemplateFilter && reference == FiltersPackage.Literals.TEMPLATE_FILTER) {

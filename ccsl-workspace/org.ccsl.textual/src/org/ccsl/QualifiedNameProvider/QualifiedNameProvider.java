@@ -16,12 +16,24 @@ import ccsl.elements.namedElements.*;
 import ccsl.elements.expressions.*;
 import ccsl.elements.namedElements.method.*;
 import ccsl.elements.statements.*;
+import ccsl.elements.namedElements.variable.*;
+import ccsl.elements.namedElements.complexType.JClass;
 
 public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvider {
 	
 	public QualifiedName qualifiedName(Element element) {
 		return QualifiedName.create(element.getUniqueName());
 	}
+	/*ADDED CHECK CORRECT*/
+	public QualifiedName qualifiedName(Variable variable) {
+		return QualifiedName.create(variable.getName());
+	}
+	
+	/*ADDED CHECK CORRECT*/
+	public QualifiedName qualifiedName(LabelStatement labelStatement) {
+		return QualifiedName.create(labelStatement.getName());
+	}
+	
 	
 	public QualifiedName qualifiedName(AtomicRule atomicRule) {
 		return QualifiedName.create(atomicRule.getSubject().getUniqueName());
@@ -48,17 +60,17 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 	}
 	
 	public QualifiedName qualifiedName(JClass jClass) {
-		return QualifiedName.create(jClass.getUniqueName());
+		return QualifiedName.create(jClass.getName());
 	}
 	/*
 	public QualifiedName qualifiedName(NamedElement namedElement) {
 		return QualifiedName.create(namedElement.getUniqueName());
 	}
-	
+	*/
 	public QualifiedName qualifiedName(Expression expression) {
 		return QualifiedName.create(expression.getUniqueName());
 	}
-	*/
+	
 	public QualifiedName qualifiedName(Method method) {
 		return QualifiedName.create(method.getUniqueName());
 	}

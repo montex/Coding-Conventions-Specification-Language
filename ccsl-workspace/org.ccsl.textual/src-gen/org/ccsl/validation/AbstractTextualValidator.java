@@ -18,6 +18,7 @@ public abstract class AbstractTextualValidator extends AbstractDeclarativeValida
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/namedElements/complexType"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/expressions"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/datatype"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/expressions/accesses"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/namedElements/variable"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/namedElements"));
@@ -26,6 +27,7 @@ public abstract class AbstractTextualValidator extends AbstractDeclarativeValida
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/expressions/annotation"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements/import"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/namedElements/method"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements/controlFlow"));
 		return result;
 	}
 }

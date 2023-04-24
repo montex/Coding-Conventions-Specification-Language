@@ -197,14 +197,15 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cBooleanExpressionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cBinaryExpressionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final RuleCall cOperandExpression_ImplParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cAccessParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		
 		//Expression expressions::Expression:
 		//	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-		//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl;
+		//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-		//StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl
+		//StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Expression_Impl
@@ -236,6 +237,9 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//OperandExpression_Impl
 		public RuleCall getOperandExpression_ImplParserRuleCall_9() { return cOperandExpression_ImplParserRuleCall_9; }
+		
+		//Access
+		public RuleCall getAccessParserRuleCall_10() { return cAccessParserRuleCall_10; }
 	}
 	public class DataTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.DataType");
@@ -315,6 +319,29 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//LongPrimitiveType
 		public RuleCall getLongPrimitiveTypeParserRuleCall_15() { return cLongPrimitiveTypeParserRuleCall_15; }
+	}
+	public class AccessElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.Access");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableAccessParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDataTypeAccessParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAccess_ImplParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Access accesses::Access:
+		//	VariableAccess | DataTypeAccess | Access_Impl;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//VariableAccess | DataTypeAccess | Access_Impl
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//VariableAccess
+		public RuleCall getVariableAccessParserRuleCall_0() { return cVariableAccessParserRuleCall_0; }
+		
+		//DataTypeAccess
+		public RuleCall getDataTypeAccessParserRuleCall_1() { return cDataTypeAccessParserRuleCall_1; }
+		
+		//Access_Impl
+		public RuleCall getAccess_ImplParserRuleCall_2() { return cAccess_ImplParserRuleCall_2; }
 	}
 	public class ObjectTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.ObjectType");
@@ -616,11 +643,11 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	'{'
 		//	negated?='not'?
 		//	'context' context=Context
-		//	'subject' subject=[elements::Element|EString]
+		//	'subject' subject=[elements::Element|EString]?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Atomic' '{' negated?='not'? 'context' context=Context 'subject' subject=[elements::Element|EString] '}'
+		//'Atomic' '{' negated?='not'? 'context' context=Context 'subject' subject=[elements::Element|EString]? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'Atomic'
@@ -647,7 +674,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'subject'
 		public Keyword getSubjectKeyword_5() { return cSubjectKeyword_5; }
 		
-		//subject=[elements::Element|EString]
+		//subject=[elements::Element|EString]?
 		public Assignment getSubjectAssignment_6() { return cSubjectAssignment_6; }
 		
 		//[elements::Element|EString]
@@ -686,14 +713,17 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cExpressionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cSimpleMethodParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final RuleCall cAnnotationFieldValueParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cVariableParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cMethodParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cSwitchCaseBlockParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		
 		//Element elements::Element:
 		//	{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType
-		//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue;
+		//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue | Variable | Method | SwitchCaseBlock;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType |
-		//ImportableElement | Expression | SimpleMethod | AnnotationFieldValue
+		//ImportableElement | Expression | SimpleMethod | AnnotationFieldValue | Variable | Method | SwitchCaseBlock
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{elements::Element} uniqueName=EString
@@ -734,6 +764,15 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//AnnotationFieldValue
 		public RuleCall getAnnotationFieldValueParserRuleCall_9() { return cAnnotationFieldValueParserRuleCall_9; }
+		
+		///*ADDED*/ Variable
+		public RuleCall getVariableParserRuleCall_10() { return cVariableParserRuleCall_10; }
+		
+		//Method
+		public RuleCall getMethodParserRuleCall_11() { return cMethodParserRuleCall_11; }
+		
+		//SwitchCaseBlock
+		public RuleCall getSwitchCaseBlockParserRuleCall_12() { return cSwitchCaseBlockParserRuleCall_12; }
 	}
 	public class ContextElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.Context");
@@ -844,14 +883,22 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	public class String0Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.String0");
-		private final RuleCall cIDTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cSTRINGTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//String0 type::String:
-		//	ID;
+		//	ID | STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//ID | STRING
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
 		//ID
-		public RuleCall getIDTerminalRuleCall() { return cIDTerminalRuleCall; }
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_1() { return cSTRINGTerminalRuleCall_1; }
 	}
 	public class AnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.Annotation");
@@ -11277,6 +11324,293 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
+	public class VariableAccessElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.VariableAccess");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cVariableAccessAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cVariableAccessKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cUniqueNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUniqueNameString0ParserRuleCall_2_0 = (RuleCall)cUniqueNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cVariableKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cVariableAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cVariableVariableCrossReference_4_1_0 = (CrossReference)cVariableAssignment_4_1.eContents().get(0);
+		private final RuleCall cVariableVariableIDTerminalRuleCall_4_1_0_1 = (RuleCall)cVariableVariableCrossReference_4_1_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		///*ADDED access elements and Blocks */ VariableAccess accesses::VariableAccess:
+		//	{accesses::VariableAccess}
+		//	'VariableAccess'
+		//	uniqueName=String0?
+		//	'{' ('variable' variable=[variable::Variable])?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{accesses::VariableAccess} 'VariableAccess' uniqueName=String0? '{' ('variable' variable=[variable::Variable])? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{accesses::VariableAccess}
+		public Action getVariableAccessAction_0() { return cVariableAccessAction_0; }
+		
+		//'VariableAccess'
+		public Keyword getVariableAccessKeyword_1() { return cVariableAccessKeyword_1; }
+		
+		//uniqueName=String0?
+		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
+		
+		//String0
+		public RuleCall getUniqueNameString0ParserRuleCall_2_0() { return cUniqueNameString0ParserRuleCall_2_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//('variable' variable=[variable::Variable])?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'variable'
+		public Keyword getVariableKeyword_4_0() { return cVariableKeyword_4_0; }
+		
+		//variable=[variable::Variable]
+		public Assignment getVariableAssignment_4_1() { return cVariableAssignment_4_1; }
+		
+		//[variable::Variable]
+		public CrossReference getVariableVariableCrossReference_4_1_0() { return cVariableVariableCrossReference_4_1_0; }
+		
+		//ID
+		public RuleCall getVariableVariableIDTerminalRuleCall_4_1_0_1() { return cVariableVariableIDTerminalRuleCall_4_1_0_1; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class DataTypeAccessElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.DataTypeAccess");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDataTypeAccessAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cDataTypeAccessKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cUniqueNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUniqueNameString0ParserRuleCall_2_0 = (RuleCall)cUniqueNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cDataTypeKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cDatatypeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cDatatypeDataTypeCrossReference_4_1_0 = (CrossReference)cDatatypeAssignment_4_1.eContents().get(0);
+		private final RuleCall cDatatypeDataTypeIDTerminalRuleCall_4_1_0_1 = (RuleCall)cDatatypeDataTypeCrossReference_4_1_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//DataTypeAccess accesses::DataTypeAccess:
+		//	{accesses::DataTypeAccess}
+		//	'DataTypeAccess'
+		//	uniqueName=String0?
+		//	'{' ('DataType' datatype=[datatype::DataType])?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{accesses::DataTypeAccess} 'DataTypeAccess' uniqueName=String0? '{' ('DataType' datatype=[datatype::DataType])? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{accesses::DataTypeAccess}
+		public Action getDataTypeAccessAction_0() { return cDataTypeAccessAction_0; }
+		
+		//'DataTypeAccess'
+		public Keyword getDataTypeAccessKeyword_1() { return cDataTypeAccessKeyword_1; }
+		
+		//uniqueName=String0?
+		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
+		
+		//String0
+		public RuleCall getUniqueNameString0ParserRuleCall_2_0() { return cUniqueNameString0ParserRuleCall_2_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//('DataType' datatype=[datatype::DataType])?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'DataType'
+		public Keyword getDataTypeKeyword_4_0() { return cDataTypeKeyword_4_0; }
+		
+		//datatype=[datatype::DataType]
+		public Assignment getDatatypeAssignment_4_1() { return cDatatypeAssignment_4_1; }
+		
+		//[datatype::DataType]
+		public CrossReference getDatatypeDataTypeCrossReference_4_1_0() { return cDatatypeDataTypeCrossReference_4_1_0; }
+		
+		//ID
+		public RuleCall getDatatypeDataTypeIDTerminalRuleCall_4_1_0_1() { return cDatatypeDataTypeIDTerminalRuleCall_4_1_0_1; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class Access_ImplElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.Access_Impl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cAccessAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cAccessKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cUniqueNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUniqueNameString0ParserRuleCall_2_0 = (RuleCall)cUniqueNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cExpressionKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cFromAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cFromExpressionParserRuleCall_4_1_0 = (RuleCall)cFromAssignment_4_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//Access_Impl accesses::Access:
+		//	{accesses::Access}
+		//	'Access'
+		//	uniqueName=String0?
+		//	'{' ('Expression' from=Expression)?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{accesses::Access} 'Access' uniqueName=String0? '{' ('Expression' from=Expression)? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{accesses::Access}
+		public Action getAccessAction_0() { return cAccessAction_0; }
+		
+		//'Access'
+		public Keyword getAccessKeyword_1() { return cAccessKeyword_1; }
+		
+		//uniqueName=String0?
+		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
+		
+		//String0
+		public RuleCall getUniqueNameString0ParserRuleCall_2_0() { return cUniqueNameString0ParserRuleCall_2_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//('Expression' from=Expression)?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'Expression'
+		public Keyword getExpressionKeyword_4_0() { return cExpressionKeyword_4_0; }
+		
+		//from=Expression
+		public Assignment getFromAssignment_4_1() { return cFromAssignment_4_1; }
+		
+		//Expression
+		public RuleCall getFromExpressionParserRuleCall_4_1_0() { return cFromExpressionParserRuleCall_4_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class SwitchCaseBlockElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.SwitchCaseBlock");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cSwitchCaseBlockAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSwitchCaseBlockKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cUniqueNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUniqueNameString0ParserRuleCall_2_0 = (RuleCall)cUniqueNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cStatementsKindKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cStatementsKindAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cStatementsKindCollectionKindEnumRuleCall_4_1_0 = (RuleCall)cStatementsKindAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cDefaultKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cDefaultAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cDefaultEBooleanParserRuleCall_5_1_0 = (RuleCall)cDefaultAssignment_5_1.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cStatementsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cStatementsAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cStatementsStatementParserRuleCall_6_2_0 = (RuleCall)cStatementsAssignment_6_2.eContents().get(0);
+		private final Group cGroup_6_3 = (Group)cGroup_6.eContents().get(3);
+		private final Keyword cCommaKeyword_6_3_0 = (Keyword)cGroup_6_3.eContents().get(0);
+		private final Assignment cStatementsAssignment_6_3_1 = (Assignment)cGroup_6_3.eContents().get(1);
+		private final RuleCall cStatementsStatementParserRuleCall_6_3_1_0 = (RuleCall)cStatementsAssignment_6_3_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_6_4 = (Keyword)cGroup_6.eContents().get(4);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		
+		//SwitchCaseBlock controlFlow::SwitchCaseBlock:
+		//	{controlFlow::SwitchCaseBlock}
+		//	'SwitchCaseBlock'
+		//	uniqueName=String0?
+		//	'{' ('statementsKind' statementsKind=CollectionKind)? ('default' default=EBoolean)? ('statements' '['
+		//	statements+=Statement ("," statements+=Statement)* ']')?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{controlFlow::SwitchCaseBlock} 'SwitchCaseBlock' uniqueName=String0? '{' ('statementsKind'
+		//statementsKind=CollectionKind)? ('default' default=EBoolean)? ('statements' '[' statements+=Statement (","
+		//statements+=Statement)* ']')? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{controlFlow::SwitchCaseBlock}
+		public Action getSwitchCaseBlockAction_0() { return cSwitchCaseBlockAction_0; }
+		
+		//'SwitchCaseBlock'
+		public Keyword getSwitchCaseBlockKeyword_1() { return cSwitchCaseBlockKeyword_1; }
+		
+		//uniqueName=String0?
+		public Assignment getUniqueNameAssignment_2() { return cUniqueNameAssignment_2; }
+		
+		//String0
+		public RuleCall getUniqueNameString0ParserRuleCall_2_0() { return cUniqueNameString0ParserRuleCall_2_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//('statementsKind' statementsKind=CollectionKind)?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'statementsKind'
+		public Keyword getStatementsKindKeyword_4_0() { return cStatementsKindKeyword_4_0; }
+		
+		//statementsKind=CollectionKind
+		public Assignment getStatementsKindAssignment_4_1() { return cStatementsKindAssignment_4_1; }
+		
+		//CollectionKind
+		public RuleCall getStatementsKindCollectionKindEnumRuleCall_4_1_0() { return cStatementsKindCollectionKindEnumRuleCall_4_1_0; }
+		
+		//('default' default=EBoolean)?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'default'
+		public Keyword getDefaultKeyword_5_0() { return cDefaultKeyword_5_0; }
+		
+		//default=EBoolean
+		public Assignment getDefaultAssignment_5_1() { return cDefaultAssignment_5_1; }
+		
+		//EBoolean
+		public RuleCall getDefaultEBooleanParserRuleCall_5_1_0() { return cDefaultEBooleanParserRuleCall_5_1_0; }
+		
+		//('statements' '[' statements+=Statement ("," statements+=Statement)* ']')?
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//'statements'
+		public Keyword getStatementsKeyword_6_0() { return cStatementsKeyword_6_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_6_1() { return cLeftSquareBracketKeyword_6_1; }
+		
+		//statements+=Statement
+		public Assignment getStatementsAssignment_6_2() { return cStatementsAssignment_6_2; }
+		
+		//Statement
+		public RuleCall getStatementsStatementParserRuleCall_6_2_0() { return cStatementsStatementParserRuleCall_6_2_0; }
+		
+		//("," statements+=Statement)*
+		public Group getGroup_6_3() { return cGroup_6_3; }
+		
+		//","
+		public Keyword getCommaKeyword_6_3_0() { return cCommaKeyword_6_3_0; }
+		
+		//statements+=Statement
+		public Assignment getStatementsAssignment_6_3_1() { return cStatementsAssignment_6_3_1; }
+		
+		//Statement
+		public RuleCall getStatementsStatementParserRuleCall_6_3_1_0() { return cStatementsStatementParserRuleCall_6_3_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_6_4() { return cRightSquareBracketKeyword_6_4; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
+	}
 	
 	public class LogicOperatorElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.LogicOperator");
@@ -11644,6 +11978,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final TypeDeclarationElements pTypeDeclaration;
 	private final ExpressionElements pExpression;
 	private final DataTypeElements pDataType;
+	private final AccessElements pAccess;
 	private final ObjectTypeElements pObjectType;
 	private final VariableElements pVariable;
 	private final StatementElements pStatement;
@@ -11752,6 +12087,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final PackageElements pPackage;
 	private final ComplexType_ImplElements pComplexType_Impl;
 	private final AnonymousClassElements pAnonymousClass;
+	private final VariableAccessElements pVariableAccess;
+	private final DataTypeAccessElements pDataTypeAccess;
+	private final Access_ImplElements pAccess_Impl;
+	private final SwitchCaseBlockElements pSwitchCaseBlock;
 	
 	private final Grammar grammar;
 	
@@ -11767,6 +12106,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pTypeDeclaration = new TypeDeclarationElements();
 		this.pExpression = new ExpressionElements();
 		this.pDataType = new DataTypeElements();
+		this.pAccess = new AccessElements();
 		this.pObjectType = new ObjectTypeElements();
 		this.pVariable = new VariableElements();
 		this.pStatement = new StatementElements();
@@ -11875,6 +12215,10 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pPackage = new PackageElements();
 		this.pComplexType_Impl = new ComplexType_ImplElements();
 		this.pAnonymousClass = new AnonymousClassElements();
+		this.pVariableAccess = new VariableAccessElements();
+		this.pDataTypeAccess = new DataTypeAccessElements();
+		this.pAccess_Impl = new Access_ImplElements();
+		this.pSwitchCaseBlock = new SwitchCaseBlockElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -11940,7 +12284,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	//Expression expressions::Expression:
 	//	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-	//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl;
+	//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -11959,6 +12303,16 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getDataTypeRule() {
 		return getDataTypeAccess().getRule();
+	}
+	
+	//Access accesses::Access:
+	//	VariableAccess | DataTypeAccess | Access_Impl;
+	public AccessElements getAccessAccess() {
+		return pAccess;
+	}
+	
+	public ParserRule getAccessRule() {
+		return getAccessAccess().getRule();
 	}
 	
 	//ObjectType datatype::ObjectType:
@@ -12033,7 +12387,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//	'{'
 	//	negated?='not'?
 	//	'context' context=Context
-	//	'subject' subject=[elements::Element|EString]
+	//	'subject' subject=[elements::Element|EString]?
 	//	'}';
 	public AtomicRuleElements getAtomicRuleAccess() {
 		return pAtomicRule;
@@ -12065,7 +12419,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	//Element elements::Element:
 	//	{elements::Element} uniqueName=EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType
-	//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue;
+	//	| ImportableElement | Expression | SimpleMethod | AnnotationFieldValue | Variable | Method | SwitchCaseBlock;
 	public ElementElements getElementAccess() {
 		return pElement;
 	}
@@ -12088,7 +12442,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//String0 type::String:
-	//	ID;
+	//	ID | STRING;
 	public String0Elements getString0Access() {
 		return pString0;
 	}
@@ -13480,6 +13834,63 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getAnonymousClassRule() {
 		return getAnonymousClassAccess().getRule();
+	}
+	
+	///*ADDED access elements and Blocks */ VariableAccess accesses::VariableAccess:
+	//	{accesses::VariableAccess}
+	//	'VariableAccess'
+	//	uniqueName=String0?
+	//	'{' ('variable' variable=[variable::Variable])?
+	//	'}';
+	public VariableAccessElements getVariableAccessAccess() {
+		return pVariableAccess;
+	}
+	
+	public ParserRule getVariableAccessRule() {
+		return getVariableAccessAccess().getRule();
+	}
+	
+	//DataTypeAccess accesses::DataTypeAccess:
+	//	{accesses::DataTypeAccess}
+	//	'DataTypeAccess'
+	//	uniqueName=String0?
+	//	'{' ('DataType' datatype=[datatype::DataType])?
+	//	'}';
+	public DataTypeAccessElements getDataTypeAccessAccess() {
+		return pDataTypeAccess;
+	}
+	
+	public ParserRule getDataTypeAccessRule() {
+		return getDataTypeAccessAccess().getRule();
+	}
+	
+	//Access_Impl accesses::Access:
+	//	{accesses::Access}
+	//	'Access'
+	//	uniqueName=String0?
+	//	'{' ('Expression' from=Expression)?
+	//	'}';
+	public Access_ImplElements getAccess_ImplAccess() {
+		return pAccess_Impl;
+	}
+	
+	public ParserRule getAccess_ImplRule() {
+		return getAccess_ImplAccess().getRule();
+	}
+	
+	//SwitchCaseBlock controlFlow::SwitchCaseBlock:
+	//	{controlFlow::SwitchCaseBlock}
+	//	'SwitchCaseBlock'
+	//	uniqueName=String0?
+	//	'{' ('statementsKind' statementsKind=CollectionKind)? ('default' default=EBoolean)? ('statements' '['
+	//	statements+=Statement ("," statements+=Statement)* ']')?
+	//	'}';
+	public SwitchCaseBlockElements getSwitchCaseBlockAccess() {
+		return pSwitchCaseBlock;
+	}
+	
+	public ParserRule getSwitchCaseBlockRule() {
+		return getSwitchCaseBlockAccess().getRule();
 	}
 	
 	//terminal ID:
