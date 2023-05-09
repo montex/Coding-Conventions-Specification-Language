@@ -39,17 +39,19 @@ public class TextualScopeProvider extends AbstractTextualScopeProvider {
             EObject rootElement = EcoreUtil2.getRootContainer(context);
             List<TypeDeclaration> candidates = EcoreUtil2.getAllContentsOfType(rootElement, TypeDeclaration.class);
             return Scopes.scopeFor(candidates);
-        } else if (context instanceof AnonymousClass && reference == ComplexTypePackage.Literals.ANONYMOUS_CLASS__TYPE) {
-            EObject rootElement = EcoreUtil2.getRootContainer(context);
-            List<TypeDeclaration> candidates = EcoreUtil2.getAllContentsOfType(rootElement, TypeDeclaration.class);
-            List<EObject> allCandidates = new ArrayList<>();
-            allCandidates.addAll(candidates);
-            allCandidates.addAll(EcoreUtil2.getAllContentsOfType(rootElement, Element.class));
-            return Scopes.scopeFor(allCandidates);
+        } else if (context instanceof AnonymousClass && reference == ComplexTypePackage.Literals.ANONYMOUS_CLASS) {
+        	EObject rootElement = EcoreUtil2.getRootContainer(context);
+            List<ObjectType> candidates = EcoreUtil2.getAllContentsOfType(rootElement, ObjectType.class);
+            return Scopes.scopeFor(candidates);
         }
         else if (context instanceof Annotation && reference == ComplexTypePackage.Literals.ANNOTATION_TYPE) {
         	EObject rootElement = EcoreUtil2.getRootContainer(context);
             List<AnnotationType> candidates = EcoreUtil2.getAllContentsOfType(rootElement, AnnotationType.class);
+            return Scopes.scopeFor(candidates);
+        }
+        else if (context instanceof Annotation && reference == ElementsPackage.Literals.ELEMENT) {
+        	EObject rootElement = EcoreUtil2.getRootContainer(context);
+            List<Element> candidates = EcoreUtil2.getAllContentsOfType(rootElement, Element.class);
             return Scopes.scopeFor(candidates);
         }
         else if (context instanceof JClass && reference == ComplexTypePackage.Literals.JCLASS) {

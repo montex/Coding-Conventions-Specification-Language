@@ -28,6 +28,8 @@ public abstract class AbstractTextualValidator extends AbstractDeclarativeValida
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements/import"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/namedElements/method"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements/controlFlow"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/statements/tryCatch"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.example.org/ccsl/elements/expressions/invocations"));
 		return result;
 	}
 }

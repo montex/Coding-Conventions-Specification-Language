@@ -26,12 +26,12 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 	}
 	/*ADDED CHECK CORRECT*/
 	public QualifiedName qualifiedName(Variable variable) {
-		return QualifiedName.create(variable.getName());
+		return QualifiedName.create(variable.getUniqueName());
 	}
 	
 	/*ADDED CHECK CORRECT*/
 	public QualifiedName qualifiedName(LabelStatement labelStatement) {
-		return QualifiedName.create(labelStatement.getName());
+		return QualifiedName.create(labelStatement.getUniqueName());
 	}
 	
 	
@@ -39,9 +39,9 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 		return QualifiedName.create(atomicRule.getSubject().getUniqueName());
 	}
 	
-	public QualifiedName qualifiedName(ObjectType objecttype) {
+	/*public QualifiedName qualifiedName(ObjectType objecttype) {
 		return QualifiedName.create(objecttype.getUniqueName());
-	}
+	}*/
 	
 	public QualifiedName qualifiedName(AnnotationType annotationType) {
 		return QualifiedName.create(annotationType.getUniqueName());
@@ -60,7 +60,7 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 	}
 	
 	public QualifiedName qualifiedName(JClass jClass) {
-		return QualifiedName.create(jClass.getName());
+		return QualifiedName.create(jClass.getUniqueName());
 	}
 	/*
 	public QualifiedName qualifiedName(NamedElement namedElement) {
@@ -75,9 +75,9 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 		return QualifiedName.create(method.getUniqueName());
 	}
 	
-	public QualifiedName qualifiedName(ComplexType complexType) {
+	/*public QualifiedName qualifiedName(ComplexType complexType) {
 		return QualifiedName.create(complexType.getUniqueName());
-	}
+	}*/
 	
 	public QualifiedName qualifiedName(Statement statement) {
 		return QualifiedName.create(statement.getUniqueName());

@@ -48,7 +48,7 @@ TypeDeclaration returns complexType::TypeDeclaration:
 
 
 Expression returns expressions::Expression:
-	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access;
+	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation;
 
 
 DataType returns datatype::DataType:
@@ -67,10 +67,10 @@ Variable returns variable::Variable:
 	Variable_Impl | ParameterVariable | LocalVariable | InitializableVariable_Impl | FieldVariable;
 
 Statement returns statements::Statement:
-	Statement_Impl | ControlFlowStatement | Block | InstanceCreation | SynchronizedBlock | ThrowStatement | EmptyStatement | ReturnStatement | BreakStatement | ContinueStatement | AssertStatement | ExpressionStatement | LabelStatement;
+	Statement_Impl | ControlFlowStatement | Block | InstanceCreation | SynchronizedBlock | ThrowStatement | EmptyStatement | ReturnStatement | BreakStatement | ContinueStatement | AssertStatement | ExpressionStatement | LabelStatement |/*ADDED */ TryStatement | CatchClause;
 
 NamedElement returns namedElements::NamedElement:
-	NamedElement_Impl | Package | TypeDeclaration_Impl;
+	NamedElement_Impl | Package | TypeDeclaration_Impl | Variable | Method;
 
 ComplexType returns complexType::ComplexType:
 	ComplexType_Impl | JInterface | AnonymousClass | JClass | JEnum | ComplexTypeDeclaration_Impl | ConstructComplexTypeDeclaration_Impl;
@@ -99,7 +99,7 @@ enum LogicOperator returns ccsl::LogicOperator:
 
 Element returns elements::Element:
 	{elements::Element}
-	uniqueName= EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType | ImportableElement | Expression |  SimpleMethod | AnnotationFieldValue | /*ADDED*/Variable | Method | SwitchCaseBlock;
+	uniqueName= EString | ControlledAccessElement | NamedElement | Statement | ComplexType | DataType | ImportableElement | Expression |  SimpleMethod | AnnotationFieldValue;
 	
 
 Context returns context::Context:
@@ -110,7 +110,10 @@ Context returns context::Context:
 	'}';
 
 String0 returns type::String:
-	ID | STRING;
+	EString;
+	
+ID0 returns type::ID:
+	ID;
 
 enum Visibility returns elements::Visibility:
 				PRIVATE = 'PRIVATE' | PACKAGE = 'PACKAGE' | PROTECTED = 'PROTECTED' | PUBLIC = 'PUBLIC' | ANY = 'ANY';
@@ -118,7 +121,7 @@ enum Visibility returns elements::Visibility:
 Annotation returns annotation::Annotation:
 	{annotation::Annotation}
 	'Annotation'
-	uniqueName=EString?
+	uniqueName=ID0?
 	'{'
 		('valuesKind' valuesKind=CollectionKind)?
 		('type' type=[complexType::AnnotationType|EString])?
@@ -128,7 +131,7 @@ Annotation returns annotation::Annotation:
 AnnotationType returns complexType::AnnotationType:
 	{complexType::AnnotationType}
 	'AnnotationType'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -144,7 +147,7 @@ AnnotationType returns complexType::AnnotationType:
 AnnotationFieldValue returns annotation::AnnotationFieldValue:
 	{annotation::AnnotationFieldValue}
 	'AnnotationFieldValue'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('field' field=[complexType::AnnotationField|EString])?
 		('value' value=Expression)?
@@ -160,7 +163,7 @@ ImportStatement returns import0::ImportStatement:
 	{import0::ImportStatement}
 	(static?='static')?
 	'ImportStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('importedElement' importedElement=[import0::ImportableElement|EString])?
 	'}';
@@ -168,7 +171,7 @@ ImportStatement returns import0::ImportStatement:
 TypeDeclaration_Impl returns complexType::TypeDeclaration:
 	{complexType::TypeDeclaration}
 	'TypeDeclaration'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -186,7 +189,7 @@ enum Inheritance returns elements::Inheritance:
 AnnotationField returns complexType::AnnotationField:
 	{complexType::AnnotationField}
 	'AnnotationField'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -198,7 +201,7 @@ AnnotationField returns complexType::AnnotationField:
 ImportableElement returns import0::ImportableElement:
 	{import0::ImportableElement}
 	'ImportableElement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 EBoolean returns ecore::EBoolean:
     'true' | 'false';
@@ -206,7 +209,7 @@ EBoolean returns ecore::EBoolean:
 JInterface returns complexType::JInterface:
 	{complexType::JInterface}
 	'JInterface'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -226,7 +229,7 @@ JInterface returns complexType::JInterface:
 JClass returns complexType::JClass:
 	{complexType::JClass}
 	'JClass'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -248,7 +251,7 @@ JClass returns complexType::JClass:
 JEnum returns complexType::JEnum:
 	{complexType::JEnum}
 	'JEnum'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -270,7 +273,7 @@ JEnum returns complexType::JEnum:
 ComplexTypeDeclaration_Impl returns complexType::ComplexTypeDeclaration:
 	{complexType::ComplexTypeDeclaration}
 	'ComplexTypeDeclaration'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -290,7 +293,7 @@ ComplexTypeDeclaration_Impl returns complexType::ComplexTypeDeclaration:
 ConstructComplexTypeDeclaration_Impl returns complexType::ConstructComplexTypeDeclaration:
 	{complexType::ConstructComplexTypeDeclaration}
 	'ConstructComplexTypeDeclaration'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -311,7 +314,7 @@ ConstructComplexTypeDeclaration_Impl returns complexType::ConstructComplexTypeDe
 FieldVariable returns variable::FieldVariable:
 	{variable::FieldVariable}
 	'FieldVariable'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -327,7 +330,7 @@ FieldVariable returns variable::FieldVariable:
 Method returns method::Method:
 	{method::Method}
 	'Method'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		(
 			('name' name=String0)?
@@ -349,7 +352,7 @@ Method returns method::Method:
 SimpleMethod returns method::SimpleMethod:
 	{method::SimpleMethod}
 	'SimpleMethod'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		(
 			('visibility' visibility=Visibility)?
@@ -357,7 +360,7 @@ SimpleMethod returns method::SimpleMethod:
 			&('params' '[' params+=ParameterVariable ( "," params+=ParameterVariable)* ']' )?
 			&('body' body=Block)?
 		)
-	'}';
+	'}'/* | Method */ ;
 
 DataType_Impl returns datatype::DataType:
 	{datatype::DataType}
@@ -367,32 +370,32 @@ DataType_Impl returns datatype::DataType:
 Expression_Impl returns expressions::Expression:
 	{expressions::Expression}
 	'Expression'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 PrimitiveType_Impl returns datatype::PrimitiveType:
 	{datatype::PrimitiveType}
 	'PrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 BooleanPrimitiveType returns datatype::BooleanPrimitiveType:
 	{datatype::BooleanPrimitiveType}
 	'BooleanPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ShortPrimitiveType returns datatype::ShortPrimitiveType:
 	{datatype::ShortPrimitiveType}
 	'ShortPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ObjectType_Impl returns datatype::ObjectType:
 	{datatype::ObjectType}
 	'ObjectType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ParameterizedType returns datatype::ParameterizedType:
 	{datatype::ParameterizedType}
 	'ParameterizedType'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('typeArguments' '(' typeArguments+=[datatype::ObjectType|EString] ( "," typeArguments+=[datatype::ObjectType|EString])* ')' )?
 		('type' type=[complexType::TypeDeclaration|EString])?
@@ -401,12 +404,12 @@ ParameterizedType returns datatype::ParameterizedType:
 IntPrimitiveType returns datatype::IntPrimitiveType:
 	{datatype::IntPrimitiveType}
 	'IntPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ArrayType returns datatype::ArrayType:
 	{datatype::ArrayType}
 	'ArrayType'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('dimensions' dimensions=Int0)?
 		('type' type=[datatype::DataType|EString])?
@@ -415,12 +418,12 @@ ArrayType returns datatype::ArrayType:
 VoidType returns datatype::VoidType:
 	{datatype::VoidType}
 	'VoidType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 TypeParameter returns datatype::TypeParameter:
 	{datatype::TypeParameter}
 	'TypeParameter'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('boundsKind' boundsKind=CollectionKind)?
 		('bounds' '(' bounds+=[datatype::ObjectType|EString] ( "," bounds+=[datatype::ObjectType|EString])* ')' )?
@@ -429,7 +432,7 @@ TypeParameter returns datatype::TypeParameter:
 WildCardType returns datatype::WildCardType:
 	{datatype::WildCardType}
 	'WildCardType'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('bound' bound=[datatype::ObjectType|EString])?
 	'}';
@@ -437,27 +440,27 @@ WildCardType returns datatype::WildCardType:
 BytePrimitiveType returns datatype::BytePrimitiveType:
 	{datatype::BytePrimitiveType}
 	'BytePrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 CharPrimitiveType returns datatype::CharPrimitiveType:
 	{datatype::CharPrimitiveType}
 	'CharPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 DoublePrimitiveType returns datatype::DoublePrimitiveType:
 	{datatype::DoublePrimitiveType}
 	'DoublePrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 FloatPrimitiveType returns datatype::FloatPrimitiveType:
 	{datatype::FloatPrimitiveType}
 	'FloatPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 LongPrimitiveType returns datatype::LongPrimitiveType:
 	{datatype::LongPrimitiveType}
 	'LongPrimitiveType'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 Int0 returns type::Int:
 	INT;
@@ -465,7 +468,7 @@ Int0 returns type::Int:
 VarDeclaration returns expressions::VarDeclaration:
 	{expressions::VarDeclaration}
 	'VarDeclaration'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('variable' variable=Variable)?
 	'}';
@@ -473,7 +476,7 @@ VarDeclaration returns expressions::VarDeclaration:
 CastExpression returns expressions::CastExpression:
 	{expressions::CastExpression}
 	'CastExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('type' type=[datatype::DataType|EString])?
 		('expression' expression=Expression)?
@@ -482,7 +485,7 @@ CastExpression returns expressions::CastExpression:
 TernaryExpression returns expressions::TernaryExpression:
 	{expressions::TernaryExpression}
 	'TernaryExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('condition' condition=Expression)?
 		('elseExpression' elseExpression=Expression)?
@@ -492,7 +495,7 @@ TernaryExpression returns expressions::TernaryExpression:
 InstanceofExpression returns expressions::InstanceofExpression:
 	{expressions::InstanceofExpression}
 	'InstanceofExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('type' type=[datatype::ObjectType|EString])?
 		('objectExpression' objectExpression=Expression)?
@@ -501,7 +504,7 @@ InstanceofExpression returns expressions::InstanceofExpression:
 ArithmeticExpression returns expressions::ArithmeticExpression:
 	{expressions::ArithmeticExpression}
 	'ArithmeticExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
@@ -512,7 +515,7 @@ ArithmeticExpression returns expressions::ArithmeticExpression:
 StringConcatenation returns expressions::StringConcatenation:
 	{expressions::StringConcatenation}
 	'StringConcatenation'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
@@ -522,7 +525,7 @@ StringConcatenation returns expressions::StringConcatenation:
 BooleanExpression returns expressions::BooleanExpression:
 	{expressions::BooleanExpression}
 	'BooleanExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
@@ -533,7 +536,7 @@ BooleanExpression returns expressions::BooleanExpression:
 BinaryExpression returns expressions::BinaryExpression:
 	{expressions::BinaryExpression}
 	'BinaryExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
@@ -544,7 +547,7 @@ BinaryExpression returns expressions::BinaryExpression:
 OperandExpression_Impl returns expressions::OperandExpression:
 	{expressions::OperandExpression}
 	'OperandExpression'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('kind' kind=ExpressionKind)?
 		('operandsKind' operandsKind=CollectionKind)?
@@ -554,7 +557,7 @@ OperandExpression_Impl returns expressions::OperandExpression:
 Variable_Impl returns variable::Variable:
 	{variable::Variable}
 	'Variable'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -566,7 +569,7 @@ Variable_Impl returns variable::Variable:
 ParameterVariable returns variable::ParameterVariable:
 	{variable::ParameterVariable}
 	'ParameterVariable'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -578,7 +581,7 @@ ParameterVariable returns variable::ParameterVariable:
 LocalVariable returns variable::LocalVariable:
 	{variable::LocalVariable}
 	'LocalVariable'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -591,7 +594,7 @@ LocalVariable returns variable::LocalVariable:
 InitializableVariable_Impl returns variable::InitializableVariable:
 	{variable::InitializableVariable}
 	'InitializableVariable'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -616,26 +619,26 @@ enum BinaryOperator returns expressions::BinaryOperator:
 Block returns statements::Block:
 	{statements::Block}
 	'Block'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('statementsKind' statementsKind=CollectionKind)?
 		('statements' '[' statements+=Statement ( "," statements+=Statement)* ']' )?
-	'}';
+	'}' | SwitchCaseBlock;
 
 Statement_Impl returns statements::Statement:
 	{statements::Statement}
 	'Statement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ControlFlowStatement returns statements::ControlFlowStatement:
 	{statements::ControlFlowStatement}
 	'ControlFlowStatement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 InstanceCreation returns statements::InstanceCreation:
 	{statements::InstanceCreation}
 	'InstanceCreation'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('argsKind' argsKind=CollectionKind)?
 		('type' type=[datatype::ObjectType|EString])?
@@ -646,7 +649,7 @@ InstanceCreation returns statements::InstanceCreation:
 SynchronizedBlock returns statements::SynchronizedBlock:
 	{statements::SynchronizedBlock}
 	'SynchronizedBlock'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('bodyStatements' '[' bodyStatements+=Statement ( "," bodyStatements+=Statement)* ']' )?
 		('key' key=Statement)?
@@ -654,7 +657,7 @@ SynchronizedBlock returns statements::SynchronizedBlock:
 
 ControlledAccessElement returns elements::ControlledAccessElement:
 	{elements::ControlledAccessElement}
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('visibility' visibility=Visibility)?
 	'}';
@@ -663,7 +666,7 @@ ControlledAccessElement returns elements::ControlledAccessElement:
 ThrowStatement returns statements::ThrowStatement:
 	{statements::ThrowStatement}
 	'ThrowStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('expression' expression=Expression)?
 	'}';
@@ -671,12 +674,12 @@ ThrowStatement returns statements::ThrowStatement:
 EmptyStatement returns statements::EmptyStatement:
 	{statements::EmptyStatement}
 	'EmptyStatement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ReturnStatement returns statements::ReturnStatement:
 	{statements::ReturnStatement}
 	'ReturnStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('expression' expression=Expression)?
 	'}';
@@ -684,17 +687,17 @@ ReturnStatement returns statements::ReturnStatement:
 BreakStatement returns statements::BreakStatement:
 	{statements::BreakStatement}
 	'BreakStatement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 ContinueStatement returns statements::ContinueStatement:
 	{statements::ContinueStatement}
 	'ContinueStatement'
-	uniqueName=String0?;
+	uniqueName=ID0?;
 
 AssertStatement returns statements::AssertStatement:
 	{statements::AssertStatement}
 	'AssertStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('expression' expression=Expression)?
 		('message' message=Expression)?
@@ -703,7 +706,7 @@ AssertStatement returns statements::AssertStatement:
 ExpressionStatement returns statements::ExpressionStatement:
 	{statements::ExpressionStatement}
 	'ExpressionStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('expression' expression=Expression)?
 	'}';
@@ -711,7 +714,7 @@ ExpressionStatement returns statements::ExpressionStatement:
 LabelStatement returns statements::LabelStatement:
 	{statements::LabelStatement}
 	'LabelStatement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=EString)?
 		('body' body=Statement)?
@@ -720,7 +723,7 @@ LabelStatement returns statements::LabelStatement:
 Constructor returns method::Constructor:
 	{method::Constructor}
 	'Constructor'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('visibility' visibility=Visibility)?
 		('paramsKind' paramsKind=CollectionKind)?
@@ -739,7 +742,7 @@ EString returns ecore::EString:
 EnumConstant returns complexType::EnumConstant:
 	{complexType::EnumConstant}
 	'EnumConstant'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -931,7 +934,7 @@ ImplicitContentsFilter returns filters::ImplicitContentsFilter:
 NamedElement_Impl returns namedElements::NamedElement:
 	{namedElements::NamedElement}
 	'NamedElement'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -941,7 +944,7 @@ NamedElement_Impl returns namedElements::NamedElement:
 Package returns namedElements::Package:
 	{namedElements::Package}
 	'Package'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('name' name=String0)?
 		('availableInSourceCode' availableInSourceCode=BooleanObject)?
@@ -952,7 +955,7 @@ Package returns namedElements::Package:
 ComplexType_Impl returns complexType::ComplexType:
 	{complexType::ComplexType}
 	'ComplexType'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
@@ -963,7 +966,7 @@ ComplexType_Impl returns complexType::ComplexType:
 AnonymousClass returns complexType::AnonymousClass:
 	{complexType::AnonymousClass}
 	'AnonymousClass'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('fieldsKind' fieldsKind=CollectionKind)?
 		('methodsKind' methodsKind=CollectionKind)?
@@ -978,7 +981,7 @@ AnonymousClass returns complexType::AnonymousClass:
 VariableAccess returns accesses::VariableAccess:
 	{accesses::VariableAccess}
 	'VariableAccess'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('variable' variable=[variable::Variable])?
 	'}';
@@ -986,7 +989,7 @@ VariableAccess returns accesses::VariableAccess:
 DataTypeAccess returns accesses::DataTypeAccess:
 	{accesses::DataTypeAccess}
 	'DataTypeAccess'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('DataType' datatype=[datatype::DataType])?
 	'}';
@@ -994,7 +997,7 @@ DataTypeAccess returns accesses::DataTypeAccess:
 Access_Impl returns accesses::Access:
 	{accesses::Access}
 	'Access'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('Expression' from=Expression)?
 	'}';
@@ -1002,9 +1005,77 @@ Access_Impl returns accesses::Access:
 SwitchCaseBlock returns controlFlow::SwitchCaseBlock:
 	{controlFlow::SwitchCaseBlock}
 	'SwitchCaseBlock'
-	uniqueName=String0?
+	uniqueName=ID0?
 	'{'
 		('statementsKind' statementsKind=CollectionKind)?
 		('default' default=EBoolean)?
 		('statements' '[' statements+=Statement ( "," statements+=Statement)* ']' )?
 	'}';
+	
+TryStatement returns tryCatch::TryStatement:
+	{tryCatch::TryStatement}
+	'TryStatement'
+	uniqueName=ID0?
+	'{'
+		('catchClausesKind' catchClausesKind=CollectionKind)?
+		('resourcesKind' resourcesKind=CollectionKind)?
+		('finallyBlock' finallyBlock=Block)?
+		('catchClauses' '[' catchClauses+=CatchClause ( "," catchClauses+=CatchClause)* ']' )?
+		('resources' '[' resources+=Expression ( "," resources+=Expression)* ']' )?
+		('tryBlock' tryBlock=Block)?
+	'}'
+;
+
+CatchClause returns tryCatch::CatchClause:
+	{tryCatch::CatchClause}
+	'CatchClause'
+	uniqueName=ID0?
+	'{'
+		('body' body=Block)?
+		('variable' variable = ParameterVariable)?
+		('handledExceptions' '(' handledExceptions+=[complexType::JClass|EString] ( "," handledExceptions+=[complexType::JClass|EString])* ')' )?
+	'}'
+;
+
+Invocation returns invocations::Invocation:
+	{invocations::Invocation}
+	'Invocation'
+	uniqueName=ID0?
+	'{'
+		('argsKind' argsKind=CollectionKind)?
+		('method' method= [method::SimpleMethod])?
+		('args' '[' args+=Expression ( "," args+=Expression)* ']' )?
+		('typeArgs' '(' typeArgs+=[datatype::ObjectType|EString] ( "," typeArgs+=[datatype::ObjectType|EString])* ')' )?
+		('typeArgsKind' typeArgsKind=CollectionKind)?
+	'{' | MethodInvocation | ConstructorInvocation
+	
+;
+
+MethodInvocation returns invocations::MethodInvocation:
+	{invocations::MethodInvocation}
+	'MethodInvocation'
+	uniqueName=ID0?
+	'{'
+		('from' from = Expression)?
+		('argsKind' argsKind=CollectionKind)?
+		('method' method= [method::SimpleMethod])?
+		('args' '[' args+=Expression ( "," args+=Expression)* ']' )?
+		('typeArgs' '(' typeArgs+=[datatype::ObjectType|EString] ( "," typeArgs+=[datatype::ObjectType|EString])* ')' )?
+		('typeArgsKind' typeArgsKind=CollectionKind)?
+	'}'
+;
+
+ConstructorInvocation returns invocations::ConstructorInvocation:
+	{invocations::ConstructorInvocation}
+	'ConstructorInvocation'
+	uniqueName=ID0?
+	'{'
+		('constructor' constructor = [method::Constructor])?
+		('argsKind' argsKind=CollectionKind)?
+		('method' method= [method::SimpleMethod])?
+		('args' '[' args+=Expression ( "," args+=Expression)* ']' )?
+		('typeArgs' '(' typeArgs+=[datatype::ObjectType|EString] ( "," typeArgs+=[datatype::ObjectType|EString])* ')' )?
+		('typeArgsKind' typeArgsKind=CollectionKind)?
+	'}'
+;
+

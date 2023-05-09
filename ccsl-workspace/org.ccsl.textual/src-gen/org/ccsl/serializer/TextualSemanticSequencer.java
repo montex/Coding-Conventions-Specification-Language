@@ -46,6 +46,10 @@ import ccsl.elements.expressions.accesses.VariableAccess;
 import ccsl.elements.expressions.annotation.Annotation;
 import ccsl.elements.expressions.annotation.AnnotationFieldValue;
 import ccsl.elements.expressions.annotation.AnnotationPackage;
+import ccsl.elements.expressions.invocations.ConstructorInvocation;
+import ccsl.elements.expressions.invocations.Invocation;
+import ccsl.elements.expressions.invocations.InvocationsPackage;
+import ccsl.elements.expressions.invocations.MethodInvocation;
 import ccsl.elements.namedElements.NamedElement;
 import ccsl.elements.namedElements.NamedElementsPackage;
 import ccsl.elements.namedElements.complexType.AnnotationField;
@@ -89,6 +93,9 @@ import ccsl.elements.statements.controlFlow.SwitchCaseBlock;
 import ccsl.elements.statements.import_.ImportPackage;
 import ccsl.elements.statements.import_.ImportStatement;
 import ccsl.elements.statements.import_.ImportableElement;
+import ccsl.elements.statements.tryCatch.CatchClause;
+import ccsl.elements.statements.tryCatch.TryCatchPackage;
+import ccsl.elements.statements.tryCatch.TryStatement;
 import ccsl.functions.booleanFunctions.filters.AtomicFilter;
 import ccsl.functions.booleanFunctions.filters.BlockLastStatementFilter;
 import ccsl.functions.booleanFunctions.filters.ChildClosureComplexTypeFilter;
@@ -378,6 +385,18 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				sequence_ImportableElement(context, (ImportableElement) semanticObject); 
 				return; 
 			}
+		else if (epackage == InvocationsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case InvocationsPackage.CONSTRUCTOR_INVOCATION:
+				sequence_ConstructorInvocation(context, (ConstructorInvocation) semanticObject); 
+				return; 
+			case InvocationsPackage.INVOCATION:
+				sequence_Invocation(context, (Invocation) semanticObject); 
+				return; 
+			case InvocationsPackage.METHOD_INVOCATION:
+				sequence_MethodInvocation(context, (MethodInvocation) semanticObject); 
+				return; 
+			}
 		else if (epackage == MethodPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case MethodPackage.CONSTRUCTOR:
@@ -441,6 +460,15 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				sequence_ThrowStatement(context, (ThrowStatement) semanticObject); 
 				return; 
 			}
+		else if (epackage == TryCatchPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case TryCatchPackage.CATCH_CLAUSE:
+				sequence_CatchClause(context, (CatchClause) semanticObject); 
+				return; 
+			case TryCatchPackage.TRY_STATEMENT:
+				sequence_TryStatement(context, (TryStatement) semanticObject); 
+				return; 
+			}
 		else if (epackage == VariablePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case VariablePackage.FIELD_VARIABLE:
@@ -471,7 +499,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Access_Impl returns Access
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? from=Expression?)
+	 *     (uniqueName=ID0? from=Expression?)
 	 */
 	protected void sequence_Access_Impl(ISerializationContext context, Access semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -484,7 +512,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     AnnotationFieldValue returns AnnotationFieldValue
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? field=[AnnotationField|EString]? value=Expression?)
+	 *     (uniqueName=ID0? field=[AnnotationField|EString]? value=Expression?)
 	 */
 	protected void sequence_AnnotationFieldValue(ISerializationContext context, AnnotationFieldValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -497,7 +525,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         type=[DataType|EString]? 
@@ -517,7 +545,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -539,7 +567,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Annotation returns Annotation
 	 *
 	 * Constraint:
-	 *     (uniqueName=EString? valuesKind=CollectionKind? type=[AnnotationType|EString]? (values+=AnnotationFieldValue values+=AnnotationFieldValue*)?)
+	 *     (uniqueName=ID0? valuesKind=CollectionKind? type=[AnnotationType|EString]? (values+=AnnotationFieldValue values+=AnnotationFieldValue*)?)
 	 */
 	protected void sequence_Annotation(ISerializationContext context, Annotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -554,7 +582,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         fieldsKind=CollectionKind? 
 	 *         methodsKind=CollectionKind? 
 	 *         type=[ObjectType|EString]? 
@@ -574,7 +602,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ArithmeticExpression returns ArithmeticExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? kind=ExpressionKind? operandsKind=CollectionKind? operator=ArithmeticOperator? (operands+=Expression operands+=Expression*)?)
+	 *     (uniqueName=ID0? kind=ExpressionKind? operandsKind=CollectionKind? operator=ArithmeticOperator? (operands+=Expression operands+=Expression*)?)
 	 */
 	protected void sequence_ArithmeticExpression(ISerializationContext context, ArithmeticExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -589,7 +617,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ArrayType returns ArrayType
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? dimensions=Int0? type=[DataType|EString]?)
+	 *     (uniqueName=ID0? dimensions=Int0? type=[DataType|EString]?)
 	 */
 	protected void sequence_ArrayType(ISerializationContext context, ArrayType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -603,7 +631,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     AssertStatement returns AssertStatement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? expression=Expression? message=Expression?)
+	 *     (uniqueName=ID0? expression=Expression? message=Expression?)
 	 */
 	protected void sequence_AssertStatement(ISerializationContext context, AssertStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -643,7 +671,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BinaryExpression returns BinaryExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? kind=ExpressionKind? operandsKind=CollectionKind? operator=BinaryOperator? (operands+=Expression operands+=Expression*)?)
+	 *     (uniqueName=ID0? kind=ExpressionKind? operandsKind=CollectionKind? operator=BinaryOperator? (operands+=Expression operands+=Expression*)?)
 	 */
 	protected void sequence_BinaryExpression(ISerializationContext context, BinaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -670,7 +698,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Block returns Block
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? statementsKind=CollectionKind? (statements+=Statement statements+=Statement*)?)
+	 *     (uniqueName=ID0? statementsKind=CollectionKind? (statements+=Statement statements+=Statement*)?)
 	 */
 	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -684,7 +712,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BooleanExpression returns BooleanExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? kind=ExpressionKind? operandsKind=CollectionKind? operator=BooleanOperator? (operands+=Expression operands+=Expression*)?)
+	 *     (uniqueName=ID0? kind=ExpressionKind? operandsKind=CollectionKind? operator=BooleanOperator? (operands+=Expression operands+=Expression*)?)
 	 */
 	protected void sequence_BooleanExpression(ISerializationContext context, BooleanExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -698,7 +726,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BooleanPrimitiveType returns BooleanPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_BooleanPrimitiveType(ISerializationContext context, BooleanPrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -712,7 +740,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BreakStatement returns BreakStatement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_BreakStatement(ISerializationContext context, BreakStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -726,7 +754,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     BytePrimitiveType returns BytePrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_BytePrimitiveType(ISerializationContext context, BytePrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -740,9 +768,23 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     CastExpression returns CastExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? type=[DataType|EString]? expression=Expression?)
+	 *     (uniqueName=ID0? type=[DataType|EString]? expression=Expression?)
 	 */
 	protected void sequence_CastExpression(ISerializationContext context, CastExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns CatchClause
+	 *     Element returns CatchClause
+	 *     CatchClause returns CatchClause
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? body=Block? variable=ParameterVariable? (handledExceptions+=[JClass|EString] handledExceptions+=[JClass|EString]*)?)
+	 */
+	protected void sequence_CatchClause(ISerializationContext context, CatchClause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -754,7 +796,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     CharPrimitiveType returns CharPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_CharPrimitiveType(ISerializationContext context, CharPrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -790,7 +832,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -819,7 +861,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         fieldsKind=CollectionKind? 
 	 *         methodsKind=CollectionKind? 
 	 *         (fields+=FieldVariable fields+=FieldVariable*)? 
@@ -866,7 +908,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -890,11 +932,34 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns ConstructorInvocation
+	 *     Element returns ConstructorInvocation
+	 *     Invocation returns ConstructorInvocation
+	 *     ConstructorInvocation returns ConstructorInvocation
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         constructor=[Constructor|ID]? 
+	 *         argsKind=CollectionKind? 
+	 *         method=[SimpleMethod|ID]? 
+	 *         (args+=Expression args+=Expression*)? 
+	 *         (typeArgs+=[ObjectType|EString] typeArgs+=[ObjectType|EString]*)? 
+	 *         typeArgsKind=CollectionKind?
+	 *     )
+	 */
+	protected void sequence_ConstructorInvocation(ISerializationContext context, ConstructorInvocation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Constructor returns Constructor
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         visibility=Visibility? 
 	 *         paramsKind=CollectionKind? 
 	 *         avaliableInSourceCode=BooleanObject? 
@@ -928,7 +993,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ContinueStatement returns ContinueStatement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_ContinueStatement(ISerializationContext context, ContinueStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -942,7 +1007,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ControlFlowStatement returns ControlFlowStatement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_ControlFlowStatement(ISerializationContext context, ControlFlowStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -955,7 +1020,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ControlledAccessElement returns ControlledAccessElement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? visibility=Visibility?)
+	 *     (uniqueName=ID0? visibility=Visibility?)
 	 */
 	protected void sequence_ControlledAccessElement(ISerializationContext context, ControlledAccessElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -993,7 +1058,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     DataTypeAccess returns DataTypeAccess
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? datatype=[DataType|ID]?)
+	 *     (uniqueName=ID0? datatype=[DataType|ID]?)
 	 */
 	protected void sequence_DataTypeAccess(ISerializationContext context, DataTypeAccess semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1021,7 +1086,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     DoublePrimitiveType returns DoublePrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_DoublePrimitiveType(ISerializationContext context, DoublePrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1053,7 +1118,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     EmptyStatement returns EmptyStatement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_EmptyStatement(ISerializationContext context, EmptyStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1066,7 +1131,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         argumentsKind=CollectionKind? 
@@ -1086,7 +1151,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ExpressionStatement returns ExpressionStatement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? expression=Expression?)
+	 *     (uniqueName=ID0? expression=Expression?)
 	 */
 	protected void sequence_ExpressionStatement(ISerializationContext context, ExpressionStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1100,7 +1165,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Expression_Impl returns Expression
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_Expression_Impl(ISerializationContext context, Expression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1110,12 +1175,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns FieldVariable
+	 *     NamedElement returns FieldVariable
 	 *     Element returns FieldVariable
 	 *     FieldVariable returns FieldVariable
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         final=BooleanObject? 
@@ -1139,7 +1205,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     FloatPrimitiveType returns FloatPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_FloatPrimitiveType(ISerializationContext context, FloatPrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1259,7 +1325,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ImportStatement returns ImportStatement
 	 *
 	 * Constraint:
-	 *     (static?='static'? uniqueName=String0? importedElement=[ImportableElement|EString]?)
+	 *     (static?='static'? uniqueName=ID0? importedElement=[ImportableElement|EString]?)
 	 */
 	protected void sequence_ImportStatement(ISerializationContext context, ImportStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1272,7 +1338,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ImportableElement returns ImportableElement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_ImportableElement(ISerializationContext context, ImportableElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1282,12 +1348,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns InitializableVariable
+	 *     NamedElement returns InitializableVariable
 	 *     Element returns InitializableVariable
 	 *     InitializableVariable_Impl returns InitializableVariable
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         final=BooleanObject? 
@@ -1308,7 +1375,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     InstanceCreation returns InstanceCreation
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? argsKind=CollectionKind? type=[ObjectType|EString]? constructor=Constructor? (args+=Statement args+=Statement*)?)
+	 *     (uniqueName=ID0? argsKind=CollectionKind? type=[ObjectType|EString]? constructor=Constructor? (args+=Statement args+=Statement*)?)
 	 */
 	protected void sequence_InstanceCreation(ISerializationContext context, InstanceCreation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1322,7 +1389,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     InstanceofExpression returns InstanceofExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? type=[ObjectType|EString]? objectExpression=Expression?)
+	 *     (uniqueName=ID0? type=[ObjectType|EString]? objectExpression=Expression?)
 	 */
 	protected void sequence_InstanceofExpression(ISerializationContext context, InstanceofExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1336,9 +1403,30 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     IntPrimitiveType returns IntPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_IntPrimitiveType(ISerializationContext context, IntPrimitiveType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns Invocation
+	 *     Element returns Invocation
+	 *     Invocation returns Invocation
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         argsKind=CollectionKind? 
+	 *         method=[SimpleMethod|ID]? 
+	 *         (args+=Expression args+=Expression*)? 
+	 *         (typeArgs+=[ObjectType|EString] typeArgs+=[ObjectType|EString]*)? 
+	 *         typeArgsKind=CollectionKind?
+	 *     )
+	 */
+	protected void sequence_Invocation(ISerializationContext context, Invocation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1404,7 +1492,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -1436,7 +1524,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -1468,7 +1556,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -1496,7 +1584,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     LabelStatement returns LabelStatement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? name=EString? body=Statement?)
+	 *     (uniqueName=ID0? name=EString? body=Statement?)
 	 */
 	protected void sequence_LabelStatement(ISerializationContext context, LabelStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1506,12 +1594,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns LocalVariable
+	 *     NamedElement returns LocalVariable
 	 *     Element returns LocalVariable
 	 *     LocalVariable returns LocalVariable
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         final=BooleanObject? 
@@ -1532,7 +1621,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     LongPrimitiveType returns LongPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_LongPrimitiveType(ISerializationContext context, LongPrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1541,12 +1630,36 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns MethodInvocation
+	 *     Element returns MethodInvocation
+	 *     Invocation returns MethodInvocation
+	 *     MethodInvocation returns MethodInvocation
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         from=Expression? 
+	 *         argsKind=CollectionKind? 
+	 *         method=[SimpleMethod|ID]? 
+	 *         (args+=Expression args+=Expression*)? 
+	 *         (typeArgs+=[ObjectType|EString] typeArgs+=[ObjectType|EString]*)? 
+	 *         typeArgsKind=CollectionKind?
+	 *     )
+	 */
+	protected void sequence_MethodInvocation(ISerializationContext context, MethodInvocation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Method
 	 *     Element returns Method
 	 *     Method returns Method
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         (
 	 *             (
 	 *                 name=String0 | 
@@ -1576,7 +1689,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     NamedElement_Impl returns NamedElement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? name=String0? availableInSourceCode=BooleanObject? (annotations+=Annotation annotations+=Annotation*)?)
+	 *     (uniqueName=ID0? name=String0? availableInSourceCode=BooleanObject? (annotations+=Annotation annotations+=Annotation*)?)
 	 */
 	protected void sequence_NamedElement_Impl(ISerializationContext context, NamedElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1591,7 +1704,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ObjectType_Impl returns ObjectType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_ObjectType_Impl(ISerializationContext context, ObjectType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1605,7 +1718,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     OperandExpression_Impl returns OperandExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? kind=ExpressionKind? operandsKind=CollectionKind? (operands+=Expression operands+=Expression*)?)
+	 *     (uniqueName=ID0? kind=ExpressionKind? operandsKind=CollectionKind? (operands+=Expression operands+=Expression*)?)
 	 */
 	protected void sequence_OperandExpression_Impl(ISerializationContext context, OperandExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1620,7 +1733,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         (annotations+=Annotation annotations+=Annotation*)? 
@@ -1635,12 +1748,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns ParameterVariable
+	 *     NamedElement returns ParameterVariable
 	 *     Element returns ParameterVariable
 	 *     ParameterVariable returns ParameterVariable
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         final=BooleanObject? 
@@ -1661,7 +1775,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ParameterizedType returns ParameterizedType
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? (typeArguments+=[ObjectType|EString] typeArguments+=[ObjectType|EString]*)? type=[TypeDeclaration|EString]?)
+	 *     (uniqueName=ID0? (typeArguments+=[ObjectType|EString] typeArguments+=[ObjectType|EString]*)? type=[TypeDeclaration|EString]?)
 	 */
 	protected void sequence_ParameterizedType(ISerializationContext context, ParameterizedType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1675,7 +1789,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     PrimitiveType_Impl returns PrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_PrimitiveType_Impl(ISerializationContext context, PrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1715,7 +1829,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ReturnStatement returns ReturnStatement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? expression=Expression?)
+	 *     (uniqueName=ID0? expression=Expression?)
 	 */
 	protected void sequence_ReturnStatement(ISerializationContext context, ReturnStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1748,7 +1862,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ShortPrimitiveType returns ShortPrimitiveType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_ShortPrimitiveType(ISerializationContext context, ShortPrimitiveType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1761,10 +1875,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     SimpleMethod returns SimpleMethod
 	 *
 	 * Constraint:
-	 *     (
-	 *         uniqueName=String0? 
-	 *         ((visibility=Visibility | paramsKind=CollectionKind | body=Block)? (params+=ParameterVariable params+=ParameterVariable*)?)+
-	 *     )
+	 *     (uniqueName=ID0? ((visibility=Visibility | paramsKind=CollectionKind | body=Block)? (params+=ParameterVariable params+=ParameterVariable*)?)+)
 	 */
 	protected void sequence_SimpleMethod(ISerializationContext context, SimpleMethod semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1778,7 +1889,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Statement_Impl returns Statement
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_Statement_Impl(ISerializationContext context, Statement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1792,7 +1903,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     StringConcatenation returns StringConcatenation
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? kind=ExpressionKind? operandsKind=CollectionKind? (operands+=Expression operands+=Expression*)?)
+	 *     (uniqueName=ID0? kind=ExpressionKind? operandsKind=CollectionKind? (operands+=Expression operands+=Expression*)?)
 	 */
 	protected void sequence_StringConcatenation(ISerializationContext context, StringConcatenation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1814,11 +1925,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Statement returns SwitchCaseBlock
 	 *     Element returns SwitchCaseBlock
+	 *     Block returns SwitchCaseBlock
 	 *     SwitchCaseBlock returns SwitchCaseBlock
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? statementsKind=CollectionKind? default=EBoolean? (statements+=Statement statements+=Statement*)?)
+	 *     (uniqueName=ID0? statementsKind=CollectionKind? default=EBoolean? (statements+=Statement statements+=Statement*)?)
 	 */
 	protected void sequence_SwitchCaseBlock(ISerializationContext context, SwitchCaseBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1832,7 +1945,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     SynchronizedBlock returns SynchronizedBlock
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? (bodyStatements+=Statement bodyStatements+=Statement*)? key=Statement?)
+	 *     (uniqueName=ID0? (bodyStatements+=Statement bodyStatements+=Statement*)? key=Statement?)
 	 */
 	protected void sequence_SynchronizedBlock(ISerializationContext context, SynchronizedBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1859,7 +1972,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     TernaryExpression returns TernaryExpression
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? condition=Expression? elseExpression=Expression? thenExpression=Expression?)
+	 *     (uniqueName=ID0? condition=Expression? elseExpression=Expression? thenExpression=Expression?)
 	 */
 	protected void sequence_TernaryExpression(ISerializationContext context, TernaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1873,9 +1986,31 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ThrowStatement returns ThrowStatement
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? expression=Expression?)
+	 *     (uniqueName=ID0? expression=Expression?)
 	 */
 	protected void sequence_ThrowStatement(ISerializationContext context, ThrowStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns TryStatement
+	 *     Element returns TryStatement
+	 *     TryStatement returns TryStatement
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         catchClausesKind=CollectionKind? 
+	 *         resourcesKind=CollectionKind? 
+	 *         finallyBlock=Block? 
+	 *         (catchClauses+=CatchClause catchClauses+=CatchClause*)? 
+	 *         (resources+=Expression resources+=Expression*)? 
+	 *         tryBlock=Block?
+	 *     )
+	 */
+	protected void sequence_TryStatement(ISerializationContext context, TryStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1889,7 +2024,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         visibility=Visibility? 
@@ -1913,7 +2048,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     TypeParameter returns TypeParameter
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? boundsKind=CollectionKind? (bounds+=[ObjectType|EString] bounds+=[ObjectType|EString]*)?)
+	 *     (uniqueName=ID0? boundsKind=CollectionKind? (bounds+=[ObjectType|EString] bounds+=[ObjectType|EString]*)?)
 	 */
 	protected void sequence_TypeParameter(ISerializationContext context, TypeParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1927,7 +2062,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     VarDeclaration returns VarDeclaration
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? variable=Variable?)
+	 *     (uniqueName=ID0? variable=Variable?)
 	 */
 	protected void sequence_VarDeclaration(ISerializationContext context, VarDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1942,7 +2077,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     VariableAccess returns VariableAccess
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? variable=[Variable|ID]?)
+	 *     (uniqueName=ID0? variable=[Variable|ID]?)
 	 */
 	protected void sequence_VariableAccess(ISerializationContext context, VariableAccess semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1952,12 +2087,13 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Variable returns Variable
+	 *     NamedElement returns Variable
 	 *     Element returns Variable
 	 *     Variable_Impl returns Variable
 	 *
 	 * Constraint:
 	 *     (
-	 *         uniqueName=String0? 
+	 *         uniqueName=ID0? 
 	 *         name=String0? 
 	 *         availableInSourceCode=BooleanObject? 
 	 *         final=BooleanObject? 
@@ -1977,7 +2113,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     VoidType returns VoidType
 	 *
 	 * Constraint:
-	 *     uniqueName=String0?
+	 *     uniqueName=ID0?
 	 */
 	protected void sequence_VoidType(ISerializationContext context, VoidType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1992,7 +2128,7 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     WildCardType returns WildCardType
 	 *
 	 * Constraint:
-	 *     (uniqueName=String0? bound=[ObjectType|EString]?)
+	 *     (uniqueName=ID0? bound=[ObjectType|EString]?)
 	 */
 	protected void sequence_WildCardType(ISerializationContext context, WildCardType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
