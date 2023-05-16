@@ -34,10 +34,7 @@ public class QualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 		return QualifiedName.create(labelStatement.getUniqueName());
 	}
 	
-	
-	public QualifiedName qualifiedName(AtomicRule atomicRule) {
-		return QualifiedName.create(atomicRule.getSubject().getUniqueName());
-	}
+
 	
 	/*public QualifiedName qualifiedName(ObjectType objecttype) {
 		return QualifiedName.create(objecttype.getUniqueName());

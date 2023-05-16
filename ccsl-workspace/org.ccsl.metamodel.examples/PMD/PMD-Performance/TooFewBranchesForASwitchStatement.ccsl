@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ccsl:AtomicRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccsl="http://www.example.org/ccsl" xmlns:controlFlow="http://www.example.org/ccsl/elements/statements/controlFlow" xmlns:filters="http://www.example.org/ccsl/filters" subject="//@context/@contextElements.0">
+<ccsl:AtomicRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccsl="http://www.example.org/ccsl" xmlns:controlFlow="http://www.example.org/ccsl/elements/statements/controlFlow" xmlns:filters="http://www.example.org/ccsl/filters" subject="SwSt1">
   <context>
-    <contextElements xsi:type="controlFlow:SwitchStatement">
-      <cases/>
+    <contextElements xsi:type="controlFlow:SwitchStatement" uniqueName="SwSt1">
+      <cases uniqueName="SCB1"/>
     </contextElements>
-    <filters xsi:type="filters:CountFilter" targets="//@context/@contextElements.0" min="-1" max="2" container="//@context/@contextElements.0" field="//@context/@contextElements.0/@cases.0"/>
+    <filters xsi:type="filters:CountFilter" targets="SwSt1" min="-1" max="2" container="SwSt1" field="SCB1">
+      <context/>
+    </filters>
   </context>
 </ccsl:AtomicRule>

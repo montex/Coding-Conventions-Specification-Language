@@ -15,6 +15,8 @@ import "classpath:/model/ccsl.ecore#//elements/datatype" as datatype
 import "classpath:/model/ccsl.ecore#//elements/expressions/invocations" as invocations
 import "classpath:/model/ccsl.ecore#//elements/namedElements/method" as method
 import "classpath:/model/ccsl.ecore#//elements/expressions/arrays" as arrays
+import "classpath:/model/ccsl.ecore#//elements/expressions/assignment" as assignment
+import "classpath:/model/ccsl.ecore#//elements/expressions/literals" as literals
 import "classpath:/model/ccsl.ecore#//elements/namedElements" as namedElements
 import "classpath:/model/ccsl.ecore#//functions/numberFunctions" as numberFunctions
 import "classpath:/model/ccsl.ecore#//elements/statements" as statements
@@ -48,7 +50,7 @@ TypeDeclaration returns complexType::TypeDeclaration:
 
 
 Expression returns expressions::Expression:
-	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation;
+	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation | ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
 
 
 DataType returns datatype::DataType:
@@ -110,13 +112,23 @@ Context returns context::Context:
 	'}';
 
 String0 returns type::String:
-	EString;
+	STRING;
 	
 ID0 returns type::ID:
 	ID;
 
 enum Visibility returns elements::Visibility:
 				PRIVATE = 'PRIVATE' | PACKAGE = 'PACKAGE' | PROTECTED = 'PROTECTED' | PUBLIC = 'PUBLIC' | ANY = 'ANY';
+				
+enum AssignmentOperator returns assignment::AssignmentOperator:
+				PLUS_ASSIGN = 'PLUS_ASSIGN' | ASSIGN = 'ASSIGN' | ANY = 'ANY';
+				
+enum UnaryAssignmentOperator returns assignment::UnaryAssignmentOperator:
+				DECREMENT = 'DECREMENT' | INCREMENT = 'INCREMENT' | ANY = 'ANY';
+				
+enum UnaryAssignmentKind returns assignment::UnaryAssignmentKind:
+				POST = 'POST' | PRE = 'PRE' | ANY = 'ANY';
+				
 
 Annotation returns annotation::Annotation:
 	{annotation::Annotation}
@@ -464,6 +476,8 @@ LongPrimitiveType returns datatype::LongPrimitiveType:
 
 Int0 returns type::Int:
 	INT;
+	
+/*terminal INT returns ecore::EInt: ('-'? '0'..'9')+; ? */
 
 VarDeclaration returns expressions::VarDeclaration:
 	{expressions::VarDeclaration}
@@ -633,7 +647,7 @@ Statement_Impl returns statements::Statement:
 ControlFlowStatement returns statements::ControlFlowStatement:
 	{statements::ControlFlowStatement}
 	'ControlFlowStatement'
-	uniqueName=ID0?;
+	uniqueName=ID0? | ConditionalControlFlowStatement | LoopStatement;
 
 InstanceCreation returns statements::InstanceCreation:
 	{statements::InstanceCreation}
@@ -1076,6 +1090,206 @@ ConstructorInvocation returns invocations::ConstructorInvocation:
 		('args' '[' args+=Expression ( "," args+=Expression)* ']' )?
 		('typeArgs' '(' typeArgs+=[datatype::ObjectType|EString] ( "," typeArgs+=[datatype::ObjectType|EString])* ')' )?
 		('typeArgsKind' typeArgsKind=CollectionKind)?
+	'}'
+;
+
+SwitchStatement returns controlFlow::SwitchStatement:
+	{controlFlow::SwitchStatement}
+	'SwitchStatement'
+	uniqueName=ID0?
+	'{'
+		('condition' condition= Expression)?
+		('cases' '[' cases+=SwitchCaseBlock ( "," cases+=SwitchCaseBlock)* ']' )?
+	'}'
+;
+
+IfStatement returns controlFlow::IfStatement:
+	{controlFlow::IfStatement}
+	'IfStatement'
+	uniqueName=ID0?
+	'{'
+		('condition' condition= Expression)?
+		('thenStatement' thenStatement= Statement)?
+		('elseStatement' elseStatement= Statement)?
+	'}'
+;
+
+LoopStatement returns controlFlow::LoopStatement:
+	{controlFlow::LoopStatement}
+	'LoopStatement'
+	uniqueName=ID0?
+	'{'
+		('body' body= Statement)?
+	'}' | WhileStatement | ForEachStatement
+;
+
+WhileStatement returns controlFlow::WhileStatement:
+	{controlFlow::WhileStatement}
+	'WhileStatement'
+	uniqueName=ID0?
+	'{'
+		('body' body= Statement)?
+	'}'
+;
+
+DoStatement returns controlFlow::DoStatement:
+	{controlFlow::DoStatement}
+	'DoStatement'
+	uniqueName=ID0?
+	'{'
+		('condition' condition= Expression)?
+		('body' body= Statement)?
+	'}'
+;
+
+ForStatement returns controlFlow::ForStatement:
+	{controlFlow::ForStatement}
+	'ForStatement'
+	uniqueName=ID0?
+	'{'
+		('condition' condition= Expression)?
+		('body' body= Statement)?
+		('initializers' '[' initializers+=Expression ( "," initializers+=Expression)* ']' )?
+		('initializersKind' initializersKind= CollectionKind)?
+		('updaters' '[' updaters+=Expression ( "," updaters+=Expression)* ']' )?
+		('updatersKind' updatersKind= CollectionKind)?
+	'}'
+;
+
+ForEachStatement returns controlFlow::ForEachStatement:
+	{controlFlow::ForEachStatement}
+	'ForEachStatement'
+	uniqueName=ID0?
+	'{'
+		('body' body= Statement)?
+		('expression' expression= LoopStatement)?
+		('variable' variable= [variable::ParameterVariable])?
+	'}'
+;
+
+ConditionalControlFlowStatement returns controlFlow::ConditionalControlFlowStatement:
+	{controlFlow::ConditionalControlFlowStatement}
+	'ConditionalControlFlowStatement'
+	uniqueName=ID0?
+	'{'
+		('condition' condition= Expression)?
+	'}' | SwitchStatement | IfStatement | DoStatement | ForStatement
+;
+
+ArrayCreation returns arrays::ArrayCreation:
+	{arrays::ArrayCreation}
+	'ArrayCreation'
+	uniqueName=ID0?
+	'{'
+		('type' type= [datatype::ObjectType])?
+		('initializer' initializer= ArrayInitializer)?
+		('dimensions' '[' dimensions+=Expression ( "," dimensions+=Expression)* ']' )?
+		('dimensionsKind' dimensionsKind= CollectionKind)?
+	'}'
+;
+
+ArrayIndexesAccess returns arrays::ArrayIndexesAccess:
+	{arrays::ArrayIndexesAccess}
+	'ArrayIndexesAccess'
+	uniqueName=ID0?
+	'{'
+		('indexes' '[' indexes+=Expression ( "," indexes+=Expression)* ']' )?
+		('indexesKind' indexesKind= CollectionKind)?
+	'}'
+;
+
+ArrayInitializer returns arrays::ArrayInitializer:
+	{arrays::ArrayInitializer}
+	'ArrayInitializer'
+	uniqueName=ID0?
+	'{'
+		('values' '[' values+=Expression ( "," values+=Expression)* ']' )?
+		('valuesKind' '[' valuesKind+=CollectionKind ( "," valuesKind+=CollectionKind)* ']' )?
+	'}'
+;
+
+SimpleAssignment returns assignment::SimpleAssignment:
+	{assignment::SimpleAssignment}
+	'SimpleAssignment'
+	uniqueName=ID0?
+	'{'
+		('operand' operand= Expression)?
+	'}' | Assignment | UnaryAssignment
+;
+
+Assignment returns assignment::Assignment:
+	{assignment::Assignment}
+	'Assignment'
+	uniqueName=ID0?
+	'{'
+		('operand' operand= Expression)?
+		('operator' operator= AssignmentOperator)?
+		('value' value= Expression)?
+	'}'
+;
+
+UnaryAssignment returns assignment::UnaryAssignment:
+	{assignment::UnaryAssignment}
+	'UnaryAssignment'
+	uniqueName=ID0?
+	'{'
+		('operand' operand= Expression)?
+		('operator' operator= UnaryAssignmentOperator)?
+		('kind' kind= UnaryAssignmentKind)?
+	'}'
+;
+
+LiteralValue returns literals::LiteralValue:
+	{literals::LiteralValue}
+	'LiteralValue'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
+	'}' | BooleanLiteral | NumberLiteral | StringLiteral | CharacterLiteral | NullLiteral
+;
+
+NullLiteral returns literals::NullLiteral:
+	{literals::NullLiteral}
+	'NullLiteral'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
+	'}'
+;
+
+CharacterLiteral returns literals::CharacterLiteral:
+	{literals::CharacterLiteral}
+	'CharacterLiteral'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
+	'}'
+;
+
+StringLiteral returns literals::StringLiteral:
+	{literals::StringLiteral}
+	'StringLiteral'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
+	'}'
+;
+
+NumberLiteral returns literals::NumberLiteral:
+	{literals::NumberLiteral}
+	'NumberLiteral'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
+	'}'
+;
+
+BooleanLiteral returns literals::BooleanLiteral:
+	{literals::BooleanLiteral}
+	'BooleanLiteral'
+	uniqueName=ID0?
+	'{'
+		('value' value= EString)?
 	'}'
 ;
 

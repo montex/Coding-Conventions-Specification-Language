@@ -27,9 +27,11 @@ public class Main2 {
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/NonCaseLabelInSwitchStatement.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/MissingSerialVersionUID.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/EmptyFinallyBlock.ccsl");*/
-        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/AvoidDecimalLiteralsInBigDecimalConstructor.ccsl");
+        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/AvoidDecimalLiteralsInBigDecimalConstructor.ccsl");*/
+        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/UnnecessaryBooleanAssertion.ccsl");*/
+        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-Performance/TooFewBranchesForASwitchStatement.ccsl");
         Resource xmiResource = resourceSet.getResource(inputURI, true);
-
+        
         EObject topObject = xmiResource.getContents().get(0);
 
         Injector injector = new TextualStandaloneSetup().createInjectorAndDoEMFRegistration();

@@ -46,10 +46,25 @@ import ccsl.elements.expressions.accesses.VariableAccess;
 import ccsl.elements.expressions.annotation.Annotation;
 import ccsl.elements.expressions.annotation.AnnotationFieldValue;
 import ccsl.elements.expressions.annotation.AnnotationPackage;
+import ccsl.elements.expressions.arrays.ArrayCreation;
+import ccsl.elements.expressions.arrays.ArrayIndexesAccess;
+import ccsl.elements.expressions.arrays.ArrayInitializer;
+import ccsl.elements.expressions.arrays.ArraysPackage;
+import ccsl.elements.expressions.assignment.Assignment;
+import ccsl.elements.expressions.assignment.AssignmentPackage;
+import ccsl.elements.expressions.assignment.SimpleAssignment;
+import ccsl.elements.expressions.assignment.UnaryAssignment;
 import ccsl.elements.expressions.invocations.ConstructorInvocation;
 import ccsl.elements.expressions.invocations.Invocation;
 import ccsl.elements.expressions.invocations.InvocationsPackage;
 import ccsl.elements.expressions.invocations.MethodInvocation;
+import ccsl.elements.expressions.literals.BooleanLiteral;
+import ccsl.elements.expressions.literals.CharacterLiteral;
+import ccsl.elements.expressions.literals.LiteralValue;
+import ccsl.elements.expressions.literals.LiteralsPackage;
+import ccsl.elements.expressions.literals.NullLiteral;
+import ccsl.elements.expressions.literals.NumberLiteral;
+import ccsl.elements.expressions.literals.StringLiteral;
 import ccsl.elements.namedElements.NamedElement;
 import ccsl.elements.namedElements.NamedElementsPackage;
 import ccsl.elements.namedElements.complexType.AnnotationField;
@@ -88,8 +103,16 @@ import ccsl.elements.statements.Statement;
 import ccsl.elements.statements.StatementsPackage;
 import ccsl.elements.statements.SynchronizedBlock;
 import ccsl.elements.statements.ThrowStatement;
+import ccsl.elements.statements.controlFlow.ConditionalControlFlowStatement;
 import ccsl.elements.statements.controlFlow.ControlFlowPackage;
+import ccsl.elements.statements.controlFlow.DoStatement;
+import ccsl.elements.statements.controlFlow.ForEachStatement;
+import ccsl.elements.statements.controlFlow.ForStatement;
+import ccsl.elements.statements.controlFlow.IfStatement;
+import ccsl.elements.statements.controlFlow.LoopStatement;
 import ccsl.elements.statements.controlFlow.SwitchCaseBlock;
+import ccsl.elements.statements.controlFlow.SwitchStatement;
+import ccsl.elements.statements.controlFlow.WhileStatement;
 import ccsl.elements.statements.import_.ImportPackage;
 import ccsl.elements.statements.import_.ImportStatement;
 import ccsl.elements.statements.import_.ImportableElement;
@@ -163,6 +186,30 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				sequence_AnnotationFieldValue(context, (AnnotationFieldValue) semanticObject); 
 				return; 
 			}
+		else if (epackage == ArraysPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case ArraysPackage.ARRAY_CREATION:
+				sequence_ArrayCreation(context, (ArrayCreation) semanticObject); 
+				return; 
+			case ArraysPackage.ARRAY_INDEXES_ACCESS:
+				sequence_ArrayIndexesAccess(context, (ArrayIndexesAccess) semanticObject); 
+				return; 
+			case ArraysPackage.ARRAY_INITIALIZER:
+				sequence_ArrayInitializer(context, (ArrayInitializer) semanticObject); 
+				return; 
+			}
+		else if (epackage == AssignmentPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case AssignmentPackage.ASSIGNMENT:
+				sequence_Assignment(context, (Assignment) semanticObject); 
+				return; 
+			case AssignmentPackage.SIMPLE_ASSIGNMENT:
+				sequence_SimpleAssignment(context, (SimpleAssignment) semanticObject); 
+				return; 
+			case AssignmentPackage.UNARY_ASSIGNMENT:
+				sequence_UnaryAssignment(context, (UnaryAssignment) semanticObject); 
+				return; 
+			}
 		else if (epackage == ccslPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case ccslPackage.ATOMIC_RULE:
@@ -216,8 +263,32 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 			}
 		else if (epackage == ControlFlowPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case ControlFlowPackage.CONDITIONAL_CONTROL_FLOW_STATEMENT:
+				sequence_ConditionalControlFlowStatement(context, (ConditionalControlFlowStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.DO_STATEMENT:
+				sequence_DoStatement(context, (DoStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.FOR_EACH_STATEMENT:
+				sequence_ForEachStatement(context, (ForEachStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.FOR_STATEMENT:
+				sequence_ForStatement(context, (ForStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.IF_STATEMENT:
+				sequence_IfStatement(context, (IfStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.LOOP_STATEMENT:
+				sequence_LoopStatement(context, (LoopStatement) semanticObject); 
+				return; 
 			case ControlFlowPackage.SWITCH_CASE_BLOCK:
 				sequence_SwitchCaseBlock(context, (SwitchCaseBlock) semanticObject); 
+				return; 
+			case ControlFlowPackage.SWITCH_STATEMENT:
+				sequence_SwitchStatement(context, (SwitchStatement) semanticObject); 
+				return; 
+			case ControlFlowPackage.WHILE_STATEMENT:
+				sequence_WhileStatement(context, (WhileStatement) semanticObject); 
 				return; 
 			}
 		else if (epackage == DatatypePackage.eINSTANCE)
@@ -395,6 +466,27 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case InvocationsPackage.METHOD_INVOCATION:
 				sequence_MethodInvocation(context, (MethodInvocation) semanticObject); 
+				return; 
+			}
+		else if (epackage == LiteralsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case LiteralsPackage.BOOLEAN_LITERAL:
+				sequence_BooleanLiteral(context, (BooleanLiteral) semanticObject); 
+				return; 
+			case LiteralsPackage.CHARACTER_LITERAL:
+				sequence_CharacterLiteral(context, (CharacterLiteral) semanticObject); 
+				return; 
+			case LiteralsPackage.LITERAL_VALUE:
+				sequence_LiteralValue(context, (LiteralValue) semanticObject); 
+				return; 
+			case LiteralsPackage.NULL_LITERAL:
+				sequence_NullLiteral(context, (NullLiteral) semanticObject); 
+				return; 
+			case LiteralsPackage.NUMBER_LITERAL:
+				sequence_NumberLiteral(context, (NumberLiteral) semanticObject); 
+				return; 
+			case LiteralsPackage.STRING_LITERAL:
+				sequence_StringLiteral(context, (StringLiteral) semanticObject); 
 				return; 
 			}
 		else if (epackage == MethodPackage.eINSTANCE)
@@ -611,6 +703,54 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns ArrayCreation
+	 *     Element returns ArrayCreation
+	 *     ArrayCreation returns ArrayCreation
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         type=[ObjectType|ID]? 
+	 *         initializer=ArrayInitializer? 
+	 *         (dimensions+=Expression dimensions+=Expression*)? 
+	 *         dimensionsKind=CollectionKind?
+	 *     )
+	 */
+	protected void sequence_ArrayCreation(ISerializationContext context, ArrayCreation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns ArrayIndexesAccess
+	 *     Element returns ArrayIndexesAccess
+	 *     ArrayIndexesAccess returns ArrayIndexesAccess
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? (indexes+=Expression indexes+=Expression*)? indexesKind=CollectionKind?)
+	 */
+	protected void sequence_ArrayIndexesAccess(ISerializationContext context, ArrayIndexesAccess semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns ArrayInitializer
+	 *     Element returns ArrayInitializer
+	 *     ArrayInitializer returns ArrayInitializer
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? (values+=Expression values+=Expression*)? (valuesKind+=CollectionKind valuesKind+=CollectionKind*)?)
+	 */
+	protected void sequence_ArrayInitializer(ISerializationContext context, ArrayInitializer semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     DataType returns ArrayType
 	 *     ObjectType returns ArrayType
 	 *     Element returns ArrayType
@@ -634,6 +774,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (uniqueName=ID0? expression=Expression? message=Expression?)
 	 */
 	protected void sequence_AssertStatement(ISerializationContext context, AssertStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns Assignment
+	 *     Element returns Assignment
+	 *     SimpleAssignment returns Assignment
+	 *     Assignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? operand=Expression? operator=AssignmentOperator? value=Expression?)
+	 */
+	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -721,6 +876,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns BooleanLiteral
+	 *     Element returns BooleanLiteral
+	 *     LiteralValue returns BooleanLiteral
+	 *     BooleanLiteral returns BooleanLiteral
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_BooleanLiteral(ISerializationContext context, BooleanLiteral semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     DataType returns BooleanPrimitiveType
 	 *     Element returns BooleanPrimitiveType
 	 *     BooleanPrimitiveType returns BooleanPrimitiveType
@@ -799,6 +969,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     uniqueName=ID0?
 	 */
 	protected void sequence_CharPrimitiveType(ISerializationContext context, CharPrimitiveType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns CharacterLiteral
+	 *     Element returns CharacterLiteral
+	 *     LiteralValue returns CharacterLiteral
+	 *     CharacterLiteral returns CharacterLiteral
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_CharacterLiteral(ISerializationContext context, CharacterLiteral semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -895,6 +1080,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (negated?='not'? operator=LogicOperator? rules+=Rule rules+=Rule*)
 	 */
 	protected void sequence_CompositeRule(ISerializationContext context, CompositeRule semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns ConditionalControlFlowStatement
+	 *     Element returns ConditionalControlFlowStatement
+	 *     ControlFlowStatement returns ConditionalControlFlowStatement
+	 *     ConditionalControlFlowStatement returns ConditionalControlFlowStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? condition=Expression?)
+	 */
+	protected void sequence_ConditionalControlFlowStatement(ISerializationContext context, ConditionalControlFlowStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1081,6 +1281,22 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Statement returns DoStatement
+	 *     Element returns DoStatement
+	 *     ControlFlowStatement returns DoStatement
+	 *     DoStatement returns DoStatement
+	 *     ConditionalControlFlowStatement returns DoStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? condition=Expression? body=Statement?)
+	 */
+	protected void sequence_DoStatement(ISerializationContext context, DoStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     DataType returns DoublePrimitiveType
 	 *     Element returns DoublePrimitiveType
 	 *     DoublePrimitiveType returns DoublePrimitiveType
@@ -1214,6 +1430,46 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Statement returns ForEachStatement
+	 *     Element returns ForEachStatement
+	 *     ControlFlowStatement returns ForEachStatement
+	 *     LoopStatement returns ForEachStatement
+	 *     ForEachStatement returns ForEachStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? body=Statement? expression=LoopStatement? variable=[ParameterVariable|ID]?)
+	 */
+	protected void sequence_ForEachStatement(ISerializationContext context, ForEachStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns ForStatement
+	 *     Element returns ForStatement
+	 *     ControlFlowStatement returns ForStatement
+	 *     ForStatement returns ForStatement
+	 *     ConditionalControlFlowStatement returns ForStatement
+	 *
+	 * Constraint:
+	 *     (
+	 *         uniqueName=ID0? 
+	 *         condition=Expression? 
+	 *         body=Statement? 
+	 *         (initializers+=Expression initializers+=Expression*)? 
+	 *         initializersKind=CollectionKind? 
+	 *         (updaters+=Expression updaters+=Expression*)? 
+	 *         updatersKind=CollectionKind?
+	 *     )
+	 */
+	protected void sequence_ForStatement(ISerializationContext context, ForStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Filter returns FromClosureFilter
 	 *     FromClosureFilter returns FromClosureFilter
 	 *
@@ -1255,6 +1511,22 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     )
 	 */
 	protected void sequence_HasSuperClassFilter(ISerializationContext context, HasSuperClassFilter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns IfStatement
+	 *     Element returns IfStatement
+	 *     ControlFlowStatement returns IfStatement
+	 *     IfStatement returns IfStatement
+	 *     ConditionalControlFlowStatement returns IfStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? condition=Expression? thenStatement=Statement? elseStatement=Statement?)
+	 */
+	protected void sequence_IfStatement(ISerializationContext context, IfStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1593,6 +1865,20 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns LiteralValue
+	 *     Element returns LiteralValue
+	 *     LiteralValue returns LiteralValue
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_LiteralValue(ISerializationContext context, LiteralValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Variable returns LocalVariable
 	 *     NamedElement returns LocalVariable
 	 *     Element returns LocalVariable
@@ -1624,6 +1910,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     uniqueName=ID0?
 	 */
 	protected void sequence_LongPrimitiveType(ISerializationContext context, LongPrimitiveType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns LoopStatement
+	 *     Element returns LoopStatement
+	 *     ControlFlowStatement returns LoopStatement
+	 *     LoopStatement returns LoopStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? body=Statement?)
+	 */
+	protected void sequence_LoopStatement(ISerializationContext context, LoopStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1671,9 +1972,9 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *                 returnType=[DataType|EString] | 
 	 *                 body=Block
 	 *             )? 
-	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)? 
+	 *             (annotations+=Annotation annotations+=Annotation*)? 
 	 *             (params+=ParameterVariable params+=ParameterVariable*)? 
-	 *             (annotations+=Annotation annotations+=Annotation*)?
+	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)?
 	 *         )+
 	 *     )
 	 */
@@ -1692,6 +1993,36 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (uniqueName=ID0? name=String0? availableInSourceCode=BooleanObject? (annotations+=Annotation annotations+=Annotation*)?)
 	 */
 	protected void sequence_NamedElement_Impl(ISerializationContext context, NamedElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns NullLiteral
+	 *     Element returns NullLiteral
+	 *     LiteralValue returns NullLiteral
+	 *     NullLiteral returns NullLiteral
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_NullLiteral(ISerializationContext context, NullLiteral semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns NumberLiteral
+	 *     Element returns NumberLiteral
+	 *     LiteralValue returns NumberLiteral
+	 *     NumberLiteral returns NumberLiteral
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_NumberLiteral(ISerializationContext context, NumberLiteral semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1871,6 +2202,20 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns SimpleAssignment
+	 *     Element returns SimpleAssignment
+	 *     SimpleAssignment returns SimpleAssignment
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? operand=Expression?)
+	 */
+	protected void sequence_SimpleAssignment(ISerializationContext context, SimpleAssignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Element returns SimpleMethod
 	 *     SimpleMethod returns SimpleMethod
 	 *
@@ -1912,6 +2257,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns StringLiteral
+	 *     Element returns StringLiteral
+	 *     LiteralValue returns StringLiteral
+	 *     StringLiteral returns StringLiteral
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? value=EString?)
+	 */
+	protected void sequence_StringLiteral(ISerializationContext context, StringLiteral semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Filter returns SuperMethodClosureFilter
 	 *     SuperMethodClosureFilter returns SuperMethodClosureFilter
 	 *
@@ -1934,6 +2294,22 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (uniqueName=ID0? statementsKind=CollectionKind? default=EBoolean? (statements+=Statement statements+=Statement*)?)
 	 */
 	protected void sequence_SwitchCaseBlock(ISerializationContext context, SwitchCaseBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns SwitchStatement
+	 *     Element returns SwitchStatement
+	 *     ControlFlowStatement returns SwitchStatement
+	 *     SwitchStatement returns SwitchStatement
+	 *     ConditionalControlFlowStatement returns SwitchStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? condition=Expression? (cases+=SwitchCaseBlock cases+=SwitchCaseBlock*)?)
+	 */
+	protected void sequence_SwitchStatement(ISerializationContext context, SwitchStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2057,6 +2433,21 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Expression returns UnaryAssignment
+	 *     Element returns UnaryAssignment
+	 *     SimpleAssignment returns UnaryAssignment
+	 *     UnaryAssignment returns UnaryAssignment
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? operand=Expression? operator=UnaryAssignmentOperator? kind=UnaryAssignmentKind?)
+	 */
+	protected void sequence_UnaryAssignment(ISerializationContext context, UnaryAssignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Expression returns VarDeclaration
 	 *     Element returns VarDeclaration
 	 *     VarDeclaration returns VarDeclaration
@@ -2116,6 +2507,22 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     uniqueName=ID0?
 	 */
 	protected void sequence_VoidType(ISerializationContext context, VoidType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns WhileStatement
+	 *     Element returns WhileStatement
+	 *     ControlFlowStatement returns WhileStatement
+	 *     LoopStatement returns WhileStatement
+	 *     WhileStatement returns WhileStatement
+	 *
+	 * Constraint:
+	 *     (uniqueName=ID0? body=Statement?)
+	 */
+	protected void sequence_WhileStatement(ISerializationContext context, WhileStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

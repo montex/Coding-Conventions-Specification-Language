@@ -1,3 +1,3 @@
 Atomic {
 	context {
-		contextElements [ ConstructorInvocation C1 { method Co1 } , JClass JC1 { name BigDecimal constructors [ Constructor Co1 { params [ ParameterVariable PV1 { type DPT1 } ] } ] } , DoublePrimitiveType DPT1 ] } subject C1 }
+		contextElements [ SwitchStatement SwSt1 { cases [ SwitchCaseBlock SCB1 { } ] } ] filters [ CountFilter { min -1 max 2 targets ( SwSt1 ) container SwSt1 field SCB1 context [ { } ] } ] } subject SwSt1 }
