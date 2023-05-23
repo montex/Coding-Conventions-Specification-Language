@@ -1,6 +1,8 @@
 package resourceConverter;
 
 import java.io.IOException;
+import java.util.Iterator;
+
 
 import ccsl.ccslPackage;
 import org.ccsl.TextualStandaloneSetup;
@@ -16,6 +18,8 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 public class Main2 {
+	private static int uniquenameCounter = 1;
+	
     public static void main(String[] args) {
     	ccslPackage.eINSTANCE.eClass();
 
@@ -23,22 +27,33 @@ public class Main2 {
 
         ResourceSet resourceSet = new ResourceSetImpl();
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/CompareObjectsWithEquals.ccsl");*/
-        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/sample-instances/anonymousClass.ccsl");*/
+        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/sample-instances/anonymousClass.ccsl");
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/NonCaseLabelInSwitchStatement.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/MissingSerialVersionUID.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/EmptyFinallyBlock.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/AvoidDecimalLiteralsInBigDecimalConstructor.ccsl");*/
         /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-ErrorProne/UnnecessaryBooleanAssertion.ccsl");*/
-        URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-Performance/TooFewBranchesForASwitchStatement.ccsl");
+        /*URI inputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.metamodel.examples/PMD/PMD-Performance/TooFewBranchesForASwitchStatement.ccsl");*/
         Resource xmiResource = resourceSet.getResource(inputURI, true);
         
         EObject topObject = xmiResource.getContents().get(0);
+        
+        changeUniqueName(topObject);
+
+        try {
+            xmiResource.save(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Injector injector = new TextualStandaloneSetup().createInjectorAndDoEMFRegistration();
         XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+        
 
         URI outputURI = URI.createFileURI("C:/skole/MasterThesis/Workspace/org.ccsl.converter/testRes/converted.ccslt");
         XtextResource xtextResource = (XtextResource) xtextResourceSet.createResource(outputURI);
+        
+        
 
         xtextResource.getContents().add(topObject);
 
@@ -48,4 +63,23 @@ public class Main2 {
             e.printStackTrace();
         }
     }
+        public static void changeUniqueName(EObject eObject) {
+            for (Iterator<EObject> it = eObject.eAllContents(); it.hasNext();) {
+                EObject childEObject = it.next();
+                
+                if (childEObject.eClass().getEStructuralFeature("uniqueName") != null) {
+                    String uniquename = (String) childEObject.eGet(childEObject.eClass().getEStructuralFeature("uniqueName"));
+
+                    if (uniquename == null || uniquename.isEmpty()) {
+                        childEObject.eSet(childEObject.eClass().getEStructuralFeature("uniqueName"), generateUniquename());
+                    }
+                }
+
+                changeUniqueName(childEObject);
+            }
+        }
+        
+        public static String generateUniquename() {
+        	return "UN" + uniquenameCounter++;
+        } 
 }
