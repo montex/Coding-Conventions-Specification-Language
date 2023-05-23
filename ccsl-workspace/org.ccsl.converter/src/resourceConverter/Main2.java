@@ -45,6 +45,8 @@ public class Main2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        nameToString(topObject);
 
         Injector injector = new TextualStandaloneSetup().createInjectorAndDoEMFRegistration();
         XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
@@ -74,12 +76,24 @@ public class Main2 {
                         childEObject.eSet(childEObject.eClass().getEStructuralFeature("uniqueName"), generateUniquename());
                     }
                 }
-
-                changeUniqueName(childEObject);
             }
         }
         
         public static String generateUniquename() {
         	return "UN" + uniquenameCounter++;
-        } 
+        }
+        
+        public static void nameToString(EObject eObject) {
+        	for (Iterator<EObject> it = eObject.eAllContents(); it.hasNext();) {
+                EObject childEObject = it.next();
+                
+                if (childEObject.eClass().getEStructuralFeature("name") != null) {
+                	String name = (String) childEObject.eGet(childEObject.eClass().getEStructuralFeature("name"));
+
+                	if (name != null && !name.isEmpty()) {
+                		childEObject.eSet(childEObject.eClass().getEStructuralFeature("name"), "\"" + name + "\"");
+                }
+            }
+        }
+     }
 }
