@@ -139,6 +139,13 @@ private static int uniquenameCounter = 1;
                 		childEObject.eSet(childEObject.eClass().getEStructuralFeature("name"), "\"" + name + "\"");
                 }
             }
+                if (childEObject.eClass().getEStructuralFeature("regex") != null) {
+                	String regex = (String) childEObject.eGet(childEObject.eClass().getEStructuralFeature("regex"));
+
+                	if (regex != null && !regex.isEmpty()) {
+                		childEObject.eSet(childEObject.eClass().getEStructuralFeature("regex"), "\"" + regex + "\"");
+                }
         }
      }
+}
 }
