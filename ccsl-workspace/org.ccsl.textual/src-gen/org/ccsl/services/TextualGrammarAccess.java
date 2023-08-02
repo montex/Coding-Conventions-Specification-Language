@@ -207,12 +207,12 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//Expression expressions::Expression:
 		//	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-		//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation
-		//	| ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
+		//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access | Invocation |
+		//	ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-		//StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation |
+		//StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access | Invocation |
 		//ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
@@ -500,7 +500,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//LabelStatement
 		public RuleCall getLabelStatementParserRuleCall_12() { return cLabelStatementParserRuleCall_12; }
 		
-		///*ADDED */ TryStatement
+		//TryStatement
 		public RuleCall getTryStatementParserRuleCall_13() { return cTryStatementParserRuleCall_13; }
 		
 		//CatchClause
@@ -914,14 +914,22 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	public class String0Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.String0");
-		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSEPARATORTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//String0 type::String:
-		//	STRING;
+		//String0 type::ID:
+		//	(SEPARATOR | ID)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall() { return cSTRINGTerminalRuleCall; }
+		//(SEPARATOR | ID)*
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//SEPARATOR
+		public RuleCall getSEPARATORTerminalRuleCall_0() { return cSEPARATORTerminalRuleCall_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
 	}
 	public class ID0Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.ID0");
@@ -4778,7 +4786,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cBodyBlockParserRuleCall_4_3_1_0 = (RuleCall)cBodyAssignment_4_3_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		///*SimpleMethod added manually */ SimpleMethod method::SimpleMethod:
+		//SimpleMethod method::SimpleMethod:
 		//	{method::SimpleMethod}
 		//	'SimpleMethod'
 		//	uniqueName=ID0?
@@ -4786,7 +4794,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//	& ('paramsKind' paramsKind=CollectionKind)?
 		//	& ('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')?
 		//	& ('body' body=Block)?)
-		//	'}' /* | Method */;
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{method::SimpleMethod} 'SimpleMethod' uniqueName=ID0? '{' (('visibility' visibility=Visibility)? & ('paramsKind'
@@ -11391,7 +11399,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cVariableVariableIDTerminalRuleCall_4_1_0_1 = (RuleCall)cVariableVariableCrossReference_4_1_0.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		///*ADDED access elements and Blocks */ VariableAccess accesses::VariableAccess:
+		//VariableAccess accesses::VariableAccess:
 		//	{accesses::VariableAccess}
 		//	'VariableAccess'
 		//	uniqueName=ID0?
@@ -14749,6 +14757,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final LogicOperatorElements eLogicOperator;
 	private final ElementElements pElement;
 	private final ContextElements pContext;
+	private final TerminalRule tSEPARATOR;
 	private final String0Elements pString0;
 	private final ID0Elements pID0;
 	private final VisibilityElements eVisibility;
@@ -14906,6 +14915,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.eLogicOperator = new LogicOperatorElements();
 		this.pElement = new ElementElements();
 		this.pContext = new ContextElements();
+		this.tSEPARATOR = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.ccsl.Textual.SEPARATOR");
 		this.pString0 = new String0Elements();
 		this.pID0 = new ID0Elements();
 		this.eVisibility = new VisibilityElements();
@@ -15101,8 +15111,8 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	//Expression expressions::Expression:
 	//	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression |
-	//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation
-	//	| ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
+	//	StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access | Invocation |
+	//	ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -15259,8 +15269,14 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		return getContextAccess().getRule();
 	}
 	
-	//String0 type::String:
-	//	STRING;
+	//terminal SEPARATOR:
+	//	'\\' | '.' | '(' | ')' | '/' | '?' | '|';
+	public TerminalRule getSEPARATORRule() {
+		return tSEPARATOR;
+	}
+	
+	//String0 type::ID:
+	//	(SEPARATOR | ID)*;
 	public String0Elements getString0Access() {
 		return pString0;
 	}
@@ -15617,7 +15633,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		return getMethodAccess().getRule();
 	}
 	
-	///*SimpleMethod added manually */ SimpleMethod method::SimpleMethod:
+	//SimpleMethod method::SimpleMethod:
 	//	{method::SimpleMethod}
 	//	'SimpleMethod'
 	//	uniqueName=ID0?
@@ -15625,7 +15641,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//	& ('paramsKind' paramsKind=CollectionKind)?
 	//	& ('params' '[' params+=ParameterVariable ("," params+=ParameterVariable)* ']')?
 	//	& ('body' body=Block)?)
-	//	'}' /* | Method */;
+	//	'}';
 	public SimpleMethodElements getSimpleMethodAccess() {
 		return pSimpleMethod;
 	}
@@ -16694,7 +16710,7 @@ public class TextualGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		return getAnonymousClassAccess().getRule();
 	}
 	
-	///*ADDED access elements and Blocks */ VariableAccess accesses::VariableAccess:
+	//VariableAccess accesses::VariableAccess:
 	//	{accesses::VariableAccess}
 	//	'VariableAccess'
 	//	uniqueName=ID0?

@@ -1648,13 +1648,23 @@ ruleString0 returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 @after {
 	leaveRule();
 }:
-	this_STRING_0=RULE_STRING
-	{
-		$current.merge(this_STRING_0);
-	}
-	{
-		newLeafNode(this_STRING_0, grammarAccess.getString0Access().getSTRINGTerminalRuleCall());
-	}
+	(
+		this_SEPARATOR_0=RULE_SEPARATOR
+		{
+			$current.merge(this_SEPARATOR_0);
+		}
+		{
+			newLeafNode(this_SEPARATOR_0, grammarAccess.getString0Access().getSEPARATORTerminalRuleCall_0());
+		}
+		    |
+		this_ID_1=RULE_ID
+		{
+			$current.merge(this_ID_1);
+		}
+		{
+			newLeafNode(this_ID_1, grammarAccess.getString0Access().getIDTerminalRuleCall_1());
+		}
+	)*
 ;
 
 // Entry rule entryRuleID0
@@ -20830,6 +20840,8 @@ ruleBinaryOperator returns [Enumerator current=null]
 		)
 	)
 ;
+
+RULE_SEPARATOR : ('\\'|'.'|'('|')'|'/'|'?'|'|');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

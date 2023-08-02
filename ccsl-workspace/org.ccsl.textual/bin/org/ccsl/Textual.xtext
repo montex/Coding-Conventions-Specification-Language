@@ -50,7 +50,7 @@ TypeDeclaration returns complexType::TypeDeclaration:
 
 
 Expression returns expressions::Expression:
-	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access /*ADDED */ | Invocation | ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
+	Expression_Impl | VarDeclaration | CastExpression | TernaryExpression | InstanceofExpression | ArithmeticExpression | StringConcatenation | BooleanExpression | BinaryExpression | OperandExpression_Impl | Access | Invocation | ArrayInitializer | ArrayIndexesAccess | ArrayCreation | SimpleAssignment | LiteralValue;
 
 
 DataType returns datatype::DataType:
@@ -69,7 +69,7 @@ Variable returns variable::Variable:
 	Variable_Impl | ParameterVariable | LocalVariable | InitializableVariable_Impl | FieldVariable;
 
 Statement returns statements::Statement:
-	Statement_Impl | ControlFlowStatement | Block | InstanceCreation | SynchronizedBlock | ThrowStatement | EmptyStatement | ReturnStatement | BreakStatement | ContinueStatement | AssertStatement | ExpressionStatement | LabelStatement |/*ADDED */ TryStatement | CatchClause;
+	Statement_Impl | ControlFlowStatement | Block | InstanceCreation | SynchronizedBlock | ThrowStatement | EmptyStatement | ReturnStatement | BreakStatement | ContinueStatement | AssertStatement | ExpressionStatement | LabelStatement | TryStatement | CatchClause;
 
 NamedElement returns namedElements::NamedElement:
 	NamedElement_Impl | Package | TypeDeclaration_Impl | Variable | Method;
@@ -111,8 +111,11 @@ Context returns context::Context:
 		('filters' '[' filters+=Filter ( "," filters+=Filter)* ']' )?
 	'}';
 
-String0 returns type::String:
-	STRING;
+
+terminal SEPARATOR: '\\' | '.' | '(' | ')' | '/' | '?' | '|';
+
+String0 returns type::ID:
+	(SEPARATOR | ID)*;
 	
 ID0 returns type::ID:
 	ID;
@@ -359,7 +362,6 @@ Method returns method::Method:
 		)
 	'}';
 
-/*SimpleMethod added manually */
 
 SimpleMethod returns method::SimpleMethod:
 	{method::SimpleMethod}
@@ -372,7 +374,7 @@ SimpleMethod returns method::SimpleMethod:
 			&('params' '[' params+=ParameterVariable ( "," params+=ParameterVariable)* ']' )?
 			&('body' body=Block)?
 		)
-	'}'/* | Method */ ;
+	'}' ;
 
 DataType_Impl returns datatype::DataType:
 	{datatype::DataType}
@@ -477,7 +479,6 @@ LongPrimitiveType returns datatype::LongPrimitiveType:
 Int0 returns type::Int:
 	INT;
 	
-/*terminal INT returns ecore::EInt: ('-'? '0'..'9')+; ? */
 
 VarDeclaration returns expressions::VarDeclaration:
 	{expressions::VarDeclaration}
@@ -990,7 +991,6 @@ AnonymousClass returns complexType::AnonymousClass:
 	'}';
 	
 	
-/*ADDED access elements and Blocks */
 
 VariableAccess returns accesses::VariableAccess:
 	{accesses::VariableAccess}

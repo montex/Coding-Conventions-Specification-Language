@@ -43,6 +43,7 @@ public class TextualParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNamedElementAccess().getAlternatives(), "rule__NamedElement__Alternatives");
 			builder.put(grammarAccess.getComplexTypeAccess().getAlternatives(), "rule__ComplexType__Alternatives");
 			builder.put(grammarAccess.getElementAccess().getAlternatives(), "rule__Element__Alternatives");
+			builder.put(grammarAccess.getString0Access().getAlternatives(), "rule__String0__Alternatives");
 			builder.put(grammarAccess.getEBooleanAccess().getAlternatives(), "rule__EBoolean__Alternatives");
 			builder.put(grammarAccess.getBlockAccess().getAlternatives(), "rule__Block__Alternatives");
 			builder.put(grammarAccess.getControlFlowStatementAccess().getAlternatives(), "rule__ControlFlowStatement__Alternatives");

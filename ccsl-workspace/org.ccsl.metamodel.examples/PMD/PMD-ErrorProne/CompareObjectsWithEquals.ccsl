@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ccsl:AtomicRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:accesses="http://www.example.org/ccsl/elements/expressions/accesses" xmlns:ccsl="http://www.example.org/ccsl" xmlns:datatype="http://www.example.org/ccsl/elements/datatype" xmlns:expressions="http://www.example.org/ccsl/elements/expressions" xmlns:filters="http://www.example.org/ccsl/filters" xmlns:method="http://www.example.org/ccsl/elements/namedElements/method" xmlns:variable="http://www.example.org/ccsl/elements/namedElements/variable" subject="test">
+<ccsl:AtomicRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:accesses="http://www.example.org/ccsl/elements/expressions/accesses" xmlns:ccsl="http://www.example.org/ccsl" xmlns:datatype="http://www.example.org/ccsl/elements/datatype" xmlns:expressions="http://www.example.org/ccsl/elements/expressions" xmlns:filters="http://www.example.org/ccsl/filters" xmlns:method="http://www.example.org/ccsl/elements/namedElements/method" xmlns:variable="http://www.example.org/ccsl/elements/namedElements/variable" subject="//@context/@contextElements.0">
   <context>
-    <contextElements xsi:type="expressions:BooleanExpression" uniqueName="test" operator="ANY">
-      <operands xsi:type="accesses:VariableAccess" uniqueName="test2" variable="test4"/>
-      <operands xsi:type="accesses:VariableAccess" uniqueName="test3" variable="test5"/>
+    <contextElements xsi:type="expressions:BooleanExpression" operator="ANY">
+      <operands xsi:type="accesses:VariableAccess" variable="//@context/@contextElements.1"/>
+      <operands xsi:type="accesses:VariableAccess" variable="//@context/@contextElements.2"/>
     </contextElements>
-    <contextElements xsi:type="variable:Variable" uniqueName="test4" name="v1"/>
-    <contextElements xsi:type="variable:Variable" uniqueName="test5" name="v2"/>
-    <filters xsi:type="filters:TemplateFilter" negated="true" targets="test4 test5" targetTemplate="test4">
+    <contextElements xsi:type="variable:Variable"/>
+    <contextElements xsi:type="variable:Variable"/>
+    <filters xsi:type="filters:TemplateFilter" negated="true" targets="//@context/@contextElements.1 //@context/@contextElements.2" targetTemplate="//@context/@filters.0/@context/@contextElements.0">
       <context>
-        <contextElements xsi:type="variable:Variable" uniqueName="test6" name="v3" type="test7"/>
-        <contextElements xsi:type="datatype:PrimitiveType" uniqueName="test7"/>
+        <contextElements xsi:type="variable:Variable" type="//@context/@filters.0/@context/@contextElements.1"/>
+        <contextElements xsi:type="datatype:PrimitiveType"/>
       </context>
     </filters>
-    <filters xsi:type="filters:ImplicityContainerFilter" negated="true" targets="test" implicityContainer="test8" implicityField="test">
+    <filters xsi:type="filters:ImplicityContainerFilter" negated="true" targets="//@context/@contextElements.0" implicityContainer="//@context/@filters.1/@context/@contextElements.0" implicityField="//@context/@contextElements.0">
       <context>
-        <contextElements xsi:type="method:Method" uniqueName="test8" name="equals"/>
+        <contextElements xsi:type="method:Method" name="equals"/>
       </context>
     </filters>
   </context>

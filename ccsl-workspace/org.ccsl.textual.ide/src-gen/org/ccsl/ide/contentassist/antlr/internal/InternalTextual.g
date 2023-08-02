@@ -440,9 +440,9 @@ ruleString0
 	}
 	:
 	(
-		{ before(grammarAccess.getString0Access().getSTRINGTerminalRuleCall()); }
-		RULE_STRING
-		{ after(grammarAccess.getString0Access().getSTRINGTerminalRuleCall()); }
+		{ before(grammarAccess.getString0Access().getAlternatives()); }
+		(rule__String0__Alternatives)*
+		{ after(grammarAccess.getString0Access().getAlternatives()); }
 	)
 ;
 finally {
@@ -4335,6 +4335,27 @@ rule__Element__Alternatives
 		{ before(grammarAccess.getElementAccess().getAnnotationFieldValueParserRuleCall_9()); }
 		ruleAnnotationFieldValue
 		{ after(grammarAccess.getElementAccess().getAnnotationFieldValueParserRuleCall_9()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__String0__Alternatives
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getString0Access().getSEPARATORTerminalRuleCall_0()); }
+		RULE_SEPARATOR
+		{ after(grammarAccess.getString0Access().getSEPARATORTerminalRuleCall_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getString0Access().getIDTerminalRuleCall_1()); }
+		RULE_ID
+		{ after(grammarAccess.getString0Access().getIDTerminalRuleCall_1()); }
 	)
 ;
 finally {
@@ -72225,6 +72246,8 @@ rule__BooleanLiteral__ValueAssignment_4_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+RULE_SEPARATOR : ('\\'|'.'|'('|')'|'/'|'?'|'|');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

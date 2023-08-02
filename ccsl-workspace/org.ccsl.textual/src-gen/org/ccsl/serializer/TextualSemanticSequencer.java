@@ -1972,9 +1972,9 @@ public class TextualSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *                 returnType=[DataType|EString] | 
 	 *                 body=Block
 	 *             )? 
-	 *             (annotations+=Annotation annotations+=Annotation*)? 
 	 *             (params+=ParameterVariable params+=ParameterVariable*)? 
-	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)?
+	 *             (thrownExceptions+=[JClass|EString] thrownExceptions+=[JClass|EString]*)? 
+	 *             (annotations+=Annotation annotations+=Annotation*)?
 	 *         )+
 	 *     )
 	 */
