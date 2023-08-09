@@ -1,0 +1,5 @@
+Composite { operator OR rules [ Atomic {
+	context {
+		contextElements [ Package UN57 { declaredTypes [ TypeDeclaration UN58 { imports [ ImportStatement UN59 { importedElement UN57 } ] } ] } ] } subject UN59 } , Atomic {
+	context {
+		contextElements [ Package UN60 { declaredTypes [ TypeDeclaration UN61 { imports [ ImportStatement UN62 { importedElement UN63 } ] } , TypeDeclaration UN63 { } ] } ] } subject UN62 } ] }

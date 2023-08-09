@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ SwitchStatement SwSt1 { cases [ SwitchCaseBlock SCB1 { } ] } ] filters [ CountFilter { min -1 max 2 targets ( SwSt1 ) container SwSt1 field SCB1 context [ { } ] } ] } subject SwSt1 }

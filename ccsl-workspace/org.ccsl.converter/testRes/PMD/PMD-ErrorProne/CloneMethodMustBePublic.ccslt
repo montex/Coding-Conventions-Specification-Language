@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN18 { methods [ Method UN19 { name clone availableInSourceCode true } ] } ] filters [ TemplateFilter { not targets ( UN19 ) targetTemplate UN20 context { contextElements [ Method UN20 { visibility PUBLIC } ] } } ] } subject UN19 }

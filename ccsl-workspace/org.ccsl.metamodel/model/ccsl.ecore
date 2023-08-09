@@ -20,15 +20,6 @@
     <eLiterals name="OR" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Root" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="FaultTypeDescription" eSuperTypes="#//Root">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//AtomicRule"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" lowerBound="1"
-        upperBound="-1" eType="#//faultTypeDescription/InjectionAction" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="strategies" lowerBound="1"
-        upperBound="-1" eType="#//faultTypeDescription/InjectionStrategy" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CollectionKind">
     <eLiterals name="EXACT"/>
     <eLiterals name="SEQUENCE" value="1"/>
@@ -554,38 +545,6 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="filters" upperBound="-1"
           eType="#//functions/booleanFunctions/filters/Filter" containment="true"/>
     </eClassifiers>
-  </eSubpackages>
-  <eSubpackages name="faultTypeDescription" nsURI="http://www.example.org/ccsl/faultTypeDescription"
-      nsPrefix="faultTypeDescription">
-    <eClassifiers xsi:type="ecore:EClass" name="InjectionAction" abstract="true">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//elements/Element"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="InjectionStrategy" abstract="true"/>
-    <eSubpackages name="action" nsURI="http://www.example.org/ccsl/faultTypeDescription/action"
-        nsPrefix="action">
-      <eClassifiers xsi:type="ecore:EClass" name="DeleteAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="MoveScopeUpAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="DeleteInfixOperatorAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="ChangeLiteralValueAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="DeleteRandomStatementAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="ReplaceVariableAccessAction" eSuperTypes="#//faultTypeDescription/InjectionAction"/>
-      <eClassifiers xsi:type="ecore:EClass" name="ReplaceArithmeticOperatorAction"
-          eSuperTypes="#//faultTypeDescription/InjectionAction">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="replaceMap" lowerBound="1"
-            upperBound="-1" eType="#//faultTypeDescription/action/ArithmeticOperatorMap"
-            containment="true"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ArithmeticOperatorMap">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="oldArithmeticOperator"
-            eType="#//elements/expressions/ArithmeticOperator"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="newArithmeticOperator"
-            eType="#//elements/expressions/ArithmeticOperator"/>
-      </eClassifiers>
-    </eSubpackages>
-    <eSubpackages name="strategy" nsURI="http://www.example.org/ccsl/faultTypeDescription/strategy"
-        nsPrefix="strategy">
-      <eClassifiers xsi:type="ecore:EClass" name="AllStrategy" eSuperTypes="#//faultTypeDescription/InjectionStrategy"/>
-    </eSubpackages>
   </eSubpackages>
   <eSubpackages name="functions" nsURI="http://www.example.org/ccsl/functions" nsPrefix="functions">
     <eClassifiers xsi:type="ecore:EClass" name="CcslFunction" abstract="true"/>

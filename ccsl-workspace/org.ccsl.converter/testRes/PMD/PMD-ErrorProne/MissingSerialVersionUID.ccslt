@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN71 { superInterfaces ( UN72 ) } , JInterface UN72 { name java.io.Serializable } ] filters [ TemplateFilter { not targets ( UN71 ) targetTemplate UN73 context { contextElements [ JClass UN73 { fields [ FieldVariable UN74 { name serialVersionUID } ] } ] } } ] } subject UN71 }

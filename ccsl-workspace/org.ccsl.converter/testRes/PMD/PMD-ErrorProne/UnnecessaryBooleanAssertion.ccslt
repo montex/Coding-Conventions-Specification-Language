@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ MethodInvocation UN102 { argsKind EXACT method UN104 args [ BooleanLiteral UN103 { } ] } , Method UN104 { } ] filters [ RegexMatch { regex assert(True|False) targets ( UN104 ) } ] } subject UN102 }

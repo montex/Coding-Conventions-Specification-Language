@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ ExpressionStatement UN15 { expression MethodInvocation UN16 { method UN17 } } , Method UN17 { name skip } ] } subject UN16 }

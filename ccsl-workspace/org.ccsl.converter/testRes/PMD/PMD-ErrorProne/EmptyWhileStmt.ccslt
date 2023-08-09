@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ WhileStatement UN56 { } ] filters [ IsEmptyBlockFilter { targets ( UN56 ) } ] } subject UN56 }

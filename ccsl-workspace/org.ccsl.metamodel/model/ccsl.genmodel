@@ -30,12 +30,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//AtomicRule/context"/>
     </genClasses>
     <genClasses ecoreClass="ccsl.ecore#//Root"/>
-    <genClasses ecoreClass="ccsl.ecore#//FaultTypeDescription">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ccsl.ecore#//FaultTypeDescription/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//FaultTypeDescription/rule"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//FaultTypeDescription/actions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//FaultTypeDescription/strategies"/>
-    </genClasses>
     <nestedGenPackages prefix="Elements" disposableProviderFactory="true" ecorePackage="ccsl.ecore#//elements">
       <genEnums typeSafeEnumCompatible="false" ecoreEnum="ccsl.ecore#//elements/Visibility">
         <genEnumLiterals ecoreEnumLiteral="ccsl.ecore#//elements/Visibility/PRIVATE"/>
@@ -445,32 +439,6 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//context/Context/contextElements"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//context/Context/filters"/>
       </genClasses>
-    </nestedGenPackages>
-    <nestedGenPackages prefix="FaultTypeDescription" disposableProviderFactory="true"
-        ecorePackage="ccsl.ecore#//faultTypeDescription">
-      <genClasses image="false" ecoreClass="ccsl.ecore#//faultTypeDescription/InjectionAction">
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference ccsl.ecore#//faultTypeDescription/InjectionAction/target"/>
-      </genClasses>
-      <genClasses image="false" ecoreClass="ccsl.ecore#//faultTypeDescription/InjectionStrategy"/>
-      <nestedGenPackages prefix="Action" disposableProviderFactory="true" ecorePackage="ccsl.ecore#//faultTypeDescription/action">
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/DeleteAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/MoveScopeUpAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/DeleteInfixOperatorAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/ChangeLiteralValueAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/DeleteRandomStatementAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/ReplaceVariableAccessAction"/>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/ReplaceArithmeticOperatorAction">
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ccsl.ecore#//faultTypeDescription/action/ReplaceArithmeticOperatorAction/replaceMap"/>
-        </genClasses>
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/action/ArithmeticOperatorMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ccsl.ecore#//faultTypeDescription/action/ArithmeticOperatorMap/oldArithmeticOperator"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ccsl.ecore#//faultTypeDescription/action/ArithmeticOperatorMap/newArithmeticOperator"/>
-        </genClasses>
-      </nestedGenPackages>
-      <nestedGenPackages prefix="Strategy" disposableProviderFactory="true" ecorePackage="ccsl.ecore#//faultTypeDescription/strategy">
-        <genClasses ecoreClass="ccsl.ecore#//faultTypeDescription/strategy/AllStrategy"/>
-      </nestedGenPackages>
     </nestedGenPackages>
     <nestedGenPackages prefix="Functions" disposableProviderFactory="true" ecorePackage="ccsl.ecore#//functions">
       <genClasses ecoreClass="ccsl.ecore#//functions/CcslFunction"/>

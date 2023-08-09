@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ ReturnStatement UN94 { } ] filters [ ImplicityContainerFilter { targets ( UN94 ) implicityContainer UN96 implicityField UN94 context { contextElements [ TryStatement UN95 { finallyBlock Block UN96 { } } ] } } ] } subject UN94 }

@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ ConstructorInvocation UN10 { method UN12 } , JClass UN11 { name BigDecimal constructors [ Constructor UN12 { params [ ParameterVariable UN13 { type UN14 } ] } ] } , DoublePrimitiveType UN14 ] } subject UN10 }

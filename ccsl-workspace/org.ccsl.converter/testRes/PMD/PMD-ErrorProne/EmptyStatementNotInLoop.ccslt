@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ EmptyStatement UN53 ] filters [ TemplateFilter { not targets ( UN53 ) targetTemplate UN55 context { contextElements [ LoopStatement UN54 { body EmptyStatement UN55 } ] } } ] } subject UN53 }

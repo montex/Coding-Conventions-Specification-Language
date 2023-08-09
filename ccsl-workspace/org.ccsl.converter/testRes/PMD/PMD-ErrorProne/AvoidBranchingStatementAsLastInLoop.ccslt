@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ LoopStatement UN1 { body Block UN2 { } } ] filters [ CompositeFilter { operator OR filters [ BlockLastStatementFilter { targets ( UN2 ) lastStatement UN3 context { contextElements [ BreakStatement UN3 ] } } , BlockLastStatementFilter { targets ( UN2 ) lastStatement UN4 context { contextElements [ ReturnStatement UN4 { } ] } } , BlockLastStatementFilter { targets ( UN2 ) lastStatement UN5 context { contextElements [ ContinueStatement UN5 ] } } ] } ] } subject UN1 }

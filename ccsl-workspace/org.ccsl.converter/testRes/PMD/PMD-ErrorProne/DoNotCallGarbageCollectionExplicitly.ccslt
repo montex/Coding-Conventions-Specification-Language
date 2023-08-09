@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ MethodInvocation UN40 { method UN42 } , JClass UN41 { methods [ Method UN42 { } ] } ] filters [ RegexMatch { regex java\\.lang\\.(Runtime|System) targets ( UN41 ) } , RegexMatch { regex (runFinalization|gc) targets ( UN42 ) } ] } subject UN40 }

@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ CatchClause UN6 { handledExceptions ( UN7 ) } , JClass UN7 { name java.lang.NullPointerException } ] } subject UN6 }

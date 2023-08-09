@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.common_2.19.0.v20200324-0932.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.ecore.source_2.22.0.v20200519-1135.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.ecore.xmi.source_2.16.0.v20190528-0725.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.ecore.change_2.14.0.v20190528-0725.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.xtext_2.22.0.v20200602-1352.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.xtext.ecore_2.22.0.v20200602-1114.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.ecore_2.22.0.v20200519-1135.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/com.google.inject_3.0.0.v201605172100.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.xtext.util_2.22.0.v20200602-1352.jar"/>
+	<classpathentry kind="lib" path="C:/skole/MasterThesis/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.16.0.v20190528-0725.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.ccsl.textual"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.ccsl.metamodel"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

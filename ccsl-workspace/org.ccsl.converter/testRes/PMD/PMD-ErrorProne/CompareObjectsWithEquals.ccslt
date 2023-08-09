@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ BooleanExpression UN32 { operator ANY operands [ VariableAccess UN33 { variable UN35 } , VariableAccess UN34 { variable UN36 } ] } , Variable UN35 { } , Variable UN36 { } ] filters [ TemplateFilter { not targets ( UN35 , UN36 ) targetTemplate UN37 context { contextElements [ Variable UN37 { type UN38 } , PrimitiveType UN38 ] } } , ImplicityContainerFilter { not targets ( UN32 ) implicityContainer UN39 implicityField UN32 context { contextElements [ Method UN39 { name equals } ] } } ] } subject UN32 }

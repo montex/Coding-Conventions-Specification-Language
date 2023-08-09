@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN75 { fields [ FieldVariable UN76 { type UN78 } , FieldVariable UN77 { type UN78 } ] } , ComplexTypeDeclaration UN78 { name Logger } ] } subject UN75 }

@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ InstanceCreation UN114 { } ] filters [ ImplicityContainerFilter { targets ( UN114 ) implicityContainer UN115 implicityField UN116 context { contextElements [ LoopStatement UN115 { body InstanceCreation UN116 { } } ] } } , ImplicityContainerFilter { not targets ( UN114 ) implicityContainer UN117 implicityField UN114 context { contextElements [ ThrowStatement UN117 { } ] } } ] } subject UN114 }

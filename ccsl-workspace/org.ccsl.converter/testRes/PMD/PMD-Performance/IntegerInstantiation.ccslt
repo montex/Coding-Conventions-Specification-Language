@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN128 { name Integer constructors [ Constructor UN129 { } ] } , ConstructorInvocation UN130 { constructor UN129 method UN129 } ] } subject UN130 }

@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN84 { methods [ Method UN85 { name equals } ] } ] filters [ TemplateFilter { not targets ( UN84 ) targetTemplate UN86 context { contextElements [ JClass UN86 { methods [ Method UN87 { name hashCode } ] } ] } } ] } subject UN84 }
