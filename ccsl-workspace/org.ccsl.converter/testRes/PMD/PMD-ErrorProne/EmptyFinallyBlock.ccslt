@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ TryStatement UN46 { finallyBlock Block UN47 { statementsKind EXACT } } ] } subject UN47 }

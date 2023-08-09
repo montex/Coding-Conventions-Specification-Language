@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ FieldVariable UN113 { volatile true } ] } subject UN113 }

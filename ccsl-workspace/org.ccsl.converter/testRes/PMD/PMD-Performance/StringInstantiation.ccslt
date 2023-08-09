@@ -1,0 +1,5 @@
+Composite { operator OR rules [ Atomic {
+	context {
+		contextElements [ ConstructorInvocation UN131 { method UN133 } , JClass UN132 { name String constructors [ Constructor UN133 { paramsKind EXACT params [ ParameterVariable UN134 { type UN132 } ] } ] } ] } subject UN131 } , Atomic {
+	context {
+		contextElements [ ConstructorInvocation UN135 { method UN137 } , JClass UN136 { name String constructors [ Constructor UN137 { paramsKind EXACT } ] } ] } subject UN135 } ] }

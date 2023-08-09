@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ ComplexTypeDeclaration UN24 { methods [ Method UN25 { name clone availableInSourceCode true paramsKind EXACT } ] } ] filters [ TemplateFilter { not targets ( UN25 ) targetTemplate UN26 context { contextElements [ Method UN26 { returnType UN24 } ] } } ] } subject UN25 }

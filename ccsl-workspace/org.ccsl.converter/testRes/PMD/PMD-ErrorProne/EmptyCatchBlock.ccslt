@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ CatchClause UN44 { body Block UN45 { statementsKind EXACT } } ] } subject UN44 }

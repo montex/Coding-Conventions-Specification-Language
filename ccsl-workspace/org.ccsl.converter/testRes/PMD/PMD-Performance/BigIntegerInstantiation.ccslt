@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ JClass UN121 { constructors [ Constructor UN122 { paramsKind EXACT params [ ParameterVariable UN123 { } ] } ] } , ConstructorInvocation UN124 { method UN122 args [ LiteralValue UN125 { } ] } ] filters [ RegexMatch { regex (java\\.math\\.)?Big(Decimal|Integer) targets ( UN121 ) } , RegexMatch { regex (0|0\\.0|1|10) targets ( UN125 ) } ] } subject UN124 }

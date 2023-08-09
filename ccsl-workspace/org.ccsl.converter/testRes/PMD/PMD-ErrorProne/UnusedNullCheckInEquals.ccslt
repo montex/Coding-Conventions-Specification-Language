@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ Variable UN105 { } , BooleanExpression UN106 { operands [ BooleanExpression UN107 { operator NOT_EQUALS operands [ VariableAccess UN108 { variable UN105 } , NullLiteral UN109 { } ] } , Invocation UN110 { method UN112 args [ VariableAccess UN111 { variable UN105 } ] { ] } , Method UN112 { name equals } ] } subject UN106 }

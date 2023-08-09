@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ InstanceCreation UN126 { argsKind EXACT type UN127 } , JClass UN127 { } ] filters [ RegexMatch { regex java\\.lang\\.String(Builder|Buffer) targets ( UN127 ) } ] } subject UN126 }

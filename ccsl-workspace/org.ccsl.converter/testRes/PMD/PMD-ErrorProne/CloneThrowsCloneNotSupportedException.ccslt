@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ Method UN27 { name clone availableInSourceCode true paramsKind EXACT } ] filters [ TemplateFilter { not targets ( UN27 ) targetTemplate UN29 context { contextElements [ JClass UN28 { inheritance FINAL methods [ Method UN29 { } ] } ] } } , TemplateFilter { not targets ( UN27 ) targetTemplate UN30 context { contextElements [ Method UN30 { thrownExceptions ( UN31 ) } , JClass UN31 { name CloneNotSupportedException } ] } } ] } subject UN27 }

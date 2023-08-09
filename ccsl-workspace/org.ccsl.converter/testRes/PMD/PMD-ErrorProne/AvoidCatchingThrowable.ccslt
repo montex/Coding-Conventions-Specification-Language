@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ CatchClause UN8 { handledExceptions ( UN9 ) } , JClass UN9 { name java.lang.Throwable } ] } subject UN8 }

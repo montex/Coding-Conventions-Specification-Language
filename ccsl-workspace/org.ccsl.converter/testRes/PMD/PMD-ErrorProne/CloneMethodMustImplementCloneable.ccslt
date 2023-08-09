@@ -1,0 +1,3 @@
+Atomic {
+	context {
+		contextElements [ ComplexTypeDeclaration UN21 { methods [ Method UN22 { name clone paramsKind EXACT } ] } ] filters [ IsKindOfFilter { not targets ( UN21 ) type UN23 context { contextElements [ JInterface UN23 { name Cloneable } ] } } ] } subject UN21 }
