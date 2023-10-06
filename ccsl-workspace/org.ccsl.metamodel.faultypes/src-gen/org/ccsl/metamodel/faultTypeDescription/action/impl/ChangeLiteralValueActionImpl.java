@@ -31,7 +31,6 @@ public class ChangeLiteralValueActionImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.CHANGE_LITERAL_VALUE_ACTION;
 	}

@@ -32,7 +32,6 @@ public class ReplaceVariableAccessActionImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.REPLACE_VARIABLE_ACCESS_ACTION;
 	}

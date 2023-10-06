@@ -43,7 +43,7 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ArithmeticOperatorMap> replaceMap;
+	protected EList replaceMap;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,7 +59,6 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.REPLACE_ARITHMETIC_OPERATOR_ACTION;
 	}
@@ -69,9 +68,9 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ArithmeticOperatorMap> getReplaceMap() {
+	public EList getReplaceMap() {
 		if (replaceMap == null) {
-			replaceMap = new EObjectContainmentEList<ArithmeticOperatorMap>(ArithmeticOperatorMap.class, this,
+			replaceMap = new EObjectContainmentEList(ArithmeticOperatorMap.class, this,
 					ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP);
 		}
 		return replaceMap;
@@ -82,11 +81,10 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP:
-			return ((InternalEList<?>) getReplaceMap()).basicRemove(otherEnd, msgs);
+			return ((InternalEList) getReplaceMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -96,7 +94,6 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP:
@@ -110,13 +107,11 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP:
 			getReplaceMap().clear();
-			getReplaceMap().addAll((Collection<? extends ArithmeticOperatorMap>) newValue);
+			getReplaceMap().addAll((Collection) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,7 +122,6 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP:
@@ -142,7 +136,6 @@ public class ReplaceArithmeticOperatorActionImpl extends MinimalEObjectImpl.Cont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION__REPLACE_MAP:

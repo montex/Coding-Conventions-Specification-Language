@@ -4,12 +4,12 @@ package org.ccsl.metamodel.faultTypeDescription.util;
 
 import ccsl.Root;
 
+import java.util.List;
+
 import org.ccsl.metamodel.faultTypeDescription.*;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-
-import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.ccsl.metamodel.faultTypeDescription.FaultypesPackage
  * @generated
  */
-public class FaultypesSwitch<T> extends Switch<T> {
+public class FaultypesSwitch {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -46,16 +46,14 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Checks whether this is a switch for the given package.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param ePackage the package in question.
-	 * @return whether this is a switch for the given package.
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
-	protected boolean isSwitchFor(EPackage ePackage) {
-		return ePackage == modelPackage;
+	public Object doSwitch(EObject theEObject) {
+		return doSwitch(theEObject.eClass(), theEObject);
 	}
 
 	/**
@@ -65,26 +63,41 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
-	protected T doSwitch(int classifierID, EObject theEObject) {
+	protected Object doSwitch(EClass theEClass, EObject theEObject) {
+		if (theEClass.eContainer() == modelPackage) {
+			return doSwitch(theEClass.getClassifierID(), theEObject);
+		} else {
+			List eSuperTypes = theEClass.getESuperTypes();
+			return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch((EClass) eSuperTypes.get(0), theEObject);
+		}
+	}
+
+	/**
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
+	protected Object doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case FaultypesPackage.INJECTION_ACTION: {
 			InjectionAction injectionAction = (InjectionAction) theEObject;
-			T result = caseInjectionAction(injectionAction);
+			Object result = caseInjectionAction(injectionAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case FaultypesPackage.INJECTION_STRATEGY: {
 			InjectionStrategy injectionStrategy = (InjectionStrategy) theEObject;
-			T result = caseInjectionStrategy(injectionStrategy);
+			Object result = caseInjectionStrategy(injectionStrategy);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION: {
 			FaultTypeDescription faultTypeDescription = (FaultTypeDescription) theEObject;
-			T result = caseFaultTypeDescription(faultTypeDescription);
+			Object result = caseFaultTypeDescription(faultTypeDescription);
 			if (result == null)
 				result = caseRoot(faultTypeDescription);
 			if (result == null)
@@ -107,7 +120,7 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInjectionAction(InjectionAction object) {
+	public Object caseInjectionAction(InjectionAction object) {
 		return null;
 	}
 
@@ -122,7 +135,7 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInjectionStrategy(InjectionStrategy object) {
+	public Object caseInjectionStrategy(InjectionStrategy object) {
 		return null;
 	}
 
@@ -137,7 +150,7 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFaultTypeDescription(FaultTypeDescription object) {
+	public Object caseFaultTypeDescription(FaultTypeDescription object) {
 		return null;
 	}
 
@@ -152,7 +165,7 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRoot(Root object) {
+	public Object caseRoot(Root object) {
 		return null;
 	}
 
@@ -167,8 +180,7 @@ public class FaultypesSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
-	@Override
-	public T defaultCase(EObject object) {
+	public Object defaultCase(EObject object) {
 		return null;
 	}
 

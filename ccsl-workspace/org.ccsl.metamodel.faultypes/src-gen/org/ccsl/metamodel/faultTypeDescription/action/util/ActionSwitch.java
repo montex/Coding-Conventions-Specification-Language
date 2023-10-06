@@ -2,12 +2,12 @@
  */
 package org.ccsl.metamodel.faultTypeDescription.action.util;
 
+import java.util.List;
+
 import org.ccsl.metamodel.faultTypeDescription.action.*;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-
-import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.ccsl.metamodel.faultTypeDescription.action.ActionPackage
  * @generated
  */
-public class ActionSwitch<T> extends Switch<T> {
+public class ActionSwitch {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -44,16 +44,14 @@ public class ActionSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Checks whether this is a switch for the given package.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param ePackage the package in question.
-	 * @return whether this is a switch for the given package.
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
-	protected boolean isSwitchFor(EPackage ePackage) {
-		return ePackage == modelPackage;
+	public Object doSwitch(EObject theEObject) {
+		return doSwitch(theEObject.eClass(), theEObject);
 	}
 
 	/**
@@ -63,61 +61,76 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
-	protected T doSwitch(int classifierID, EObject theEObject) {
+	protected Object doSwitch(EClass theEClass, EObject theEObject) {
+		if (theEClass.eContainer() == modelPackage) {
+			return doSwitch(theEClass.getClassifierID(), theEObject);
+		} else {
+			List eSuperTypes = theEClass.getESuperTypes();
+			return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch((EClass) eSuperTypes.get(0), theEObject);
+		}
+	}
+
+	/**
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
+	protected Object doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case ActionPackage.DELETE_ACTION: {
 			DeleteAction deleteAction = (DeleteAction) theEObject;
-			T result = caseDeleteAction(deleteAction);
+			Object result = caseDeleteAction(deleteAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.MOVE_SCOPE_UP_ACTION: {
 			MoveScopeUpAction moveScopeUpAction = (MoveScopeUpAction) theEObject;
-			T result = caseMoveScopeUpAction(moveScopeUpAction);
+			Object result = caseMoveScopeUpAction(moveScopeUpAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.DELETE_INFIX_OPERATOR_ACTION: {
 			DeleteInfixOperatorAction deleteInfixOperatorAction = (DeleteInfixOperatorAction) theEObject;
-			T result = caseDeleteInfixOperatorAction(deleteInfixOperatorAction);
+			Object result = caseDeleteInfixOperatorAction(deleteInfixOperatorAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.CHANGE_LITERAL_VALUE_ACTION: {
 			ChangeLiteralValueAction changeLiteralValueAction = (ChangeLiteralValueAction) theEObject;
-			T result = caseChangeLiteralValueAction(changeLiteralValueAction);
+			Object result = caseChangeLiteralValueAction(changeLiteralValueAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.DELETE_RANDOM_STATEMENT_ACTION: {
 			DeleteRandomStatementAction deleteRandomStatementAction = (DeleteRandomStatementAction) theEObject;
-			T result = caseDeleteRandomStatementAction(deleteRandomStatementAction);
+			Object result = caseDeleteRandomStatementAction(deleteRandomStatementAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.REPLACE_VARIABLE_ACCESS_ACTION: {
 			ReplaceVariableAccessAction replaceVariableAccessAction = (ReplaceVariableAccessAction) theEObject;
-			T result = caseReplaceVariableAccessAction(replaceVariableAccessAction);
+			Object result = caseReplaceVariableAccessAction(replaceVariableAccessAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.REPLACE_ARITHMETIC_OPERATOR_ACTION: {
 			ReplaceArithmeticOperatorAction replaceArithmeticOperatorAction = (ReplaceArithmeticOperatorAction) theEObject;
-			T result = caseReplaceArithmeticOperatorAction(replaceArithmeticOperatorAction);
+			Object result = caseReplaceArithmeticOperatorAction(replaceArithmeticOperatorAction);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
 		case ActionPackage.ARITHMETIC_OPERATOR_MAP: {
 			ArithmeticOperatorMap arithmeticOperatorMap = (ArithmeticOperatorMap) theEObject;
-			T result = caseArithmeticOperatorMap(arithmeticOperatorMap);
+			Object result = caseArithmeticOperatorMap(arithmeticOperatorMap);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -138,7 +151,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDeleteAction(DeleteAction object) {
+	public Object caseDeleteAction(DeleteAction object) {
 		return null;
 	}
 
@@ -153,7 +166,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseMoveScopeUpAction(MoveScopeUpAction object) {
+	public Object caseMoveScopeUpAction(MoveScopeUpAction object) {
 		return null;
 	}
 
@@ -168,7 +181,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDeleteInfixOperatorAction(DeleteInfixOperatorAction object) {
+	public Object caseDeleteInfixOperatorAction(DeleteInfixOperatorAction object) {
 		return null;
 	}
 
@@ -183,7 +196,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseChangeLiteralValueAction(ChangeLiteralValueAction object) {
+	public Object caseChangeLiteralValueAction(ChangeLiteralValueAction object) {
 		return null;
 	}
 
@@ -198,7 +211,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDeleteRandomStatementAction(DeleteRandomStatementAction object) {
+	public Object caseDeleteRandomStatementAction(DeleteRandomStatementAction object) {
 		return null;
 	}
 
@@ -213,7 +226,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReplaceVariableAccessAction(ReplaceVariableAccessAction object) {
+	public Object caseReplaceVariableAccessAction(ReplaceVariableAccessAction object) {
 		return null;
 	}
 
@@ -228,7 +241,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReplaceArithmeticOperatorAction(ReplaceArithmeticOperatorAction object) {
+	public Object caseReplaceArithmeticOperatorAction(ReplaceArithmeticOperatorAction object) {
 		return null;
 	}
 
@@ -243,7 +256,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseArithmeticOperatorMap(ArithmeticOperatorMap object) {
+	public Object caseArithmeticOperatorMap(ArithmeticOperatorMap object) {
 		return null;
 	}
 
@@ -258,8 +271,7 @@ public class ActionSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
-	@Override
-	public T defaultCase(EObject object) {
+	public Object defaultCase(EObject object) {
 		return null;
 	}
 

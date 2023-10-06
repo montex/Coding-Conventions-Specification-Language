@@ -50,7 +50,6 @@ public class FaultypesAdapterFactory extends AdapterFactoryImpl {
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
-	@Override
 	public boolean isFactoryForType(Object object) {
 		if (object == modelPackage) {
 			return true;
@@ -67,29 +66,24 @@ public class FaultypesAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected FaultypesSwitch<Adapter> modelSwitch = new FaultypesSwitch<Adapter>() {
-		@Override
-		public Adapter caseInjectionAction(InjectionAction object) {
+	protected FaultypesSwitch modelSwitch = new FaultypesSwitch() {
+		public Object caseInjectionAction(InjectionAction object) {
 			return createInjectionActionAdapter();
 		}
 
-		@Override
-		public Adapter caseInjectionStrategy(InjectionStrategy object) {
+		public Object caseInjectionStrategy(InjectionStrategy object) {
 			return createInjectionStrategyAdapter();
 		}
 
-		@Override
-		public Adapter caseFaultTypeDescription(FaultTypeDescription object) {
+		public Object caseFaultTypeDescription(FaultTypeDescription object) {
 			return createFaultTypeDescriptionAdapter();
 		}
 
-		@Override
-		public Adapter caseRoot(Root object) {
+		public Object caseRoot(Root object) {
 			return createRootAdapter();
 		}
 
-		@Override
-		public Adapter defaultCase(EObject object) {
+		public Object defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};
@@ -102,9 +96,8 @@ public class FaultypesAdapterFactory extends AdapterFactoryImpl {
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
-	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return (Adapter) modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**

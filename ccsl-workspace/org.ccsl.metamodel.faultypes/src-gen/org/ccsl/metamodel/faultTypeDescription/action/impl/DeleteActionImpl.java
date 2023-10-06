@@ -31,7 +31,6 @@ public class DeleteActionImpl extends MinimalEObjectImpl.Container implements De
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.DELETE_ACTION;
 	}

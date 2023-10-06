@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -87,15 +86,6 @@ public interface FaultypesPackage extends EPackage {
 	int INJECTION_ACTION_FEATURE_COUNT = 1;
 
 	/**
-	 * The number of operations of the '<em>Injection Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INJECTION_ACTION_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.impl.InjectionStrategyImpl <em>Injection Strategy</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,15 +103,6 @@ public interface FaultypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int INJECTION_STRATEGY_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Injection Strategy</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INJECTION_STRATEGY_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.impl.FaultTypeDescriptionImpl <em>Fault Type Description</em>}' class.
@@ -177,15 +158,6 @@ public interface FaultypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int FAULT_TYPE_DESCRIPTION_FEATURE_COUNT = ccslPackage.ROOT_FEATURE_COUNT + 4;
-
-	/**
-	 * The number of operations of the '<em>Fault Type Description</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAULT_TYPE_DESCRIPTION_OPERATION_COUNT = ccslPackage.ROOT_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.ccsl.metamodel.faultTypeDescription.InjectionAction <em>Injection Action</em>}'.
@@ -287,7 +259,6 @@ public interface FaultypesPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>

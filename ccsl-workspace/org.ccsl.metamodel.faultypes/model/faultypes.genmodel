@@ -4,9 +4,9 @@
     modelDirectory="/org.ccsl.metamodel.faultypes/src-gen" creationIcons="false"
     editDirectory="/org.ccsl.metamodel.faultypes.edit/src-gen" editorDirectory="/org.ccsl.metamodel.faultypes.editor/src-gen"
     modelPluginID="org.ccsl.metamodel.faultypes" modelName="Faultypes" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false" usedGenPackages="../../org.ccsl.metamodel/model/ccsl.genmodel#//ccsl"
-    operationReflection="true" importOrganizing="true">
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" copyrightFields="false"
+    usedGenPackages="../../org.ccsl.metamodel/model/ccsl.genmodel#//ccsl" operationReflection="false"
+    importOrganizing="true">
   <foreignModel>faultypes.ecore</foreignModel>
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Faultypes" basePackage="org.ccsl.metamodel" disposableProviderFactory="true"

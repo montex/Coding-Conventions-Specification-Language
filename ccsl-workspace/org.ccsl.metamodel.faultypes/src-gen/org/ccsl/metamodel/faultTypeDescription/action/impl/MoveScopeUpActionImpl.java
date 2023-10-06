@@ -31,7 +31,6 @@ public class MoveScopeUpActionImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.MOVE_SCOPE_UP_ACTION;
 	}

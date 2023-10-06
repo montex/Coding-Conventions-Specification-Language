@@ -181,13 +181,9 @@ public class StrategyPackageImpl extends EPackageImpl implements StrategyPackage
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Create type parameters
-
-		// Set bounds for type parameters
-
 		// Add supertypes to classes
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(allStrategyEClass, AllStrategy.class, "AllStrategy", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
 	}

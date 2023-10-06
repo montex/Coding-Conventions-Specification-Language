@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EPackage;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -74,15 +73,6 @@ public interface StrategyPackage extends EPackage {
 	int ALL_STRATEGY_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of operations of the '<em>All Strategy</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ALL_STRATEGY_OPERATION_COUNT = 0;
-
-	/**
 	 * Returns the meta object for class '{@link org.ccsl.metamodel.faultTypeDescription.strategy.AllStrategy <em>All Strategy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,7 +97,6 @@ public interface StrategyPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>

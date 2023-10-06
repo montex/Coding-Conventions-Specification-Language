@@ -32,7 +32,6 @@ public class DeleteRandomStatementActionImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.DELETE_RANDOM_STATEMENT_ACTION;
 	}

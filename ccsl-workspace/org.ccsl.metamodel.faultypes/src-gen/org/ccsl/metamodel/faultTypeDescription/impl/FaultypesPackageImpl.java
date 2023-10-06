@@ -285,14 +285,10 @@ public class FaultypesPackageImpl extends EPackageImpl implements FaultypesPacka
 		getESubpackages().add(theActionPackage);
 		getESubpackages().add(theStrategyPackage);
 
-		// Create type parameters
-
-		// Set bounds for type parameters
-
 		// Add supertypes to classes
 		faultTypeDescriptionEClass.getESuperTypes().add(theccslPackage.getRoot());
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(injectionActionEClass, InjectionAction.class, "InjectionAction", IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInjectionAction_Target(), theElementsPackage.getElement(), null, "target", null, 0, 1,

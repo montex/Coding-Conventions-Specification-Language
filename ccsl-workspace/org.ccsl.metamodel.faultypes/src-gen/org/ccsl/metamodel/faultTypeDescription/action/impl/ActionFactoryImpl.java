@@ -53,7 +53,6 @@ public class ActionFactoryImpl extends EFactoryImpl implements ActionFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 		case ActionPackage.DELETE_ACTION:
@@ -172,7 +171,6 @@ public class ActionFactoryImpl extends EFactoryImpl implements ActionFactory {
 	 * @deprecated
 	 * @generated
 	 */
-	@Deprecated
 	public static ActionPackage getPackage() {
 		return ActionPackage.eINSTANCE;
 	}

@@ -78,10 +78,10 @@ public interface FaultTypeDescription extends Root {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Actions</em>' containment reference list.
 	 * @see org.ccsl.metamodel.faultTypeDescription.FaultypesPackage#getFaultTypeDescription_Actions()
-	 * @model containment="true" required="true"
+	 * @model type="org.ccsl.metamodel.faultTypeDescription.InjectionAction" containment="true" required="true"
 	 * @generated
 	 */
-	EList<InjectionAction> getActions();
+	EList getActions();
 
 	/**
 	 * Returns the value of the '<em><b>Strategies</b></em>' containment reference list.
@@ -90,9 +90,9 @@ public interface FaultTypeDescription extends Root {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Strategies</em>' containment reference list.
 	 * @see org.ccsl.metamodel.faultTypeDescription.FaultypesPackage#getFaultTypeDescription_Strategies()
-	 * @model containment="true" required="true"
+	 * @model type="org.ccsl.metamodel.faultTypeDescription.InjectionStrategy" containment="true" required="true"
 	 * @generated
 	 */
-	EList<InjectionStrategy> getStrategies();
+	EList getStrategies();
 
 } // FaultTypeDescription

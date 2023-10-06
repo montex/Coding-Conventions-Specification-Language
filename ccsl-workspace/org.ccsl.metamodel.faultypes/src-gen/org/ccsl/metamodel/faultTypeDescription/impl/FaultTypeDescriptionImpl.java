@@ -81,7 +81,7 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<InjectionAction> actions;
+	protected EList actions;
 
 	/**
 	 * The cached value of the '{@link #getStrategies() <em>Strategies</em>}' containment reference list.
@@ -91,7 +91,7 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<InjectionStrategy> strategies;
+	protected EList strategies;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -107,7 +107,6 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return FaultypesPackage.Literals.FAULT_TYPE_DESCRIPTION;
 	}
@@ -189,9 +188,9 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<InjectionAction> getActions() {
+	public EList getActions() {
 		if (actions == null) {
-			actions = new EObjectContainmentEList<InjectionAction>(InjectionAction.class, this,
+			actions = new EObjectContainmentEList(InjectionAction.class, this,
 					FaultypesPackage.FAULT_TYPE_DESCRIPTION__ACTIONS);
 		}
 		return actions;
@@ -202,9 +201,9 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<InjectionStrategy> getStrategies() {
+	public EList getStrategies() {
 		if (strategies == null) {
-			strategies = new EObjectContainmentEList<InjectionStrategy>(InjectionStrategy.class, this,
+			strategies = new EObjectContainmentEList(InjectionStrategy.class, this,
 					FaultypesPackage.FAULT_TYPE_DESCRIPTION__STRATEGIES);
 		}
 		return strategies;
@@ -215,15 +214,14 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__RULE:
 			return basicSetRule(null, msgs);
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__ACTIONS:
-			return ((InternalEList<?>) getActions()).basicRemove(otherEnd, msgs);
+			return ((InternalEList) getActions()).basicRemove(otherEnd, msgs);
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__STRATEGIES:
-			return ((InternalEList<?>) getStrategies()).basicRemove(otherEnd, msgs);
+			return ((InternalEList) getStrategies()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -233,7 +231,6 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__NAME:
@@ -253,8 +250,6 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__NAME:
@@ -265,11 +260,11 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 			return;
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__ACTIONS:
 			getActions().clear();
-			getActions().addAll((Collection<? extends InjectionAction>) newValue);
+			getActions().addAll((Collection) newValue);
 			return;
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__STRATEGIES:
 			getStrategies().clear();
-			getStrategies().addAll((Collection<? extends InjectionStrategy>) newValue);
+			getStrategies().addAll((Collection) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -280,7 +275,6 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__NAME:
@@ -304,7 +298,6 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION__NAME:
@@ -324,12 +317,11 @@ public class FaultTypeDescriptionImpl extends RootImpl implements FaultTypeDescr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');

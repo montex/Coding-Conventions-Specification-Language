@@ -31,7 +31,6 @@ public abstract class InjectionStrategyImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return FaultypesPackage.Literals.INJECTION_STRATEGY;
 	}

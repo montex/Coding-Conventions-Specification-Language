@@ -31,7 +31,6 @@ public class AllStrategyImpl extends MinimalEObjectImpl.Container implements All
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return StrategyPackage.Literals.ALL_STRATEGY;
 	}

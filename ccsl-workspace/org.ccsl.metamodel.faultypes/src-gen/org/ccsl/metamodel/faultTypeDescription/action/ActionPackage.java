@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -76,15 +75,6 @@ public interface ActionPackage extends EPackage {
 	int DELETE_ACTION_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of operations of the '<em>Delete Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE_ACTION_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.MoveScopeUpActionImpl <em>Move Scope Up Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,15 +92,6 @@ public interface ActionPackage extends EPackage {
 	 * @ordered
 	 */
 	int MOVE_SCOPE_UP_ACTION_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Move Scope Up Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MOVE_SCOPE_UP_ACTION_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.DeleteInfixOperatorActionImpl <em>Delete Infix Operator Action</em>}' class.
@@ -132,15 +113,6 @@ public interface ActionPackage extends EPackage {
 	int DELETE_INFIX_OPERATOR_ACTION_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of operations of the '<em>Delete Infix Operator Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE_INFIX_OPERATOR_ACTION_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.ChangeLiteralValueActionImpl <em>Change Literal Value Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -158,15 +130,6 @@ public interface ActionPackage extends EPackage {
 	 * @ordered
 	 */
 	int CHANGE_LITERAL_VALUE_ACTION_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Change Literal Value Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_LITERAL_VALUE_ACTION_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.DeleteRandomStatementActionImpl <em>Delete Random Statement Action</em>}' class.
@@ -188,15 +151,6 @@ public interface ActionPackage extends EPackage {
 	int DELETE_RANDOM_STATEMENT_ACTION_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of operations of the '<em>Delete Random Statement Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE_RANDOM_STATEMENT_ACTION_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.ReplaceVariableAccessActionImpl <em>Replace Variable Access Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -214,15 +168,6 @@ public interface ActionPackage extends EPackage {
 	 * @ordered
 	 */
 	int REPLACE_VARIABLE_ACCESS_ACTION_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Replace Variable Access Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REPLACE_VARIABLE_ACCESS_ACTION_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.ReplaceArithmeticOperatorActionImpl <em>Replace Arithmetic Operator Action</em>}' class.
@@ -251,15 +196,6 @@ public interface ActionPackage extends EPackage {
 	 * @ordered
 	 */
 	int REPLACE_ARITHMETIC_OPERATOR_ACTION_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>Replace Arithmetic Operator Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REPLACE_ARITHMETIC_OPERATOR_ACTION_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.ccsl.metamodel.faultTypeDescription.action.impl.ArithmeticOperatorMapImpl <em>Arithmetic Operator Map</em>}' class.
@@ -297,15 +233,6 @@ public interface ActionPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARITHMETIC_OPERATOR_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>Arithmetic Operator Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARITHMETIC_OPERATOR_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.ccsl.metamodel.faultTypeDescription.action.DeleteAction <em>Delete Action</em>}'.
@@ -435,7 +362,6 @@ public interface ActionPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>

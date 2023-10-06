@@ -48,7 +48,6 @@ public class ActionAdapterFactory extends AdapterFactoryImpl {
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
-	@Override
 	public boolean isFactoryForType(Object object) {
 		if (object == modelPackage) {
 			return true;
@@ -65,49 +64,40 @@ public class ActionAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ActionSwitch<Adapter> modelSwitch = new ActionSwitch<Adapter>() {
-		@Override
-		public Adapter caseDeleteAction(DeleteAction object) {
+	protected ActionSwitch modelSwitch = new ActionSwitch() {
+		public Object caseDeleteAction(DeleteAction object) {
 			return createDeleteActionAdapter();
 		}
 
-		@Override
-		public Adapter caseMoveScopeUpAction(MoveScopeUpAction object) {
+		public Object caseMoveScopeUpAction(MoveScopeUpAction object) {
 			return createMoveScopeUpActionAdapter();
 		}
 
-		@Override
-		public Adapter caseDeleteInfixOperatorAction(DeleteInfixOperatorAction object) {
+		public Object caseDeleteInfixOperatorAction(DeleteInfixOperatorAction object) {
 			return createDeleteInfixOperatorActionAdapter();
 		}
 
-		@Override
-		public Adapter caseChangeLiteralValueAction(ChangeLiteralValueAction object) {
+		public Object caseChangeLiteralValueAction(ChangeLiteralValueAction object) {
 			return createChangeLiteralValueActionAdapter();
 		}
 
-		@Override
-		public Adapter caseDeleteRandomStatementAction(DeleteRandomStatementAction object) {
+		public Object caseDeleteRandomStatementAction(DeleteRandomStatementAction object) {
 			return createDeleteRandomStatementActionAdapter();
 		}
 
-		@Override
-		public Adapter caseReplaceVariableAccessAction(ReplaceVariableAccessAction object) {
+		public Object caseReplaceVariableAccessAction(ReplaceVariableAccessAction object) {
 			return createReplaceVariableAccessActionAdapter();
 		}
 
-		@Override
-		public Adapter caseReplaceArithmeticOperatorAction(ReplaceArithmeticOperatorAction object) {
+		public Object caseReplaceArithmeticOperatorAction(ReplaceArithmeticOperatorAction object) {
 			return createReplaceArithmeticOperatorActionAdapter();
 		}
 
-		@Override
-		public Adapter caseArithmeticOperatorMap(ArithmeticOperatorMap object) {
+		public Object caseArithmeticOperatorMap(ArithmeticOperatorMap object) {
 			return createArithmeticOperatorMapAdapter();
 		}
 
-		@Override
-		public Adapter defaultCase(EObject object) {
+		public Object defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};
@@ -120,9 +110,8 @@ public class ActionAdapterFactory extends AdapterFactoryImpl {
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
-	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return (Adapter) modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**

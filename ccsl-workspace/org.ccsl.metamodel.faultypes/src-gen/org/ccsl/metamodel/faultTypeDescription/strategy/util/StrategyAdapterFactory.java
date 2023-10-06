@@ -48,7 +48,6 @@ public class StrategyAdapterFactory extends AdapterFactoryImpl {
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
-	@Override
 	public boolean isFactoryForType(Object object) {
 		if (object == modelPackage) {
 			return true;
@@ -65,14 +64,12 @@ public class StrategyAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected StrategySwitch<Adapter> modelSwitch = new StrategySwitch<Adapter>() {
-		@Override
-		public Adapter caseAllStrategy(AllStrategy object) {
+	protected StrategySwitch modelSwitch = new StrategySwitch() {
+		public Object caseAllStrategy(AllStrategy object) {
 			return createAllStrategyAdapter();
 		}
 
-		@Override
-		public Adapter defaultCase(EObject object) {
+		public Object defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};
@@ -85,9 +82,8 @@ public class StrategyAdapterFactory extends AdapterFactoryImpl {
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
-	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return (Adapter) modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**

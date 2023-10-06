@@ -2,6 +2,8 @@
  */
 package org.ccsl.metamodel.faultTypeDescription.action;
 
+import ccsl.elements.expressions.ArithmeticOperator;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -29,12 +31,12 @@ public interface ArithmeticOperatorMap extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Old Arithmetic Operator</em>' attribute.
 	 * @see ccsl.elements.expressions.ArithmeticOperator
-	 * @see #setOldArithmeticOperator(ccsl.elements.expressions.ArithmeticOperator)
+	 * @see #setOldArithmeticOperator(ArithmeticOperator)
 	 * @see org.ccsl.metamodel.faultTypeDescription.action.ActionPackage#getArithmeticOperatorMap_OldArithmeticOperator()
 	 * @model
 	 * @generated
 	 */
-	ccsl.elements.expressions.ArithmeticOperator getOldArithmeticOperator();
+	ArithmeticOperator getOldArithmeticOperator();
 
 	/**
 	 * Sets the value of the '{@link org.ccsl.metamodel.faultTypeDescription.action.ArithmeticOperatorMap#getOldArithmeticOperator <em>Old Arithmetic Operator</em>}' attribute.
@@ -45,7 +47,7 @@ public interface ArithmeticOperatorMap extends EObject {
 	 * @see #getOldArithmeticOperator()
 	 * @generated
 	 */
-	void setOldArithmeticOperator(ccsl.elements.expressions.ArithmeticOperator value);
+	void setOldArithmeticOperator(ArithmeticOperator value);
 
 	/**
 	 * Returns the value of the '<em><b>New Arithmetic Operator</b></em>' attribute.
@@ -54,12 +56,12 @@ public interface ArithmeticOperatorMap extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>New Arithmetic Operator</em>' attribute.
 	 * @see ccsl.elements.expressions.ArithmeticOperator
-	 * @see #setNewArithmeticOperator(ccsl.elements.expressions.ArithmeticOperator)
+	 * @see #setNewArithmeticOperator(ArithmeticOperator)
 	 * @see org.ccsl.metamodel.faultTypeDescription.action.ActionPackage#getArithmeticOperatorMap_NewArithmeticOperator()
 	 * @model
 	 * @generated
 	 */
-	ccsl.elements.expressions.ArithmeticOperator getNewArithmeticOperator();
+	ArithmeticOperator getNewArithmeticOperator();
 
 	/**
 	 * Sets the value of the '{@link org.ccsl.metamodel.faultTypeDescription.action.ArithmeticOperatorMap#getNewArithmeticOperator <em>New Arithmetic Operator</em>}' attribute.
@@ -70,6 +72,6 @@ public interface ArithmeticOperatorMap extends EObject {
 	 * @see #getNewArithmeticOperator()
 	 * @generated
 	 */
-	void setNewArithmeticOperator(ccsl.elements.expressions.ArithmeticOperator value);
+	void setNewArithmeticOperator(ArithmeticOperator value);
 
 } // ArithmeticOperatorMap

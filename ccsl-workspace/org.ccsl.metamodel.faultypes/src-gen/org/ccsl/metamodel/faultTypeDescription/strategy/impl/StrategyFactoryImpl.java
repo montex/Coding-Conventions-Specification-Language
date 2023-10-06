@@ -53,7 +53,6 @@ public class StrategyFactoryImpl extends EFactoryImpl implements StrategyFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 		case StrategyPackage.ALL_STRATEGY:
@@ -88,7 +87,6 @@ public class StrategyFactoryImpl extends EFactoryImpl implements StrategyFactory
 	 * @deprecated
 	 * @generated
 	 */
-	@Deprecated
 	public static StrategyPackage getPackage() {
 		return StrategyPackage.eINSTANCE;
 	}

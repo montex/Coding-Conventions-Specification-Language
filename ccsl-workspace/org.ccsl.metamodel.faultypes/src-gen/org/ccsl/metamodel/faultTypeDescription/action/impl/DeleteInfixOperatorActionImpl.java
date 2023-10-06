@@ -31,7 +31,6 @@ public class DeleteInfixOperatorActionImpl extends MinimalEObjectImpl.Container 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.DELETE_INFIX_OPERATOR_ACTION;
 	}

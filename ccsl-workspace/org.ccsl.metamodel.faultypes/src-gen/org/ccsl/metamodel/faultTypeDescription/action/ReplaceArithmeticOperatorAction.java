@@ -30,9 +30,9 @@ public interface ReplaceArithmeticOperatorAction extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Replace Map</em>' containment reference list.
 	 * @see org.ccsl.metamodel.faultTypeDescription.action.ActionPackage#getReplaceArithmeticOperatorAction_ReplaceMap()
-	 * @model containment="true" required="true"
+	 * @model type="org.ccsl.metamodel.faultTypeDescription.action.ArithmeticOperatorMap" containment="true" required="true"
 	 * @generated
 	 */
-	EList<ArithmeticOperatorMap> getReplaceMap();
+	EList getReplaceMap();
 
 } // ReplaceArithmeticOperatorAction

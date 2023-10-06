@@ -83,7 +83,6 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected EClass eStaticClass() {
 		return ActionPackage.Literals.ARITHMETIC_OPERATOR_MAP;
 	}
@@ -141,7 +140,6 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ActionPackage.ARITHMETIC_OPERATOR_MAP__OLD_ARITHMETIC_OPERATOR:
@@ -157,7 +155,6 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ActionPackage.ARITHMETIC_OPERATOR_MAP__OLD_ARITHMETIC_OPERATOR:
@@ -175,7 +172,6 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ActionPackage.ARITHMETIC_OPERATOR_MAP__OLD_ARITHMETIC_OPERATOR:
@@ -193,7 +189,6 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ActionPackage.ARITHMETIC_OPERATOR_MAP__OLD_ARITHMETIC_OPERATOR:
@@ -209,12 +204,11 @@ public class ArithmeticOperatorMapImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (oldArithmeticOperator: ");
 		result.append(oldArithmeticOperator);
 		result.append(", newArithmeticOperator: ");

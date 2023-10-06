@@ -53,7 +53,6 @@ public class FaultypesFactoryImpl extends EFactoryImpl implements FaultypesFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 		case FaultypesPackage.FAULT_TYPE_DESCRIPTION:
@@ -88,7 +87,6 @@ public class FaultypesFactoryImpl extends EFactoryImpl implements FaultypesFacto
 	 * @deprecated
 	 * @generated
 	 */
-	@Deprecated
 	public static FaultypesPackage getPackage() {
 		return FaultypesPackage.eINSTANCE;
 	}
