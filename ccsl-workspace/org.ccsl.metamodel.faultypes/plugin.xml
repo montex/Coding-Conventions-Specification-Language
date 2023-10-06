@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated faultypes -->
+      <package
+            uri="http://www.example.org/ccsl/faultTypeDescription"
+            class="org.ccsl.metamodel.faultTypeDescription.FaultypesPackage"
+            genModel="model/faultypes.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated faultypes -->
+      <package
+            uri="http://www.example.org/ccsl/faultTypeDescription/action"
+            class="org.ccsl.metamodel.faultTypeDescription.action.ActionPackage"
+            genModel="model/faultypes.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated faultypes -->
+      <package
+            uri="http://www.example.org/ccsl/faultTypeDescription/strategy"
+            class="org.ccsl.metamodel.faultTypeDescription.strategy.StrategyPackage"
+            genModel="model/faultypes.genmodel"/>
+   </extension>
+
+</plugin>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.ccsl.metamodel.faultypes/src-gen" creationIcons="false"
+    editDirectory="/org.ccsl.metamodel.faultypes.edit/src-gen" editorDirectory="/org.ccsl.metamodel.faultypes.editor/src-gen"
+    modelPluginID="org.ccsl.metamodel.faultypes" modelName="Faultypes" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" usedGenPackages="../../org.ccsl.metamodel/model/ccsl.genmodel#//ccsl"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>faultypes.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Faultypes" basePackage="org.ccsl.metamodel" disposableProviderFactory="true"
+      ecorePackage="faultypes.ecore#/">
+    <genClasses image="false" ecoreClass="faultypes.ecore#//InjectionAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference faultypes.ecore#//InjectionAction/target"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="faultypes.ecore#//InjectionStrategy"/>
+    <genClasses ecoreClass="faultypes.ecore#//FaultTypeDescription">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute faultypes.ecore#//FaultTypeDescription/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference faultypes.ecore#//FaultTypeDescription/rule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference faultypes.ecore#//FaultTypeDescription/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference faultypes.ecore#//FaultTypeDescription/strategies"/>
+    </genClasses>
+    <nestedGenPackages prefix="Action" basePackage="org.ccsl.metamodel.faultTypeDescription"
+        disposableProviderFactory="true" ecorePackage="faultypes.ecore#//action">
+      <genClasses ecoreClass="faultypes.ecore#//action/DeleteAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/MoveScopeUpAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/DeleteInfixOperatorAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/ChangeLiteralValueAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/DeleteRandomStatementAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/ReplaceVariableAccessAction"/>
+      <genClasses ecoreClass="faultypes.ecore#//action/ReplaceArithmeticOperatorAction">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference faultypes.ecore#//action/ReplaceArithmeticOperatorAction/replaceMap"/>
+      </genClasses>
+      <genClasses ecoreClass="faultypes.ecore#//action/ArithmeticOperatorMap">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute faultypes.ecore#//action/ArithmeticOperatorMap/oldArithmeticOperator"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute faultypes.ecore#//action/ArithmeticOperatorMap/newArithmeticOperator"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Strategy" basePackage="org.ccsl.metamodel.faultTypeDescription"
+        disposableProviderFactory="true" ecorePackage="faultypes.ecore#//strategy">
+      <genClasses ecoreClass="faultypes.ecore#//strategy/AllStrategy"/>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>
