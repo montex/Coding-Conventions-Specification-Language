@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CCSL Examples
+Bundle-SymbolicName: org.ccsl.metamodel.examples
+Bundle-Version: 1.0.0.qualifier
