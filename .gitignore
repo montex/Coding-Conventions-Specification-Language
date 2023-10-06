@@ -10,3 +10,8 @@
 /ccsl-workspace/Sample/
 /faultTypeRuleExecutor-workspace/.metadata/
 /faultTypeRuleExecutor-workspace/org.eclipse.*/
+*._trace
+*.xtendbin
+*/bin/
+*.class
+.metadata
