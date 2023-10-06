@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Acceleo Ocl Module Runtime Plug-in
+Bundle-Name: CCSL OCL Checker Generator
 Bundle-SymbolicName: org.ccsl.gen.ocl
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.ccsl.gen.ocl.Activator

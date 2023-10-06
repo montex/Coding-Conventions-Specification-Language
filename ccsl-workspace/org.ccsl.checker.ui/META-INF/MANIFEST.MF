@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Popup
-Bundle-SymbolicName: org.ccsl.checker.popup;singleton:=true
+Bundle-SymbolicName: org.ccsl.checker.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.ccsl.checker.sidebar.Activator
 Require-Bundle: org.eclipse.ui,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="mainGenerator" name="org.ccsl.gen.ocl">
-    <property name="ECLIPSE_HOME" value="../../../../../eclipse"/>
-    <property name="ECLIPSE_WORKSPACE" value="../../../../../WorkspaceTextual"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../../../usr/local/eclipse/eclipse-2020-06"/>
+    <property name="ECLIPSE_WORKSPACE" value="../.."/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.ccsl.gen.ocl.libraryclasspath">
