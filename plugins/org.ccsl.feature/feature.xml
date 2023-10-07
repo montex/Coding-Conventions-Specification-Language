@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.ccsl.feature"
-      label="CCSL - Coding Conventions Specification Language"
+      label="CCSL - Metamodel, Checker and Examples"
       version="1.0.0.qualifier">
 
    <description>
-      Metamodel and examples for the CCSL (Coding Conventions Specification Language)
+      Metamodel, checker, and examples for the CCSL (Coding Conventions Specification Language)
    </description>
 
    <copyright>

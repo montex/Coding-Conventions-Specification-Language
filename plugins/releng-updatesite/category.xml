@@ -9,5 +9,5 @@
    <feature id="org.ccsl.textual.feature">
       <category name="org.ccsl.category"/>
    </feature>
-   <category-def name="org.ccsl.category" label="CCSL"/>
+   <category-def name="org.ccsl.category" label="Coding Conventions Specification Language (CCSL)"/>
 </site>
