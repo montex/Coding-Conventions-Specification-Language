@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.ccsl.textual.ui.tests
 Bundle-ManifestVersion: 2
-Bundle-Name: org.ccsl.textual.ui.tests
+Bundle-Name: CCSL Textual Syntax (UI Tests)
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.ccsl.textual.ui.tests; singleton:=true

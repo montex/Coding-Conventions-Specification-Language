@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.ccsl.textual.ide
 Bundle-ManifestVersion: 2
-Bundle-Name: org.ccsl.textual.ide
+Bundle-Name: CCSL Textual Syntax (IDE)
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.ccsl.textual.ide; singleton:=true

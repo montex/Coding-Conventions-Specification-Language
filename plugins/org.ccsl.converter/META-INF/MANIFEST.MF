@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Converter
+Bundle-Name: CCSL Textual Syntax - Converter
 Bundle-SymbolicName: org.ccsl.converter
 Bundle-Version: 1.0.0.qualifier
 Export-Package: resourceConverter
