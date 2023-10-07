@@ -1,0 +1,43 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Package and Deploy
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Build with Maven
+      run: mvn compile --file plugins/pom.xml
+    - name: Package with Maven
+      run: mvn package --file plugins/pom.xml
+    - uses: actions/upload-artifact@v2
+      with:
+        name: plugins-jars
+        path: plugins/releng-updatesite/target/repository/plugins/*.jar
+    - name: Deploy update site
+      uses: up9cloud/action-rsync@v1.1
+      env:
+        # Required
+        HOST: ccsl.montecchi.info
+        KEY: ${{secrets.DEPLOY_SSH_KEY}} # ssh private key
+        TARGET: ~/ccsl.montecchi.info/updatesite/${GITHUB_REF##*/}/ # target folder or file
+
+        # Optional (with `default` values)
+        VERBOSE: false # set it true if you want some tips
+        USER: montex82_github_deploy # target server ssh user
+        ARGS: -avz
+        SOURCE: plugins/releng-updatesite/target/repository/ # source folder or file
