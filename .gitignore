@@ -12,6 +12,7 @@
 /faultTypeRuleExecutor-workspace/org.eclipse.*/
 *._trace
 *.xtendbin
-*/bin/
+bin/
 *.class
 .metadata
+target/

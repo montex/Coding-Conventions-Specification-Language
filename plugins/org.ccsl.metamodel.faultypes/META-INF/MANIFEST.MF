@@ -3,11 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.ccsl.metamodel.faultypes;singleton:=true
 Automatic-Module-Name: org.ccsl.metamodel.faultypes
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.ccsl.metamodel.faultTypeDescription,
  org.ccsl.metamodel.faultTypeDescription.action,
  org.ccsl.metamodel.faultTypeDescription.action.impl,

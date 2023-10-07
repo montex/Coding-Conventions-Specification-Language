@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="mainGenerator" name="org.ccsl.gen.ocl">
     <property name="ECLIPSE_HOME" value="../../../../../../../../usr/local/eclipse/eclipse-2020-06"/>
-    <property name="ECLIPSE_WORKSPACE" value="../.."/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../workspace"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.ccsl.gen.ocl.libraryclasspath">
@@ -30,6 +30,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen.ecore_2.22.0.v20200324-0947.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.20.0.v20200324-0932.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/com.google.guava_27.1.0.v20190517-1946.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.apache.commons.lang3_3.1.0.v201403281430.jar"/>
     </path>
 
     <path id="org.ccsl.gen.ocl.classpath">

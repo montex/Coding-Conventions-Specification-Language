@@ -1,0 +1,37 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ccsl</groupId>
+  <artifactId>root</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <parent>
+    <groupId>org.ccsl</groupId>
+    <artifactId>releng</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>./releng</relativePath>
+  </parent>
+
+  <modules>
+    <module>releng-updatesite</module>
+    <module>org.ccsl.checker</module>
+    <module>org.ccsl.checker.ui</module>
+    <module>org.ccsl.converter</module>
+    <module>org.ccsl.faulttypes.feature</module>
+    <module>org.ccsl.feature</module>
+    <module>org.ccsl.gen.ocl</module>
+    <module>org.ccsl.metamodel</module>
+    <module>org.ccsl.metamodel.edit</module>
+    <module>org.ccsl.metamodel.editor</module>
+    <module>org.ccsl.metamodel.examples</module>
+    <module>org.ccsl.metamodel.faultypes</module>
+    <module>org.ccsl.metamodel.faultypes.edit</module>
+    <module>org.ccsl.metamodel.faultypes.editor</module>
+    <module>org.ccsl.textual</module>
+    <module>org.ccsl.textual.feature</module>
+    <module>org.ccsl.textual.ide</module>
+    <module>org.ccsl.textual.tests</module>
+    <module>org.ccsl.textual.ui</module>
+    <module>org.ccsl.textual.ui.tests</module>
+  </modules>
+
+</project>

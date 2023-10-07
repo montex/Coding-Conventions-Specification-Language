@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.ccsl.faulttypes.feature">
+      <category name="org.ccsl.category"/>
+   </feature>
+   <feature id="org.ccsl.feature">
+      <category name="org.ccsl.category"/>
+   </feature>
+   <feature id="org.ccsl.textual.feature">
+      <category name="org.ccsl.category"/>
+   </feature>
+   <category-def name="org.ccsl.category" label="CCSL"/>
+</site>

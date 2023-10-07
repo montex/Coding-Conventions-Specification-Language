@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.ccsl.textual
 Bundle-ManifestVersion: 2
-Bundle-Name: org.ccsl.textual
+Bundle-Name: CCSL Textual Syntax
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.ccsl.textual; singleton:=true
@@ -12,8 +12,7 @@ Require-Bundle: org.ccsl.metamodel,
  org.eclipse.equinox.common;bundle-version="3.5.0",
  org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtext.util,
- org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- org.eclipse.gmf.xpand;bundle-version="2.2.0"
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.ccsl,
  org.ccsl.QualifiedNameProvider,
