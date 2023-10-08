@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CCSL Textual Syntax - Converter
+Bundle-SymbolicName: org.ccsl.converter
+Bundle-Version: 1.0.0.qualifier
+Export-Package: resourceConverter
+Require-Bundle: org.ccsl.metamodel;bundle-version="1.0.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.16.0",
+ com.google.inject;bundle-version="3.0.0",
+ org.eclipse.xtext;bundle-version="2.22.0"

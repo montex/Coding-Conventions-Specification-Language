@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated faultypes -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.ccsl.metamodel.faultTypeDescription.presentation.FaultypesModelWizardID"
+            name="%_UI_FaultypesModelWizard_label"
+            class="org.ccsl.metamodel.faultTypeDescription.presentation.FaultypesModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/FaultypesModelFile.gif">
+         <description>%_UI_FaultypesModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated faultypes -->
+      <editor
+            id="org.ccsl.metamodel.faultTypeDescription.presentation.FaultypesEditorID"
+            name="%_UI_FaultypesEditor_label"
+            icon="icons/full/obj16/FaultypesModelFile.gif"
+            extensions="faultypes"
+            class="org.ccsl.metamodel.faultTypeDescription.presentation.FaultypesEditor"
+            contributorClass="org.ccsl.metamodel.faultTypeDescription.presentation.FaultypesActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated faultypes -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.ccsl.metamodel.faultTypeDescription.action.presentation.ActionModelWizardID"
+            name="%_UI_ActionModelWizard_label"
+            class="org.ccsl.metamodel.faultTypeDescription.action.presentation.ActionModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/ActionModelFile.gif">
+         <description>%_UI_ActionModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated faultypes -->
+      <editor
+            id="org.ccsl.metamodel.faultTypeDescription.action.presentation.ActionEditorID"
+            name="%_UI_ActionEditor_label"
+            icon="icons/full/obj16/ActionModelFile.gif"
+            extensions="action"
+            class="org.ccsl.metamodel.faultTypeDescription.action.presentation.ActionEditor"
+            contributorClass="org.ccsl.metamodel.faultTypeDescription.action.presentation.ActionActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated faultypes -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.ccsl.metamodel.faultTypeDescription.strategy.presentation.StrategyModelWizardID"
+            name="%_UI_StrategyModelWizard_label"
+            class="org.ccsl.metamodel.faultTypeDescription.strategy.presentation.StrategyModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/StrategyModelFile.gif">
+         <description>%_UI_StrategyModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated faultypes -->
+      <editor
+            id="org.ccsl.metamodel.faultTypeDescription.strategy.presentation.StrategyEditorID"
+            name="%_UI_StrategyEditor_label"
+            icon="icons/full/obj16/StrategyModelFile.gif"
+            extensions="strategy"
+            class="org.ccsl.metamodel.faultTypeDescription.strategy.presentation.StrategyEditor"
+            contributorClass="org.ccsl.metamodel.faultTypeDescription.strategy.presentation.StrategyActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

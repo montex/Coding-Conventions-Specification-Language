@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.ccsl.textual.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: CCSL Textual Syntax (IDE)
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.ccsl.textual.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.ccsl.textual,
+ org.ccsl.metamodel,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.ccsl.ide.contentassist.antlr.internal,
+ org.ccsl.ide.contentassist.antlr
